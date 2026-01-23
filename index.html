@@ -5,23 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morfeo | Sistemas de Contenido Automatizado con IA</title>
     <meta name="description" content="Diseñá, operá y vendé sistemas de contenido con IA en 3 meses. Dejá de improvisar prompts. Construí una operación escalable.">
-    
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Morfeo | Sistemas de Contenido Automatizado con IA">
+    <meta property="og:description" content="Diseñá, operá y vendé sistemas de contenido con IA en 3 meses. Programa intensivo de 3 meses con plazas limitadas.">
+    <meta property="og:image" content="https://www.genspark.ai/api/files/s/68iEcwGt">
+    <meta property="og:url" content="https://morfeoacademy.com">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://morfeoacademy.com">
+
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230a0a0a'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-size='60' font-family='system-ui' font-weight='bold' fill='%23c8f547'>M</text></svg>">
-    
-    <!-- Fonts -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050508'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-size='60' font-family='serif' font-weight='400' fill='%23a3e635'>M</text></svg>">
+
+    <!-- Fonts - Optimized loading with preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
+    <!-- Critical fonts inline for faster LCP -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/style.css">
-    
-    <!-- Wistia Video -->
+    <link rel="stylesheet" href="/css/style.css?v=2">
+
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Morfeo Developers Club",
+        "description": "Programa intensivo de 3 meses para diseñar, operar y vender sistemas de contenido automatizado con IA",
+        "provider": {
+            "@type": "Organization",
+            "name": "Morfeo Academy"
+        },
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "online",
+            "duration": "P3M"
+        }
+    }
+    </script>
+
+    <!-- Wistia Video - Defer loading -->
     <script src="https://fast.wistia.com/player.js" async></script>
     <script src="https://fast.wistia.com/embed/rceo4f1yi7.js" async type="module"></script>
     <style>wistia-player[media-id='rceo4f1yi7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/rceo4f1yi7/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
-    
+
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -50,9 +83,14 @@
                 Diseñá, operá y vendé <span class="text-accent">sistemas de contenido con IA</span> en 3 meses
             </h1>
             <p class="hero-subtitle">Generá contenido a escala sin depender de plataformas y con un alto estándar de calidad.</p>
-            
+
             <div class="hero-cta-group">
-                <a href="https://enlaces.morfeoacademy.com/widget/booking/ELTSIUKToAYjAwkQqIQI" target="_blank" rel="noopener" class="cta-button primary">Quiero ser parte</a>
+                <a href="https://enlaces.morfeoacademy.com/widget/booking/ELTSIUKToAYjAwkQqIQI" target="_blank" rel="noopener" class="cta-button primary large">
+                    Agendar mi evaluación gratuita
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
@@ -65,7 +103,6 @@
             </div>
         </div>
     </section>
-
 
 
     <!-- 3. Problem Section -->
@@ -100,12 +137,12 @@
                 <div class="what-is-content">
                     <h2 class="section-title-left">¿Qué es un sistema automatizado de contenido?</h2>
                     <p class="what-is-desc">Un <strong>flujo de trabajo automatizado</strong> que recibe instrucciones, ejecuta acciones y genera <strong>contenido de calidad</strong> sin intervención manual.</p>
-                    
+
                     <div class="comfy-block">
                         <h3>Construido sobre <span class="text-accent">ComfyUI</span></h3>
                         <p>Plataforma basada en nodos con los modelos de IA generativa más avanzados del mercado.</p>
                     </div>
-                    
+
                     <div class="comfy-benefits-vertical">
                         <div class="benefit-item">
                             <span class="benefit-icon">✓</span>
@@ -121,9 +158,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="what-is-image">
-                    <img src="https://www.genspark.ai/api/files/s/68iEcwGt" alt="Sistema de IA - Componentes interconectados">
+                    <img src="https://www.genspark.ai/api/files/s/68iEcwGt" alt="Sistema de IA - Componentes interconectados" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>
@@ -146,7 +183,7 @@
 
             <h2 class="section-title">Hay otra forma de trabajar con IA</h2>
             <p class="section-subtitle">Una mucho más profesional, escalable y predecible.</p>
-            
+
             <div class="solution-grid">
                 <div class="solution-item">
                     <div class="solution-number">01</div>
@@ -201,21 +238,23 @@
     <section class="final-cta-section" id="agenda">
         <div class="container">
             <div class="final-cta-content">
-                <h2 class="final-cta-title">¿Listo para construir tu <span class="text-accent">sistema de contenido</span>?</h2>
-                <p class="final-cta-desc">Agendá una evaluación personalizada de 30 minutos. Sin compromiso.</p>
-                
+                <h2 class="final-cta-title">¿Listo para dejar de improvisar y <span class="text-accent">construir tu sistema</span>?</h2>
+                <p class="final-cta-desc">En 30 minutos analizamos tu situación actual, definimos si Morfeo es para vos, y te mostramos el roadmap exacto.</p>
+
                 <div class="final-cta-features">
                     <span class="final-cta-feature">⏱ 30 minutos</span>
-                    <span class="final-cta-feature">🎯 Evaluación personalizada</span>
-                    <span class="final-cta-feature">💬 Sin compromiso</span>
+                    <span class="final-cta-feature">🎯 Plan personalizado</span>
+                    <span class="final-cta-feature">💰 Sin costo</span>
                 </div>
-                
-                <a href="https://enlaces.morfeoacademy.com/widget/booking/ELTSIUKToAYjAwkQqIQI" target="_blank" rel="noopener" class="cta-button primary final-cta-button">
-                    Quiero ser parte
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+                <a href="https://enlaces.morfeoacademy.com/widget/booking/ELTSIUKToAYjAwkQqIQI" target="_blank" rel="noopener" class="cta-button primary final-cta-button large">
+                    Agendar evaluación gratuita
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
+
+                <p class="cta-guarantee">Sin spam. Cancelá cuando quieras.</p>
             </div>
         </div>
     </section>
@@ -224,7 +263,7 @@
     <section class="faq-section">
         <div class="container">
             <h2 class="section-title">Preguntas frecuentes</h2>
-            
+
             <div class="faq-grid">
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
@@ -304,8 +343,8 @@
     <!-- Floating CTA -->
     <div class="floating-cta" id="floatingCta">
         <a href="https://enlaces.morfeoacademy.com/widget/booking/ELTSIUKToAYjAwkQqIQI" target="_blank" rel="noopener" class="floating-cta-button">
-            <span>Quiero ser parte</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <span>Reservar evaluación gratis</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
         </a>
