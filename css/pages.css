@@ -252,6 +252,16 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--spacing-lg);
     margin: var(--spacing-xl) 0;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 4-column grid for wider screens */
+@media (min-width: 900px) {
+    .feature-grid.grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .feature-card {
@@ -490,6 +500,29 @@ main {
     margin: 0 auto;
 }
 
+/* Full-width background sections */
+.section-alt {
+    background: var(--color-bg-alt);
+    padding: var(--spacing-3xl) var(--spacing-md);
+    margin: 0;
+    max-width: none;
+}
+
+.section-alt .section-header,
+.section-alt .feature-grid,
+.section-alt .process-steps,
+.section-alt .faq-section,
+.section-alt .page-content {
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-alt .faq-section,
+.section-alt .page-content {
+    max-width: var(--container-narrow);
+}
+
 .section-header {
     text-align: center;
     margin-bottom: var(--spacing-2xl);
@@ -537,6 +570,8 @@ main {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-lg);
+    max-width: var(--container-max);
+    margin: 0 auto;
 }
 
 .process-step {
