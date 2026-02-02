@@ -605,3 +605,31 @@ main {
     color: var(--color-text-muted);
     font-size: var(--font-size-base);
 }
+
+/* Fix 4-card grid to always be 2x2 on desktop */
+@media (min-width: 768px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    
+    .feature-grid.grid-3 {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
+
+/* Fix CTA button contrast - ensure dark text on green */
+.cta-button {
+    background: var(--color-accent) !important;
+    color: #050508 !important;
+}
+
+.cta-button:hover {
+    background: var(--color-accent-hover) !important;
+    color: #050508 !important;
+}
+
+/* Ensure good contrast on all interactive elements */
+.cta-box .cta-button {
+    color: #050508 !important;
+    font-weight: 600;
+}
