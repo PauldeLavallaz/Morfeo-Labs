@@ -15,6 +15,100 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/pages.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        /* Mobile Responsive for sobre-mi inline styles */
+        @media (max-width: 768px) {
+            /* Hero section - vertical layout */
+            .sobre-mi-hero {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+                gap: 1.5rem !important;
+            }
+            
+            .sobre-mi-hero img {
+                width: 180px !important;
+                height: 180px !important;
+                margin: 0 auto;
+            }
+            
+            .sobre-mi-hero h1 {
+                font-size: 2rem !important;
+            }
+            
+            .sobre-mi-hero .tags {
+                justify-content: center;
+            }
+            
+            /* Stats grid - 2x2 */
+            .sobre-mi-stats {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1rem !important;
+            }
+            
+            .sobre-mi-stats > div {
+                padding: 1rem !important;
+            }
+            
+            .sobre-mi-stats .stat-number {
+                font-size: 2rem !important;
+            }
+            
+            /* Skills grid - 1 column */
+            .sobre-mi-skills {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            /* CTAs grid - 1 column */
+            .sobre-mi-ctas {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            /* Social links - 1 column */
+            .sobre-mi-social {
+                grid-template-columns: 1fr !important;
+                gap: 0.75rem !important;
+            }
+            
+            /* Section headings */
+            .sobre-mi-section h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Text content */
+            .sobre-mi-text {
+                font-size: 1rem !important;
+            }
+            
+            .sobre-mi-text p {
+                margin-top: 0.75rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sobre-mi-hero img {
+                width: 150px !important;
+                height: 150px !important;
+            }
+            
+            .sobre-mi-hero h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            .sobre-mi-hero .subtitle {
+                font-size: 1rem !important;
+            }
+            
+            .sobre-mi-stats .stat-number {
+                font-size: 1.5rem !important;
+            }
+            
+            .sobre-mi-stats .stat-label {
+                font-size: 0.75rem !important;
+            }
+        }
+    </style>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -59,14 +153,14 @@
             <nav class="breadcrumbs"><a href="/">Inicio</a> / Sobre Paul</nav>
 
             <!-- Hero Section -->
-            <section style="display:grid;grid-template-columns:1fr 2fr;gap:3rem;align-items:center;margin:3rem 0;padding:2rem 0">
+            <section class="sobre-mi-hero" style="display:grid;grid-template-columns:1fr 2fr;gap:3rem;align-items:center;margin:3rem 0;padding:2rem 0">
                 <div style="text-align:center">
                     <img src="/images/paul-de-lavallaz.jpg" alt="Paul de Lavallaz" style="width:250px;height:250px;border-radius:50%;object-fit:cover;border:4px solid #a3e635">
                 </div>
                 <div>
                     <h1 style="font-family:'Instrument Serif',serif;font-size:3rem;margin-bottom:0.5rem">Paul de Lavallaz</h1>
-                    <p style="font-size:1.25rem;color:#a3e635;margin-bottom:1.5rem">Fundador de Morfeo Academy | Especialista en IA Generativa</p>
-                    <div style="display:flex;flex-wrap:wrap;gap:0.75rem">
+                    <p class="subtitle" style="font-size:1.25rem;color:#a3e635;margin-bottom:1.5rem">Fundador de Morfeo Academy | Especialista en IA Generativa</p>
+                    <div class="tags" style="display:flex;flex-wrap:wrap;gap:0.75rem">
                         <span style="background:rgba(163,230,53,0.15);color:#a3e635;padding:0.5rem 1rem;border-radius:100px;font-size:0.875rem">🔧 +3 años en IA generativa</span>
                         <span style="background:rgba(163,230,53,0.15);color:#a3e635;padding:0.5rem 1rem;border-radius:100px;font-size:0.875rem">📺 @morfeoacademy</span>
                         <span style="background:rgba(163,230,53,0.15);color:#a3e635;padding:0.5rem 1rem;border-radius:100px;font-size:0.875rem">🏢 Proyectos con marcas top</span>
@@ -76,9 +170,9 @@
             </section>
 
             <!-- Mi Historia -->
-            <section style="margin:4rem 0">
+            <section class="sobre-mi-section" style="margin:4rem 0">
                 <h2 style="font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:1.5rem">Por qué creé Morfeo Academy</h2>
-                <div style="font-size:1.125rem;line-height:1.8;color:#d1d5db">
+                <div class="sobre-mi-text" style="font-size:1.125rem;line-height:1.8;color:#d1d5db">
                     <p>Empecé a trabajar con IA generativa en 2022, antes de que ChatGPT existiera.</p>
                     <p style="margin-top:1rem">En ese momento, la mayoría de la gente ni siquiera sabía que se podían generar imágenes con inteligencia artificial. Yo ya estaba experimentando con Stable Diffusion, construyendo workflows, y descubriendo el potencial de estas herramientas para la producción de contenido.</p>
                     <p style="margin-top:1rem">Vi cómo empresas gastaban miles de dólares en producciones fotográficas tradicionales cuando podrían lograr resultados similares (o mejores) en minutos con el sistema correcto. Y vi a profesionales talentosos frustrados porque no encontraban recursos en español que fueran más allá de lo básico.</p>
@@ -90,9 +184,9 @@
             </section>
 
             <!-- Expertise -->
-            <section style="margin:4rem 0">
+            <section class="sobre-mi-section" style="margin:4rem 0">
                 <h2 style="font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:1.5rem">Lo que sé hacer</h2>
-                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem">
+                <div class="sobre-mi-skills" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem">
                     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.5rem">
                         <h3 style="color:#a3e635;margin-bottom:0.5rem">🔧 ComfyUI</h3>
                         <p style="color:#9ca3af;font-size:0.875rem;margin-bottom:0.5rem">Nivel: Experto</p>
@@ -117,24 +211,24 @@
             </section>
 
             <!-- Track Record -->
-            <section style="margin:4rem 0">
+            <section class="sobre-mi-section" style="margin:4rem 0">
                 <h2 style="font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:1.5rem">Resultados que hablan</h2>
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem">
+                <div class="sobre-mi-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem">
                     <div style="text-align:center;padding:1.5rem">
-                        <div style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">+3</div>
-                        <div style="color:#9ca3af;font-size:0.875rem">años en IA generativa</div>
+                        <div class="stat-number" style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">+3</div>
+                        <div class="stat-label" style="color:#9ca3af;font-size:0.875rem">años en IA generativa</div>
                     </div>
                     <div style="text-align:center;padding:1.5rem">
-                        <div style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">+150</div>
-                        <div style="color:#9ca3af;font-size:0.875rem">workflows creados</div>
+                        <div class="stat-number" style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">+150</div>
+                        <div class="stat-label" style="color:#9ca3af;font-size:0.875rem">workflows creados</div>
                     </div>
                     <div style="text-align:center;padding:1.5rem">
-                        <div style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">200GB</div>
-                        <div style="color:#9ca3af;font-size:0.875rem">VRAM disponible</div>
+                        <div class="stat-number" style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">200GB</div>
+                        <div class="stat-label" style="color:#9ca3af;font-size:0.875rem">VRAM disponible</div>
                     </div>
                     <div style="text-align:center;padding:1.5rem">
-                        <div style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">Franui</div>
-                        <div style="color:#9ca3af;font-size:0.875rem">caso de éxito</div>
+                        <div class="stat-number" style="font-family:'Instrument Serif',serif;font-size:3rem;color:#a3e635">Franui</div>
+                        <div class="stat-label" style="color:#9ca3af;font-size:0.875rem">caso de éxito</div>
                     </div>
                 </div>
             </section>
@@ -166,9 +260,9 @@
             </section>
 
             <!-- Redes -->
-            <section style="margin:4rem 0">
+            <section class="sobre-mi-section" style="margin:4rem 0">
                 <h2 style="font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:1.5rem">Aprendé conmigo</h2>
-                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem">
+                <div class="sobre-mi-social" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem">
                     <a href="https://youtube.com/@morfeoacademy" target="_blank" style="display:flex;align-items:center;gap:1rem;padding:1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:12px;text-decoration:none;color:#d1d5db;transition:all 0.2s">
                         <span style="font-size:1.5rem">📺</span>
                         <div><strong>YouTube</strong><br><span style="color:#9ca3af;font-size:0.875rem">@morfeoacademy</span></div>
@@ -189,9 +283,9 @@
             </section>
 
             <!-- CTAs -->
-            <section style="margin:4rem 0">
+            <section class="sobre-mi-section" style="margin:4rem 0">
                 <h2 style="font-family:'Instrument Serif',serif;font-size:2rem;margin-bottom:1.5rem">¿Querés trabajar conmigo?</h2>
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
+                <div class="sobre-mi-ctas" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem">
                     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:1.5rem;text-align:center">
                         <div style="font-size:2rem;margin-bottom:1rem">📚</div>
                         <h3 style="margin-bottom:0.5rem">Aprender</h3>
