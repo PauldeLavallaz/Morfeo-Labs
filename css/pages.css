@@ -859,3 +859,177 @@ main {
     color: #050508 !important;
     font-weight: 600;
 }
+
+/* ========================================
+   BLOG ARTICLE HEADERS (replaces inline styles)
+   ======================================== */
+.article-header {
+    margin-bottom: 2rem;
+}
+
+.article-badge {
+    display: inline-block;
+    background: rgba(163, 230, 53, 0.15);
+    color: #a3e635;
+    font-size: 0.875rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+}
+
+.article-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+}
+
+.article-excerpt {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    color: #9ca3af;
+    line-height: 1.5;
+}
+
+.article-hero-img {
+    width: 100%;
+    border-radius: 12px;
+    margin: 2rem 0;
+    height: auto;
+}
+
+/* ========================================
+   MOBILE OPTIMIZATIONS
+   ======================================== */
+
+/* Touch-friendly tap targets */
+@media (max-width: 768px) {
+    .page-nav a,
+    .breadcrumbs a,
+    .footer-col a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .article-content a {
+        padding: 0.25rem 0;
+    }
+    
+    /* Better spacing for mobile reading */
+    .article-content {
+        padding: 0 var(--spacing-xs);
+    }
+    
+    .article-content p,
+    .article-content li {
+        line-height: 1.75;
+    }
+    
+    /* Code blocks scroll smoothly */
+    .article-content pre {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+    
+    /* Lists indent properly on mobile */
+    .article-content ul,
+    .article-content ol {
+        padding-left: var(--spacing-md);
+    }
+    
+    /* Images don't overflow */
+    .article-content img,
+    .article-hero-img {
+        max-width: 100%;
+        height: auto;
+    }
+    
+    /* CTA box better margins */
+    .cta-box {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* Small mobile tweaks */
+@media (max-width: 480px) {
+    .article-header {
+        margin-bottom: 1.5rem;
+    }
+    
+    .article-badge {
+        font-size: 0.75rem;
+        padding: 0.2rem 0.6rem;
+    }
+    
+    .article-meta {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+    }
+    
+    .breadcrumbs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: var(--spacing-xs);
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Better reading experience */
+    .article-content {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+    
+    .article-content h2 {
+        font-size: 1.5rem;
+        margin-top: 2rem;
+    }
+    
+    .article-content h3 {
+        font-size: 1.25rem;
+    }
+}
+
+/* ========================================
+   BLOG LISTING CARDS & TAGS
+   ======================================== */
+.card-link {
+    text-decoration: none;
+    display: block;
+}
+
+.card-tag {
+    display: inline-block;
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-tag--accent {
+    color: var(--color-accent);
+}
+
+.card-tag--muted {
+    color: var(--color-text-muted);
+}
+
+/* Feature cards as links - better touch targets */
+a.feature-card {
+    text-decoration: none;
+    display: block;
+}
+
+a.feature-card:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+    /* Cards need more padding for mobile touch */
+    .feature-card {
+        padding: var(--spacing-lg);
+    }
+    
+    a.feature-card {
+        min-height: 120px;
+    }
+}
