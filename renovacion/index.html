@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renovación Developer Club — Morfeo Academy</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23050508'/><text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-size='60' font-family='serif' font-weight='400' fill='%23a3e635'>M</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:       #050508;
+  --bg-alt:   #0a0a0f;
+  --bg-card:  #0f0f14;
+  --bg-el:    #14141a;
+  --text:     #f4f4f5;
+  --muted:    #9ca3af;
+  --subtle:   #6b7280;
+  --lime:     #a3e635;
+  --lime-h:   #bef264;
+  --lime-d:   #84cc16;
+  --lime-glow:rgba(163,230,53,0.15);
+  --border:   rgba(255,255,255,0.06);
+  --border-l: rgba(255,255,255,0.10);
+  --red:      #ef4444;
+  --red-glow: rgba(239,68,68,0.15);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+/* HEADER */
+header {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 18px; font-weight: 600; color: var(--text);
+  text-decoration: none;
+}
+.logo-mark {
+  width: 32px; height: 32px;
+  background: var(--bg-el);
+  border: 1px solid var(--border-l);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Instrument Serif', serif;
+  color: var(--lime);
+  font-size: 18px;
+}
+
+/* HERO */
+.hero { padding: 72px 0 48px; text-align: center; }
+.tag {
+  display: inline-block;
+  background: var(--lime-glow);
+  border: 1px solid var(--lime-d);
+  color: var(--lime);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+.hero h1 em { font-style: italic; color: var(--lime); }
+.hero p.subtitle {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 580px;
+  margin: 0 auto 48px;
+}
+
+/* URGENCY BANNER */
+.urgency-bar {
+  background: var(--red-glow);
+  border: 1px solid rgba(239,68,68,0.3);
+  border-radius: 12px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+}
+.urgency-label { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+.urgency-text { font-weight: 600; font-size: 15px; color: var(--text); }
+.urgency-text span { color: var(--red); }
+
+.countdown {
+  display: flex; gap: 12px; align-items: center;
+}
+.countdown-unit {
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border-l);
+  border-radius: 10px;
+  padding: 10px 16px;
+  min-width: 60px;
+}
+.countdown-unit .num {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+.countdown-unit .lbl {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--subtle);
+  margin-top: 4px;
+}
+.countdown-sep {
+  font-size: 24px; font-weight: 700;
+  color: var(--subtle); margin-top: -8px;
+}
+
+/* WHAT YOU KEEP */
+.section { margin-bottom: 72px; }
+.section-title {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--subtle);
+  margin-bottom: 28px;
+}
+.keeps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+.keep-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  transition: border-color 0.2s;
+}
+.keep-card:hover { border-color: var(--border-l); }
+.keep-icon { font-size: 28px; margin-bottom: 14px; }
+.keep-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; }
+.keep-desc { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+/* WHAT YOU LOSE */
+.lose-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 72px;
+}
+.lose-card h3 {
+  font-size: 18px; font-weight: 600; margin-bottom: 20px;
+  color: var(--red);
+}
+.lose-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.lose-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 15px; color: var(--muted);
+}
+.lose-list li::before {
+  content: '✕';
+  color: var(--red);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* PLANS */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 72px;
+}
+.plan-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.plan-card:hover { border-color: var(--border-l); transform: translateY(-2px); }
+.plan-card.featured {
+  border-color: var(--lime-d);
+  background: linear-gradient(135deg, var(--bg-card), rgba(163,230,53,0.04));
+}
+.plan-badge {
+  position: absolute;
+  top: -12px; left: 50%; transform: translateX(-50%);
+  background: var(--lime);
+  color: #050508;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.plan-name { font-size: 13px; color: var(--subtle); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; }
+.plan-price {
+  margin-bottom: 6px;
+}
+.plan-price .amount {
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+.plan-price .currency { font-size: 20px; vertical-align: super; font-weight: 400; color: var(--muted); }
+.plan-price .period { font-size: 14px; color: var(--subtle); }
+.plan-original {
+  font-size: 13px;
+  color: var(--subtle);
+  text-decoration: line-through;
+  margin-bottom: 6px;
+}
+.plan-saving {
+  font-size: 13px;
+  color: var(--lime);
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.plan-permonth {
+  font-size: 13px; color: var(--muted); margin-bottom: 24px;
+}
+.plan-features { list-style: none; margin-bottom: 28px; display: flex; flex-direction: column; gap: 10px; }
+.plan-features li {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 14px; color: var(--muted);
+}
+.plan-features li::before {
+  content: '✓';
+  color: var(--lime);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.plan-cta {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+.plan-cta.primary {
+  background: var(--lime);
+  color: #050508;
+}
+.plan-cta.primary:hover { background: var(--lime-h); }
+.plan-cta.secondary {
+  background: var(--bg-el);
+  color: var(--text);
+  border: 1px solid var(--border-l);
+}
+.plan-cta.secondary:hover { background: var(--border-l); }
+
+/* PRICE NOTE */
+.price-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--subtle);
+  margin-bottom: 72px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.price-note strong { color: var(--red); }
+
+/* FAQ */
+.faq { margin-bottom: 72px; }
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 20px 0;
+}
+.faq-q { font-weight: 600; font-size: 15px; margin-bottom: 10px; cursor: pointer; }
+.faq-a { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--subtle);
+}
+
+@media (max-width: 600px) {
+  .urgency-bar { flex-direction: column; align-items: flex-start; }
+  .countdown-unit .num { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="https://morfeoacademy.com" class="logo">
+      <div class="logo-mark">M</div>
+      Morfeo Academy
+    </a>
+  </div>
+</header>
+
+<main>
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="tag">Solo para developers activos</div>
+    <h1>La IA no espera.<br><em>Tu acceso tampoco.</em></h1>
+    <p class="subtitle">En 90 días cambian los modelos, los workflows y las herramientas. Los que renuevan siguen operando. Los que no, quedan afuera del sistema.</p>
+  </section>
+
+  <!-- URGENCY COUNTDOWN -->
+  <div class="urgency-bar">
+    <div>
+      <div class="urgency-label">Precio preferencial disponible por</div>
+      <div class="urgency-text">Oferta especial para developers actuales — <span id="expiry-date">cargando...</span></div>
+    </div>
+    <div class="countdown">
+      <div class="countdown-unit"><div class="num" id="cd-days">--</div><div class="lbl">días</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="num" id="cd-hours">--</div><div class="lbl">horas</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="num" id="cd-mins">--</div><div class="lbl">min</div></div>
+      <div class="countdown-sep">:</div>
+      <div class="countdown-unit"><div class="num" id="cd-secs">--</div><div class="lbl">seg</div></div>
+    </div>
+  </div>
+
+  <!-- WHAT YOU KEEP -->
+  <section class="section">
+    <div class="section-title">Lo que mantenés con tu renovación</div>
+    <div class="keeps-grid">
+      <div class="keep-card">
+        <div class="keep-icon">⚡</div>
+        <div class="keep-title">Infraestructura GPU ilimitada</div>
+        <div class="keep-desc">Acceso completo a ComfyDeploy con todas las GPUs activas y los workflows de producción. Sin límites de uso, sin costos extra.</div>
+      </div>
+      <div class="keep-card">
+        <div class="keep-icon">🔄</div>
+        <div class="keep-title">Workflows siempre actualizados</div>
+        <div class="keep-desc">Cada vez que un modelo cambia o aparece una herramienta mejor, los workflows se actualizan. Vos no tenés que perseguir nada.</div>
+      </div>
+      <div class="keep-card">
+        <div class="keep-icon">🎯</div>
+        <div class="keep-title">Clases en vivo diarias</div>
+        <div class="keep-desc">Acceso a todas las sesiones en vivo. Casos reales, problemas reales, soluciones que podés implementar el mismo día.</div>
+      </div>
+      <div class="keep-card">
+        <div class="keep-icon">📚</div>
+        <div class="keep-title">Biblioteca completa en Skool</div>
+        <div class="keep-desc">Todo el contenido grabado, los recursos, los templates y las actualizaciones del programa.</div>
+      </div>
+      <div class="keep-card">
+        <div class="keep-icon">🤝</div>
+        <div class="keep-title">Comunidad de developers</div>
+        <div class="keep-desc">El grupo privado donde se comparten casos, errores, wins y oportunidades de trabajo. El valor real está acá.</div>
+      </div>
+      <div class="keep-card">
+        <div class="keep-icon">💬</div>
+        <div class="keep-title">Soporte directo</div>
+        <div class="keep-desc">Canal de soporte activo para resolver dudas técnicas, revisar proyectos y no quedarte trabado.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU LOSE -->
+  <div class="lose-card">
+    <h3>Si no renovás, perdés acceso a:</h3>
+    <ul class="lose-list">
+      <li>Todos los workflows de ComfyDeploy — las GPUs se desactivan</li>
+      <li>Las actualizaciones de los sistemas cuando salen nuevos modelos</li>
+      <li>El canal privado de la comunidad y el soporte técnico</li>
+      <li>Las clases en vivo y el contenido nuevo que se agrega cada semana</li>
+      <li>La posibilidad de volver al precio preferencial — si re-ingresás después, pagás precio lleno</li>
+    </ul>
+  </div>
+
+  <!-- PLANS -->
+  <section class="section">
+    <div class="section-title">Elegí tu plan de renovación</div>
+    <div class="plans-grid">
+
+      <!-- ANNUAL -->
+      <div class="plan-card featured">
+        <div class="plan-badge">Mejor valor</div>
+        <div class="plan-name">Hasta fin de año</div>
+        <div class="plan-price">
+          <span class="currency">$</span><span class="amount" id="price-annual">2.900</span>
+        </div>
+        <div class="plan-original" id="original-annual">Precio regular: $3.500</div>
+        <div class="plan-saving" id="saving-annual">Ahorrás $600 — solo por 15 días</div>
+        <div class="plan-permonth" id="permonth-annual">≈ $414/mes hasta dic 2026</div>
+        <ul class="plan-features">
+          <li>Acceso completo hasta el 31 de diciembre</li>
+          <li>GPU ilimitada en ComfyDeploy</li>
+          <li>Todos los workflows + actualizaciones</li>
+          <li>Clases en vivo + biblioteca completa</li>
+          <li>Comunidad + soporte</li>
+          <li>Precio bloqueado sin re-ingreso</li>
+        </ul>
+        <a href="https://morfeoacademy.com" class="plan-cta primary" id="cta-annual">Renovar hasta fin de año</a>
+      </div>
+
+      <!-- QUARTERLY -->
+      <div class="plan-card">
+        <div class="plan-name">3 meses</div>
+        <div class="plan-price">
+          <span class="currency">$</span><span class="amount" id="price-quarterly">1.500</span>
+        </div>
+        <div class="plan-original" id="original-quarterly">Precio regular: $1.800</div>
+        <div class="plan-saving" id="saving-quarterly">Ahorrás $300 — solo por 15 días</div>
+        <div class="plan-permonth">$500/mes</div>
+        <ul class="plan-features">
+          <li>3 meses de acceso completo</li>
+          <li>GPU ilimitada en ComfyDeploy</li>
+          <li>Todos los workflows + actualizaciones</li>
+          <li>Clases en vivo + biblioteca completa</li>
+          <li>Comunidad + soporte</li>
+        </ul>
+        <a href="https://morfeoacademy.com" class="plan-cta secondary" id="cta-quarterly">Renovar por 3 meses</a>
+      </div>
+
+      <!-- MONTHLY -->
+      <div class="plan-card">
+        <div class="plan-name">Mes a mes</div>
+        <div class="plan-price">
+          <span class="currency">$</span><span class="amount">750</span>
+        </div>
+        <div class="plan-original" style="visibility:hidden">—</div>
+        <div class="plan-saving" style="visibility:hidden">—</div>
+        <div class="plan-permonth">Sin compromiso</div>
+        <ul class="plan-features">
+          <li>Acceso mensual renovable</li>
+          <li>GPU ilimitada en ComfyDeploy</li>
+          <li>Todos los workflows + actualizaciones</li>
+          <li>Clases en vivo + biblioteca completa</li>
+          <li>Comunidad + soporte</li>
+        </ul>
+        <a href="https://morfeoacademy.com" class="plan-cta secondary" id="cta-monthly">Renovar mes a mes</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICE NOTE -->
+  <div class="price-note">
+    ⚠️ <strong>Una vez que vence el período preferencial</strong>, los precios vuelven a los valores regulares. Si cortás el acceso y querés re-ingresar después, no hay garantía de precio.
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq section">
+    <div class="section-title">Preguntas frecuentes</div>
+    <div class="faq-item">
+      <div class="faq-q">¿Qué pasa si no renuevo ahora?</div>
+      <div class="faq-a">Perdés el acceso a ComfyDeploy, los workflows y la comunidad cuando vence tu período actual. Podés re-ingresar después, pero al precio regular y sin garantía de disponibilidad.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿El precio preferencial es real o es marketing?</div>
+      <div class="faq-a">El countdown de esta página se genera desde el primer momento en que abrís este link. No se resetea si cerrás el browser. Cuando llega a cero, los precios cambian.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Qué workflows están incluidos?</div>
+      <div class="faq-a">Todos los workflows activos en el sistema de Morfeo: generación de imágenes, UGC, video, automatización de contenido, y todos los que se agreguen durante tu período.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Las clases en vivo son grabadas?</div>
+      <div class="faq-a">Sí. Todas las clases quedan grabadas en Skool dentro de las 24hs. Si no podés ir en vivo, podés verlas después.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">¿Puedo cambiar de plan después?</div>
+      <div class="faq-a">Sí, podés upgradearte en cualquier momento. El crédito del plan actual se descuenta del nuevo.</div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Morfeo Academy · <a href="https://morfeoacademy.com" style="color:var(--subtle);text-decoration:none;">morfeoacademy.com</a></p>
+  </div>
+</footer>
+
+<script>
+// ─── CONFIG ─────────────────────────────────────────────────────────────────
+const SUPABASE_URL = 'https://qbcoghkvefubgkxtrlyl.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY29naGt2ZWZ1YmdreHRybHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzMwMDgsImV4cCI6MjA5MDA0OTAwOH0.XGxmTlqHK14PenWGMfr12IYFIYf1B2jLp4YmOjz3aA8';
+const OFFER_DAYS = 15;
+const ANNUAL_PROMO = 2900;
+const ANNUAL_REGULAR = 3500;
+const QUARTERLY_PROMO = 1500;
+const QUARTERLY_REGULAR = 1800;
+
+// ─── UUID HELPERS ────────────────────────────────────────────────────────────
+function getCookie(name) {
+  return document.cookie.split(';').map(c => c.trim()).find(c => c.startsWith(name + '='))?.split('=')[1];
+}
+function setCookie(name, value, days) {
+  const exp = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = `${name}=${value}; expires=${exp}; path=/; SameSite=Lax`;
+}
+function genUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+    const r = Math.random() * 16 | 0;
+    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+// ─── SUPABASE HELPERS ────────────────────────────────────────────────────────
+async function supabaseGet(table, eq) {
+  const url = `${SUPABASE_URL}/rest/v1/${table}?${eq}&select=*&limit=1`;
+  const r = await fetch(url, { headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}` } });
+  return r.ok ? r.json() : [];
+}
+async function supabaseInsert(table, data) {
+  await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { apikey: SUPABASE_ANON, Authorization: `Bearer ${SUPABASE_ANON}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify(data)
+  });
+}
+
+// ─── MAIN ────────────────────────────────────────────────────────────────────
+async function init() {
+  // Get or create visitor UUID
+  let uuid = getCookie('mfv') || localStorage.getItem('mfv');
+  if (!uuid) {
+    uuid = genUUID();
+    setCookie('mfv', uuid, 90);
+    localStorage.setItem('mfv', uuid);
+  }
+
+  // Fetch first visit from Supabase
+  let firstVisit;
+  try {
+    const rows = await supabaseGet('renovacion_visits', `visitor_id=eq.${uuid}`);
+    if (rows && rows.length > 0) {
+      firstVisit = new Date(rows[0].first_visit);
+    } else {
+      firstVisit = new Date();
+      await supabaseInsert('renovacion_visits', { visitor_id: uuid, first_visit: firstVisit.toISOString() });
+    }
+  } catch(e) {
+    // Fallback: use localStorage only
+    const stored = localStorage.getItem('mfv_ts');
+    if (stored) {
+      firstVisit = new Date(parseInt(stored));
+    } else {
+      firstVisit = new Date();
+      localStorage.setItem('mfv_ts', firstVisit.getTime().toString());
+    }
+  }
+
+  const deadline = new Date(firstVisit.getTime() + OFFER_DAYS * 864e5);
+  const isExpired = Date.now() > deadline.getTime();
+
+  // Update expiry display
+  document.getElementById('expiry-date').textContent = isExpired
+    ? 'Oferta vencida'
+    : `hasta el ${deadline.toLocaleDateString('es-AR', { day: 'numeric', month: 'long' })}`;
+
+  // Update prices based on expiry
+  if (isExpired) {
+    document.getElementById('price-annual').textContent = ANNUAL_REGULAR.toLocaleString('es-AR');
+    document.getElementById('price-quarterly').textContent = QUARTERLY_REGULAR.toLocaleString('es-AR');
+    document.getElementById('original-annual').style.visibility = 'hidden';
+    document.getElementById('original-quarterly').style.visibility = 'hidden';
+    document.getElementById('saving-annual').textContent = 'Precio regular';
+    document.getElementById('saving-quarterly').textContent = 'Precio regular';
+    document.getElementById('permonth-annual').textContent = '≈ $500/mes hasta dic 2026';
+    document.querySelectorAll('.urgency-bar').forEach(el => el.style.opacity = '0.4');
+  }
+
+  // Countdown tick
+  function tick() {
+    const diff = deadline.getTime() - Date.now();
+    if (diff <= 0) {
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
+      return;
+    }
+    const d = Math.floor(diff / 864e5);
+    const h = Math.floor((diff % 864e5) / 36e5);
+    const m = Math.floor((diff % 36e5) / 6e4);
+    const s = Math.floor((diff % 6e4) / 1e3);
+    document.getElementById('cd-days').textContent  = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(s).padStart(2,'0');
+    setTimeout(tick, 1000);
+  }
+  tick();
+}
+
+init();
+</script>
+
+</body>
+</html>
