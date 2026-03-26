@@ -317,6 +317,27 @@ footer {
   color: var(--subtle);
 }
 
+/* VIDEO */
+.video-wrap {
+  margin-bottom: 56px;
+}
+.video-placeholder {
+  background: var(--bg-card);
+  border: 1px solid var(--border-l);
+  border-radius: 16px;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.video-placeholder wistia-player { width: 100%; height: 100%; position: absolute; inset: 0; }
+#video-loading {
+  font-size: 48px;
+  opacity: 0.2;
+}
+
 @media (max-width: 600px) {
   .urgency-bar { flex-direction: column; align-items: flex-start; }
   .countdown-unit .num { font-size: 22px; }
@@ -343,6 +364,14 @@ footer {
     <h1>La IA no espera.<br><em>Tu acceso tampoco.</em></h1>
     <p class="subtitle">En 90 días cambian los modelos, los workflows y las herramientas. Los que renuevan siguen operando. Los que no, quedan afuera del sistema.</p>
   </section>
+
+  <!-- VSL VIDEO -->
+  <div class="video-wrap">
+    <div class="video-placeholder" id="video-block">
+      <!-- Reemplazar WISTIA_ID con el ID real una vez subido el video -->
+      <div id="video-loading">▶</div>
+    </div>
+  </div>
 
   <!-- URGENCY COUNTDOWN -->
   <div class="urgency-bar">
@@ -516,8 +545,20 @@ footer {
   </div>
 </footer>
 
+<!-- Wistia — descomentar cuando tengas el ID -->
+<!-- <script src="https://fast.wistia.com/player.js" async></script> -->
+<!-- <script src="https://fast.wistia.com/embed/WISTIA_ID.js" async type="module"></script> -->
+
 <script>
 // ─── CONFIG ─────────────────────────────────────────────────────────────────
+// Para activar el video: reemplazar WISTIA_ID y descomentar los scripts de Wistia arriba
+const WISTIA_ID = null; // Ej: 'zsj8efwg2w'
+if (WISTIA_ID) {
+  document.getElementById('video-loading').style.display = 'none';
+  const p = document.getElementById('video-block');
+  p.innerHTML = `<wistia-player media-id="${WISTIA_ID}" aspect="1.7777777777777777"></wistia-player>`;
+}
+
 const SUPABASE_URL = 'https://qbcoghkvefubgkxtrlyl.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY29naGt2ZWZ1YmdreHRybHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzMwMDgsImV4cCI6MjA5MDA0OTAwOH0.XGxmTlqHK14PenWGMfr12IYFIYf1B2jLp4YmOjz3aA8';
 const OFFER_DAYS = 15;
