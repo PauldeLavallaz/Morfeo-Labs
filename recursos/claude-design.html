@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía completa de Claude Design · Morfeo Academy</title>
+<meta name="description" content="5 tips, 5 prompts templates y el setup completo para dominar Claude Design — la herramienta de diseño conversacional de Anthropic.">
+<meta property="og:title" content="Guía completa de Claude Design">
+<meta property="og:description" content="5 tips + 5 templates + setup guiado. Por Morfeo Academy.">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F0EAD6;
+    --cream-2: #E8DFC5;
+    --ink: #171717;
+    --ink-muted: #5A5A5A;
+    --coral: #D96B52;
+    --coral-dk: #B8553E;
+    --coral-lt: #E8876B;
+    --black: #0A0A0A;
+    --border: #D8CFB3;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  body.locked { overflow: hidden; }
+  .serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: var(--coral-dk); text-decoration: none; border-bottom: 1px solid currentColor; }
+  em { color: var(--coral-dk); font-style: italic; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  /* ── Nav ── */
+  .nav {
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1180px;
+    margin: 0 auto;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(240,234,214,0.92);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand { font-weight: 600; letter-spacing: -0.2px; }
+  .nav-brand em { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; color: var(--coral); border: none; }
+  .nav-back {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+  }
+  .nav-back:hover { color: var(--coral); }
+
+  /* ── Section layout ── */
+  .section {
+    padding: 80px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section.dark {
+    background: var(--black);
+    color: #fff;
+    border-bottom-color: transparent;
+  }
+  .section.dark em { color: var(--coral); }
+  .section.dark strong { color: #fff; }
+  .section.gradient {
+    background: linear-gradient(165deg, var(--coral-dk) 0%, var(--coral) 55%, var(--coral-lt) 100%);
+    color: var(--black);
+    border-bottom-color: transparent;
+  }
+  .section.gradient em, .section.gradient strong { color: var(--black); }
+  .wrap { max-width: 680px; margin: 0 auto; }
+
+  /* ── Typography ── */
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .dark .eyebrow { color: var(--coral-lt); }
+  .gradient .eyebrow { color: var(--black); opacity: 0.6; }
+
+  h1 { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-weight: 400; font-size: 72px; line-height: 0.98; letter-spacing: -2.5px; margin-bottom: 24px; }
+  h2 { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-weight: 400; font-size: 52px; line-height: 1.02; letter-spacing: -1.8px; margin-bottom: 20px; }
+  h3 { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-weight: 400; font-size: 32px; line-height: 1.1; letter-spacing: -0.9px; margin: 40px 0 14px; }
+  .lede { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.4; color: var(--ink-muted); margin-bottom: 32px; }
+  .dark .lede { color: rgba(255,255,255,0.7); }
+  p { margin-bottom: 18px; font-size: 16px; }
+  ul, ol { margin: 18px 0 24px 22px; }
+  li { margin-bottom: 10px; font-size: 16px; }
+
+  /* ── Code block ── */
+  pre {
+    background: var(--black);
+    color: var(--coral-lt);
+    padding: 22px 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 18px 0 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  pre .c { color: rgba(255,255,255,0.4); }
+  pre .k { color: #FEBC2E; }
+  pre .v { color: #fff; }
+  code.inline {
+    background: rgba(10,10,10,0.08);
+    color: var(--coral-dk);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .dark code.inline { background: rgba(255,255,255,0.1); color: var(--coral-lt); }
+
+  /* ── Callout ── */
+  .callout {
+    border-left: 3px solid var(--coral);
+    margin: 24px 0;
+    background: rgba(217,107,82,0.08);
+    padding: 16px 20px;
+    border-radius: 4px;
+  }
+  .callout .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--coral-dk);
+    margin-bottom: 6px;
+    font-weight: 600;
+    display: block;
+  }
+  .callout p { margin: 0; font-size: 14.5px; }
+  .dark .callout { background: rgba(217,107,82,0.13); }
+  .dark .callout .label { color: var(--coral-lt); }
+  .dark .callout p { color: rgba(255,255,255,0.85); }
+
+  /* ── Checklist ── */
+  .check-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+  .check-item:last-child { border-bottom: none; }
+  .check-num { font-family: 'Fraunces', serif; font-style: italic; font-size: 28px; color: var(--coral); min-width: 40px; line-height: 1; }
+  .check-title { font-weight: 600; font-size: 16px; margin-bottom: 4px; color: var(--ink); }
+  .check-desc { font-size: 14.5px; color: var(--ink-muted); }
+
+  /* ── Window mockup ── */
+  .window { background: var(--black); border-radius: 22px; padding: 72px 28px 56px; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); text-align: center; margin: 32px 0 44px; }
+  .window .lights { position: absolute; top: 18px; left: 22px; display: flex; gap: 7px; }
+  .window .lights span { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+  .window-text { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-style: italic; font-weight: 500; color: var(--coral); font-size: 92px; letter-spacing: -3.5px; line-height: 0.95; white-space: nowrap; }
+
+  /* ── Pills ── */
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 13px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.08); border-radius: 100px; font-size: 11px; font-weight: 500; color: var(--black); margin: 2px 4px 2px 0; }
+  .pill .dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+  .dark .pill { background: rgba(255,255,255,0.9); color: var(--black); border-color: rgba(255,255,255,0.1); }
+
+  /* ── Template ── */
+  .template-head { display: flex; align-items: baseline; gap: 16px; margin-bottom: 18px; padding-top: 18px; border-top: 1px solid var(--border); }
+  .dark .template-head { border-top-color: rgba(255,255,255,0.1); }
+  .template-num { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; font-size: 56px; color: var(--coral); line-height: 1; letter-spacing: -2px; }
+  .template-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 28px; line-height: 1.08; letter-spacing: -0.8px; color: var(--ink); }
+  .dark .template-title { color: #fff; }
+
+  /* ── Cover ── */
+  .cover { padding: 100px 28px 80px; text-align: center; }
+  .cover h1 { font-size: 64px; letter-spacing: -2.2px; }
+
+  /* ── Footer ── */
+  .footer { padding: 50px 28px; text-align: center; background: var(--black); color: rgba(255,255,255,0.55); font-size: 13px; }
+  .footer a { color: #fff; border-bottom-color: rgba(255,255,255,0.35); }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* ═══ EMAIL GATE (modal overlay)                        ═══ */
+  /* ═══════════════════════════════════════════════════════ */
+  .gate-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(240, 234, 214, 0.82);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: gateIn 300ms ease-out;
+  }
+  @keyframes gateIn { from { opacity: 0; } to { opacity: 1; } }
+  .gate-backdrop.hidden { display: none; }
+  .gate-card {
+    width: 100%;
+    max-width: 460px;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 44px 36px 40px;
+    text-align: center;
+    box-shadow: 0 24px 70px rgba(0,0,0,0.18);
+    position: relative;
+  }
+  .gate-window {
+    background: var(--black);
+    border-radius: 16px;
+    padding: 34px 18px 26px;
+    position: relative;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.38);
+    margin-bottom: 24px;
+  }
+  .gate-window .lights { position: absolute; top: 11px; left: 13px; display: flex; gap: 5px; }
+  .gate-window .lights span { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .gate-window-text { font-family: 'Fraunces', serif; font-optical-sizing: auto; font-style: italic; font-weight: 500; color: var(--coral); font-size: 42px; letter-spacing: -1.6px; line-height: 1; }
+  .gate-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .gate-title {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .gate-title em { font-style: italic; color: var(--coral); }
+  .gate-sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-muted);
+    margin-bottom: 26px;
+    line-height: 1.4;
+  }
+  .gate-form { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+  .gate-form input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    transition: border-color 150ms, box-shadow 150ms;
+  }
+  .gate-form input:focus { outline: none; border-color: var(--coral); box-shadow: 0 0 0 3px rgba(217,107,82,0.18); }
+  .gate-form input:invalid:not(:placeholder-shown) { border-color: #EF4444; }
+  .gate-form input::placeholder { color: #A8A29A; }
+  .gate-btn {
+    margin-top: 8px;
+    padding: 14px 22px;
+    background: var(--black);
+    color: var(--coral);
+    border: none;
+    border-radius: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 200ms, transform 150ms;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .gate-btn:hover:not(:disabled) { background: var(--coral); color: #fff; transform: translateY(-1px); }
+  .gate-btn:disabled { opacity: 0.6; cursor: wait; }
+  .gate-err {
+    font-size: 13px;
+    color: #DC2626;
+    margin-top: 4px;
+    min-height: 18px;
+  }
+  .gate-foot {
+    margin-top: 18px;
+    font-size: 11px;
+    color: var(--ink-muted);
+    line-height: 1.45;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* ═══ FLOATING HOVER CTA (bottom-right)                 ═══ */
+  /* ═══════════════════════════════════════════════════════ */
+  .float-cta {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 100;
+    background: var(--black);
+    color: #fff;
+    border-radius: 100px;
+    padding: 14px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 14px 38px rgba(0,0,0,0.38), 0 0 0 0 rgba(217,107,82,0.0);
+    transition: all 350ms cubic-bezier(0.32,0.72,0.26,1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 64px;
+    max-height: 64px;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.08);
+    animation: ctaPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes ctaPulse {
+    0%,100% { box-shadow: 0 14px 38px rgba(0,0,0,0.38), 0 0 0 0 rgba(217,107,82,0.4); }
+    50%     { box-shadow: 0 14px 38px rgba(0,0,0,0.38), 0 0 0 14px rgba(217,107,82,0); }
+  }
+  .float-cta .icon {
+    width: 28px;
+    height: 28px;
+    background: var(--coral);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--black);
+    line-height: 1;
+  }
+  .float-cta:hover {
+    max-width: 420px;
+    max-height: 200px;
+    border-radius: 22px;
+    padding: 22px 26px;
+    background: var(--black);
+    animation: none;
+    box-shadow: 0 22px 60px rgba(0,0,0,0.48);
+  }
+  .float-cta .collapsed { display: inline; }
+  .float-cta .expanded { display: none; text-align: left; flex-direction: column; gap: 12px; width: 100%; }
+  .float-cta:hover .collapsed { display: none; }
+  .float-cta:hover .expanded { display: flex; }
+  .float-cta:hover .icon {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+  .float-cta .expanded .eyebrow-mini {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 1.4px;
+    color: var(--coral);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .float-cta .expanded .title-mini {
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: -0.7px;
+    color: #fff;
+  }
+  .float-cta .expanded .title-mini em { font-style: italic; color: var(--coral); }
+  .float-cta .expanded .sub-mini {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.4;
+  }
+  .float-cta .expanded .btn-mini {
+    align-self: flex-start;
+    margin-top: 4px;
+    padding: 9px 16px;
+    background: var(--coral);
+    color: var(--black);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 150ms, transform 150ms;
+  }
+  .float-cta:hover .btn-mini:hover { background: var(--coral-lt); transform: translateX(2px); }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 48px; letter-spacing: -1.6px; }
+    h2 { font-size: 38px; letter-spacing: -1.2px; }
+    h3 { font-size: 26px; }
+    .window-text { font-size: 56px; letter-spacing: -2px; }
+    .window { padding: 52px 20px 40px; }
+    .cover h1 { font-size: 44px; }
+    .section { padding: 60px 24px; }
+    .float-cta { bottom: 16px; right: 16px; }
+    .float-cta:hover { max-width: calc(100vw - 32px); }
+    .gate-card { padding: 32px 24px 28px; }
+    .gate-window-text { font-size: 32px; }
+  }
+</style>
+</head>
+<body class="locked">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ EMAIL GATE                                        ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="gate-backdrop" id="gate">
+  <div class="gate-card">
+    <div class="gate-window">
+      <div class="lights">
+        <span style="background:#FF5F57;"></span>
+        <span style="background:#FEBC2E;"></span>
+        <span style="background:#28C840;"></span>
+      </div>
+      <div class="gate-window-text">Claude Design</div>
+    </div>
+
+    <span class="gate-eyebrow">Guía gratis · 12 min</span>
+    <h2 class="gate-title">Dejá tu nombre<br>y <em>entrás.</em></h2>
+    <p class="gate-sub">Te suma a la lista de Morfeo — cuando sale contenido nuevo, te avisamos. Nada más.</p>
+
+    <form class="gate-form" id="gateForm" novalidate>
+      <input type="text" name="nombre" id="nombre" placeholder="Tu nombre" required minlength="2" maxlength="120" autocomplete="given-name">
+      <input type="email" name="email" id="email" placeholder="Tu email" required maxlength="160" autocomplete="email">
+      <button class="gate-btn" type="submit" id="gateBtn">
+        Abrir la guía
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="gate-err" id="gateErr"></div>
+    </form>
+
+    <p class="gate-foot">No spam, no lo compartimos. Respondemos a <a href="mailto:paul@morfeoacademy.com" style="color:var(--ink);">paul@morfeoacademy.com</a>.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ NAV                                                ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-brand">Morfeo <em>Academy</em></div>
+  <a class="nav-back" href="/recursos">← Todos los recursos</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ COVER                                              ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section cover">
+  <div class="wrap">
+    <span class="eyebrow">Guía · Abril 2026 · Morfeo Academy</span>
+    <div class="serif" style="font-size:36px;margin-bottom:16px;letter-spacing:-0.8px;">Guía completa de</div>
+    <div class="window">
+      <div class="lights">
+        <span style="background:#FF5F57;"></span>
+        <span style="background:#FEBC2E;"></span>
+        <span style="background:#28C840;"></span>
+      </div>
+      <div class="window-text">Claude Design</div>
+    </div>
+    <div class="serif" style="font-size:26px;color:var(--ink);line-height:1.3;">
+      5 tips, 5 prompts templates,<br>
+      y el setup que uso para <em>Morfeo Academy</em>.
+    </div>
+    <p style="margin-top:40px;font-size:14px;color:var(--ink-muted);">
+      La misma guía que mencioné en el carrusel.<br>
+      Por Paul · <a href="https://instagram.com/morfeoacademy">@morfeoacademy</a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ 01 · CONTEXTO                                      ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">01 · El contexto</span>
+    <h2>Figma <em>tembló.</em></h2>
+    <p class="lede">Anthropic lanzó Claude Design el 17/04/2026. La versión corta: prompteás, sale un prototipo. Pero lo importante está en la versión larga.</p>
+    <p>Claude Design es una herramienta conversacional que genera <strong>prototipos interactivos, slide decks, one-pagers y UI mockups</strong> desde prompts en lenguaje natural. Corre con <strong>Opus 4.7</strong> debajo y está disponible para planes Pro, Max, Team y Enterprise.</p>
+    <p>Lo que lo hace diferente:</p>
+    <ul>
+      <li><strong>Lee tu codebase + design files</strong> durante el onboarding y arma un design system interno. Esto significa que cada output respeta tus colores, tipografía y componentes.</li>
+      <li><strong>Refinás con sliders que genera solo</strong> — spacing, density, contrast, saturation. Ajuste en vivo, sin re-prompt.</li>
+      <li><strong>Handoff directo a Claude Code</strong> — cuando el diseño está listo, se empaqueta y lo pasás a Claude Code con un prompt. Sale código de producción.</li>
+    </ul>
+    <div class="callout">
+      <span class="label">La verdad incómoda</span>
+      <p>Si tu organización no tiene un brand system configurado, Claude Design te va a devolver outputs genéricos. Con cara de Claude, no con cara tuya. La diferencia entre que esta herramienta sea mágica o mediocre está en los primeros 15 minutos de setup.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ 02 · SETUP                                         ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">02 · Setup (15 min, una vez)</span>
+    <h2>Tu <em>brand system</em>, antes que tu primer prompt.</h2>
+    <p class="lede">Esta es la parte que casi nadie hace. Hacela bien y cada output que genere Claude Design va a verse como tu marca.</p>
+
+    <div class="check-item">
+      <span class="check-num">01</span>
+      <div>
+        <div class="check-title">Conectá tu codebase</div>
+        <div class="check-desc">En Claude Design → Settings → Integrations → GitHub. Autorizá acceso al repo que tiene tus componentes. Si usás Tailwind, Shadcn, Radix, Chakra, etc., Claude Design los va a detectar y usar.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <span class="check-num">02</span>
+      <div>
+        <div class="check-title">Subí tus design files</div>
+        <div class="check-desc">Si tenés Figma, exportá el archivo de design system y subílo en Settings → Design files. Claude va a parsear variables, estilos y componentes. Si no tenés Figma, saltate este paso — va con el codebase.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <span class="check-num">03</span>
+      <div>
+        <div class="check-title">Configurá brand tokens manualmente</div>
+        <div class="check-desc">En Brand settings, definí: <code class="inline">--brand-primary</code>, <code class="inline">--brand-secondary</code>, neutrals (9-step scale), heading font, body font, mono font, border-radius base, y spacing scale. Sí, se hace una sola vez.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <span class="check-num">04</span>
+      <div>
+        <div class="check-title">Definí tu component library preferida</div>
+        <div class="check-desc">En Preferences → Components, elegí cuál usás: shadcn/ui, Radix, Chakra, Material, o custom. Claude va a priorizar esos patterns en todos los outputs.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <span class="check-num">05</span>
+      <div>
+        <div class="check-title">Subí 3-5 referencias visuales de marca</div>
+        <div class="check-desc">Screenshots de tu landing actual, un post de Instagram, una captura de tu app. Claude los usa para aprender tu "voz visual" — no solo los tokens técnicos.</div>
+      </div>
+    </div>
+    <div class="check-item">
+      <span class="check-num">06</span>
+      <div>
+        <div class="check-title">Primer prompt de test</div>
+        <div class="check-desc">Antes de usarlo "en producción", probá: <em>"Hacé un landing hero para [producto] con [CTA]."</em> Si el output no respeta tus tokens, volvé al paso 3.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ 03 · TEMPLATES                                     ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">03 · 5 prompts templates</span>
+    <h2>Los 5 prompts que uso <em>todos los días.</em></h2>
+    <p class="lede">Copiá, pegá, ajustá la parte entre corchetes. Funcionan si hiciste bien el setup de la sección anterior.</p>
+
+    <div class="template-head">
+      <span class="template-num">01</span>
+      <div>
+        <div class="template-title">Landing page hero</div>
+        <div style="margin-top:6px;"><span class="pill"><span class="dot" style="background:#D96B52;"></span>Conversión</span><span class="pill"><span class="dot" style="background:#4ADE80;"></span>B2B / B2C</span></div>
+      </div>
+    </div>
+<pre><span class="c"># Template 1 — Landing hero</span>
+<span class="k">Audiencia:</span> <span class="v">[emprendedores latam 25-45 que venden infoproductos]</span>
+<span class="k">Objetivo:</span> <span class="v">[conseguir que agenden una call gratuita de 30 min]</span>
+<span class="k">Tono:</span> <span class="v">[directo, rioplatense, sin bullshit]</span>
+<span class="k">Referencias:</span> <span class="v">[adjuntar screenshots de 2-3 landings que admires]</span>
+
+<span class="k">Brief:</span>
+<span class="v">Generá una sección hero para la home de [producto].
+Estructura: eyebrow + headline serif grande + subtítulo claro + CTA primario + prueba social discreta.
+Necesito que el headline resuelva una objeción específica: "[objeción]".
+Evitá stock photos. Si falta visual, usá una composición tipográfica.</span></pre>
+    <div class="callout">
+      <span class="label">Pro tip</span>
+      <p>Después del primer output, usá el slider <strong>density</strong> para ajustar cuánto texto querés en el hero. Más density = más subheadlines y trust signals. Menos density = hero minimalista estilo Linear.</p>
+    </div>
+
+    <div class="template-head">
+      <span class="template-num">02</span>
+      <div>
+        <div class="template-title">Slide de pitch deck</div>
+        <div style="margin-top:6px;"><span class="pill"><span class="dot" style="background:#A78BFA;"></span>Investor</span><span class="pill"><span class="dot" style="background:#FEBC2E;"></span>Internal</span></div>
+      </div>
+    </div>
+<pre><span class="c"># Template 2 — Deck slide</span>
+<span class="k">Audiencia:</span> <span class="v">[VCs early-stage en LATAM]</span>
+<span class="k">Objetivo:</span> <span class="v">[explicar el tamaño del mercado sin abrumar]</span>
+<span class="k">Referencias:</span> <span class="v">[estilo Stripe Atlas deck, Notion launch deck]</span>
+
+<span class="k">Brief:</span>
+<span class="v">Slide #[N] del deck.
+Tema: [TAM / SAM / SOM del mercado de X en LATAM].
+Formato: 1 stat grande centrado + 3 sub-stats laterales + fuente pequeña.
+Sin pie charts. Números redondos. Tipografía serif en los stats.
+Ancho 16:9.</span></pre>
+
+    <div class="template-head">
+      <span class="template-num">03</span>
+      <div>
+        <div class="template-title">One-pager / ad creative</div>
+        <div style="margin-top:6px;"><span class="pill"><span class="dot" style="background:#D96B52;"></span>Meta / IG</span><span class="pill"><span class="dot" style="background:#4ADE80;"></span>Print</span></div>
+      </div>
+    </div>
+<pre><span class="c"># Template 3 — One-pager ad</span>
+<span class="k">Audiencia:</span> <span class="v">[creators de contenido 20-35 en español]</span>
+<span class="k">Objetivo:</span> <span class="v">[hook visual fuerte para ad de Meta]</span>
+<span class="k">Formato:</span> <span class="v">[1:1 para IG feed, 9:16 para stories]</span>
+
+<span class="k">Brief:</span>
+<span class="v">Creative de ad para [producto].
+Hook tipográfico: "[copy del hook, máx 8 palabras]".
+Estilo editorial — parece un poster, no un ad.
+Paleta restringida (2-3 colores máx, usá mi brand system).
+Sin personas. Sin stock. Sin íconos genéricos.
+Evitá que se vea hecho por IA.</span></pre>
+
+    <div class="template-head">
+      <span class="template-num">04</span>
+      <div>
+        <div class="template-title">Carousel de Instagram</div>
+        <div style="margin-top:6px;"><span class="pill"><span class="dot" style="background:#A78BFA;"></span>Educativo</span><span class="pill"><span class="dot" style="background:#D96B52;"></span>Conversión</span></div>
+      </div>
+    </div>
+<pre><span class="c"># Template 4 — IG carousel</span>
+<span class="k">Audiencia:</span> <span class="v">[mi audiencia de @morfeoacademy]</span>
+<span class="k">Objetivo:</span> <span class="v">[educar sobre X + cerrar con CTA a DM]</span>
+<span class="k">Slides:</span> <span class="v">[7 slides, 4:5 (1080x1350)]</span>
+
+<span class="k">Brief:</span>
+<span class="v">Carousel educativo sobre [tema].
+Slide 1: hook tipográfico + pill con el tema central.
+Slides 2-6: un tip por slide con número italic serif.
+Alterná fondo claro y oscuro (intercalado).
+Slide 7: CTA tipo "comentá [keyword]".
+Aplicá mi design system. Sin logos dentro de los slides.</span></pre>
+    <div class="callout">
+      <span class="label">Meta-insight</span>
+      <p>Este mismo carousel que promociona esta guía fue armado con un prompt casi idéntico al template 4.</p>
+    </div>
+
+    <div class="template-head">
+      <span class="template-num">05</span>
+      <div>
+        <div class="template-title">Mobile app screen</div>
+        <div style="margin-top:6px;"><span class="pill"><span class="dot" style="background:#4ADE80;"></span>iOS / Android</span><span class="pill"><span class="dot" style="background:#FEBC2E;"></span>Handoff a code</span></div>
+      </div>
+    </div>
+<pre><span class="c"># Template 5 — App screen</span>
+<span class="k">Audiencia:</span> <span class="v">[usuarios mobile de mi app [nombre]]</span>
+<span class="k">Objetivo:</span> <span class="v">[pantalla de onboarding paso [N]]</span>
+<span class="k">Plataforma:</span> <span class="v">[iOS native-feel / Android Material You]</span>
+
+<span class="k">Brief:</span>
+<span class="v">Pantalla [N] del onboarding.
+Incluye: ilustración simple top + headline claro + 1-2 sub-bullets + CTA primario full-width + link secundario "skip".
+Usá mis componentes (buttons, cards) del codebase.
+Cuando apruebe, empaquetá para handoff a Claude Code con instrucción: "genera el componente [NombreScreen] en React Native usando nuestras primitives".</span></pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ 04 · WORKFLOW                                      ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">04 · Workflow end-to-end</span>
+    <h2>Cómo encadeno los <em>5 tips</em> en un flujo real.</h2>
+    <p class="lede">La primera vez que usé Claude Design para diseñar un post de Morfeo, el flujo completo me tomó 12 minutos. Esto incluye idea → slides finales en Instagram.</p>
+
+    <ol style="list-style:none;margin:20px 0 0 0;padding:0;">
+      <li style="padding:20px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;">
+        <span class="serif" style="font-style:italic;font-size:32px;color:var(--coral);min-width:48px;line-height:1;">1.</span>
+        <div>
+          <strong style="font-size:17px;">Abrís Claude Design y tipeás un prompt usando el Template correspondiente.</strong>
+          <p style="margin-top:6px;font-size:15px;color:var(--ink-muted);">Pegás el template de arriba, completás los corchetes, adjuntás 2-3 referencias visuales. Enter.</p>
+        </div>
+      </li>
+      <li style="padding:20px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;">
+        <span class="serif" style="font-style:italic;font-size:32px;color:var(--coral);min-width:48px;line-height:1;">2.</span>
+        <div>
+          <strong style="font-size:17px;">Revisás el primer output y usás los sliders para ajustar.</strong>
+          <p style="margin-top:6px;font-size:15px;color:var(--ink-muted);">Claude genera sliders específicos al proyecto. Jugalos en vivo: spacing, density, contrast, saturation.</p>
+        </div>
+      </li>
+      <li style="padding:20px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;">
+        <span class="serif" style="font-style:italic;font-size:32px;color:var(--coral);min-width:48px;line-height:1;">3.</span>
+        <div>
+          <strong style="font-size:17px;">Iterás con inline edits si hace falta.</strong>
+          <p style="margin-top:6px;font-size:15px;color:var(--ink-muted);">Click en un elemento específico, escribís el cambio puntual.</p>
+        </div>
+      </li>
+      <li style="padding:20px 0;border-bottom:1px solid var(--border);display:flex;gap:16px;">
+        <span class="serif" style="font-style:italic;font-size:32px;color:var(--coral);min-width:48px;line-height:1;">4.</span>
+        <div>
+          <strong style="font-size:17px;">Exportás o pasás a Claude Code.</strong>
+          <p style="margin-top:6px;font-size:15px;color:var(--ink-muted);">Si es un post de IG → exportás a PNG. Si es una pantalla de app → click en "Handoff to Claude Code".</p>
+        </div>
+      </li>
+      <li style="padding:20px 0;display:flex;gap:16px;">
+        <span class="serif" style="font-style:italic;font-size:32px;color:var(--coral);min-width:48px;line-height:1;">5.</span>
+        <div>
+          <strong style="font-size:17px;">Publicás / deployás.</strong>
+          <p style="margin-top:6px;font-size:15px;color:var(--ink-muted);">Total: 10-15 min para asset estático, 25-40 min para una pantalla de app con código funcional.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ 05 · ERRORES                                       ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">05 · Errores que vi seguido</span>
+    <h2>Los 4 errores que <em>vas a cometer.</em></h2>
+    <p class="lede">Los cometí yo. Los vi en 3 marcas que pasaron por mi workspace esta semana. No son bugs de Claude Design — son del usuario.</p>
+    <h3 style="margin-top:36px;">1. Saltarse el setup de brand system.</h3>
+    <p>"Después lo configuro." No, no vas a hacerlo después. El brand system son 15 minutos. Ponelo en la agenda.</p>
+    <h3>2. Prompts telegráficos.</h3>
+    <p>"Hacé un deck lindo." Claude Design no adivina tu intención. El diff entre un prompt de 4 palabras y uno de 12 con contexto es <strong>3-4× la calidad del output</strong>.</p>
+    <h3>3. No subir referencias visuales.</h3>
+    <p>Adjuntá screenshots. Siempre. Claude Design es mejor interpretando imágenes que texto.</p>
+    <h3>4. Olvidar que existe el handoff a Claude Code.</h3>
+    <p>La diferencia más grande vs Figma no es el diseño — es que el diseño <em>se convierte en código</em> con un prompt.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ 06 · CIERRE                                        ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section gradient">
+  <div class="wrap" style="text-align:center;">
+    <span class="eyebrow">Cierre</span>
+    <div class="serif" style="font-size:44px;font-weight:400;line-height:1.0;letter-spacing:-1.6px;color:var(--black);">¿Querés</div>
+    <div class="serif" style="display:flex;align-items:baseline;justify-content:center;gap:10px;line-height:1;margin:4px 0;">
+      <span style="font-size:44px;letter-spacing:-1.6px;color:var(--black);">más</span>
+      <span style="font-style:italic;font-size:92px;font-weight:500;letter-spacing:-3.5px;color:var(--black);">cosas</span>
+    </div>
+    <div class="serif" style="font-size:40px;font-weight:400;line-height:1.0;letter-spacing:-1.4px;color:var(--black);">como esta?</div>
+    <p style="margin-top:28px;font-size:15px;max-width:480px;margin-left:auto;margin-right:auto;color:rgba(10,10,10,0.82);">
+      Seguime en <a href="https://instagram.com/morfeoacademy" style="color:var(--black);font-weight:600;">@morfeoacademy</a>.
+      Todas las semanas subo algo nuevo sobre Claude, ComfyUI, Flux y workflows de generación de contenido.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ FOOTER                                             ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div style="max-width:680px;margin:0 auto;">
+    <p style="margin-bottom:8px;"><strong style="color:#fff;">Guía completa de Claude Design</strong> · Abril 2026</p>
+    <p>Por Paul para <a href="https://instagram.com/morfeoacademy">@morfeoacademy</a> · Hecho con Claude Code</p>
+    <p style="margin-top:14px;font-size:11px;color:rgba(255,255,255,0.32);">Esta guía se distribuye gratis. Compartila. Si la copiás, por lo menos dejá el crédito.</p>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ FLOATING HOVER CTA                                 ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<a class="float-cta" href="/oferta" id="floatCta">
+  <span class="icon">M</span>
+  <span class="collapsed">¿Automatizar?</span>
+  <div class="expanded">
+    <div>
+      <div class="eyebrow-mini">Morfeo Academy</div>
+      <div class="title-mini">¿Y si en vez de leer<br>lo <em>ejecutás?</em></div>
+    </div>
+    <div class="sub-mini">Te enseñamos a montar tu propio sistema de contenido con IA — el mismo que uso para Morfeo.</div>
+    <span class="btn-mini">
+      Ver la oferta
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+    </span>
+  </div>
+</a>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ═══ JS                                                 ═══ -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<script>
+const SUPABASE_URL  = 'https://qbcoghkvefubgkxtrlyl.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFiY29naGt2ZWZ1YmdreHRybHlsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NzMwMDgsImV4cCI6MjA5MDA0OTAwOH0.XGxmTlqHK14PenWGMfr12IYFIYf1B2jLp4YmOjz3aA8';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+const RESOURCE_SLUG = 'claude-design';
+const LS_KEY = 'morfeo_resource_unlocked';
+
+const gate    = document.getElementById('gate');
+const form    = document.getElementById('gateForm');
+const btn     = document.getElementById('gateBtn');
+const errBox  = document.getElementById('gateErr');
+const nombre  = document.getElementById('nombre');
+const email   = document.getElementById('email');
+
+// Check localStorage — if already unlocked any resource, skip gate for returning visitors
+function isUnlocked() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return false;
+    const obj = JSON.parse(raw);
+    // consider unlocked if any resource registered in the last 60 days
+    const ts = obj.ts || 0;
+    return (Date.now() - ts) < 60 * 24 * 60 * 60 * 1000;
+  } catch (_) { return false; }
+}
+
+function unlockUI() {
+  gate.classList.add('hidden');
+  document.body.classList.remove('locked');
+}
+
+if (isUnlocked()) unlockUI();
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errBox.textContent = '';
+
+  const n = nombre.value.trim();
+  const em = email.value.trim();
+  const emailRx = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+  if (n.length < 2) { errBox.textContent = 'Escribí tu nombre (al menos 2 letras).'; return; }
+  if (!emailRx.test(em)) { errBox.textContent = 'Email inválido.'; return; }
+
+  btn.disabled = true;
+  btn.innerHTML = 'Enviando...';
+
+  const payload = {
+    nombre: n,
+    email: em,
+    resource_slug: RESOURCE_SLUG,
+    source: 'web',
+    user_agent: navigator.userAgent.slice(0, 280),
+    referrer: (document.referrer || '').slice(0, 280)
+  };
+
+  const { error } = await sb.from('resource_leads').insert(payload);
+
+  if (error) {
+    console.error(error);
+    errBox.textContent = 'Hubo un error. Probá de nuevo en un momento.';
+    btn.disabled = false;
+    btn.innerHTML = 'Abrir la guía →';
+    return;
+  }
+
+  // Success: store localStorage flag so they don't re-fill next visit
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      email: em,
+      nombre: n,
+      slug: RESOURCE_SLUG,
+      ts: Date.now()
+    }));
+  } catch (_) {}
+
+  unlockUI();
+});
+</script>
+
+</body>
+</html>
