@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quickstart · Claude Live Artifacts · @morfeoacademy</title>
+<meta name="description" content="Quickstart técnico de Claude Live Artifacts — qué son, cómo se conectan, apps disponibles, prompt listo para pegar, y los límites reales que no dice el anuncio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { scroll-behavior: smooth; }
+  body { font-family: Inter, sans-serif; background: #F0EAD6; color: #171717; }
+  pre { font-family: 'JetBrains Mono', monospace; }
+  em { font-style: italic; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <section style="padding:96px 28px 72px;background:#F0EAD6;color:#171717;position:relative;">
+  <div style="max-width:680px;margin:0 auto;text-align:center;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#D96B52;text-transform:uppercase;margin-bottom:22px;">Quickstart · Abril 2026 · Morfeo Academy</div>
+    <div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:36px;letter-spacing:-0.8px;line-height:1;color:#171717;">Quickstart técnico de</div>
+
+    <div style="position:relative;background:#0A0A0A;border-radius:22px;padding:60px 28px 46px;margin:22px auto 24px;max-width:560px;box-shadow:0 18px 50px rgba(0,0,0,0.28);">
+      <div style="position:absolute;top:16px;left:20px;display:flex;gap:6px;">
+        <span style="width:10px;height:10px;background:#FF5F57;border-radius:50%;display:inline-block;"></span>
+        <span style="width:10px;height:10px;background:#FEBC2E;border-radius:50%;display:inline-block;"></span>
+        <span style="width:10px;height:10px;background:#28C840;border-radius:50%;display:inline-block;"></span>
+      </div>
+      <div style="position:absolute;top:16px;right:20px;display:flex;align-items:center;gap:5px;">
+        <span style="width:6px;height:6px;background:#28C840;border-radius:50%;display:inline-block;box-shadow:0 0 0 2.5px rgba(40,200,64,0.3);"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#28C840;letter-spacing:1.4px;">LIVE</span>
+      </div>
+      <div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:92px;color:#D96B52;letter-spacing:-3.4px;line-height:0.92;">Live<br/>Artifacts</div>
+    </div>
+
+    <div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:19px;color:#5A5A5A;line-height:1.4;max-width:500px;margin:0 auto;">
+      Qué son técnicamente, cómo se conectan, y un <em style="font-style:italic;color:#D96B52;">prompt listo</em> para armar el primero en 5 minutos.
+    </div>
+  </div>
+</section>
+  <section style="padding:80px 28px;background:#0A0A0A;color:#fff;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#E8876B;text-transform:uppercase;margin-bottom:14px;">01 · Qué es realmente</div>
+    <h2 style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:44px;letter-spacing:-1px;line-height:1.05;color:#fff;margin:0 0 22px 0;">
+      Un artifact que llama a tus apps <em style="font-style:italic;color:#D96B52;">cada vez que lo abrís</em>.
+    </h2>
+    <p style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:400;font-size:18px;font-style:italic;line-height:1.55;color:rgba(255,255,255,0.72);margin:0 0 20px 0;">
+      Vive adentro de Claude Cowork. El render corre en el sandbox del cliente (HTML/JS/React); la data viene por MCP.
+    </p>
+    <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.65;color:rgba(255,255,255,0.82);margin:0 0 18px 0;">
+      Un artifact común de Claude es estático — lo generás una vez y queda ahí. Un <strong style="color:#E8876B;">Live Artifact</strong> es distinto: cuando lo abrís, Claude dispara <em style="font-style:italic;">tool calls</em> contra los conectores que autorizaste (Gmail, Linear, Stripe, etc.) y repopula la vista con los datos del momento.
+    </p>
+    <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.65;color:rgba(255,255,255,0.82);margin:0 0 18px 0;">
+      <strong style="color:#E8876B;">Importante sobre el refresh:</strong> no hay auto-refresh programado (ni cron, ni interval). Se refresca <em style="font-style:italic;">cuando vos lo abrís</em> o apretás refresh manualmente. Esto es clave para entender el modelo mental — no es un dashboard en tiempo real tipo DataDog; es un snapshot on-demand con zero latencia entre "lo abrí" y "tengo la data de ahora".
+    </p>
+    <div style="margin-top:36px;padding:22px 24px;border-left:3px solid #D96B52;background:rgba(217,107,82,0.08);">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:#E8876B;text-transform:uppercase;margin-bottom:8px;">DIFERENCIA CLAVE</div>
+      <p style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:19px;line-height:1.4;color:#fff;margin:0;">
+        Artifact normal: "acá tenés los números de ayer, hardcodeados".<br/>Live Artifact: "acá tenés los números de este segundo, porque recién los fui a buscar".
+      </p>
+    </div>
+  </div>
+</section>
+  <section style="padding:80px 28px;background:#F0EAD6;color:#171717;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#D96B52;text-transform:uppercase;margin-bottom:14px;">02 · Requisitos</div>
+    <h2 style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:40px;letter-spacing:-0.9px;line-height:1.05;color:#171717;margin:0 0 24px 0;">
+      Qué necesitás antes de <em style="font-style:italic;color:#D96B52;">apretar enter</em>.
+    </h2>
+
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div style="display:flex;gap:20px;padding:18px 0;border-bottom:1px solid #D8CFB3;">
+        <span style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:42px;color:#D96B52;min-width:50px;line-height:0.9;">01</span>
+        <div>
+          <div style="font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:#171717;margin-bottom:4px;">Plan Claude Pro o superior</div>
+          <div style="font-family:Inter,sans-serif;font-size:14px;color:#5A5A5A;line-height:1.5;">Cowork requiere Pro (USD 20/mes), Max, Team o Enterprise. El plan Free no tiene acceso. El plan gratis te deja 1 conector custom como máximo.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;padding:18px 0;border-bottom:1px solid #D8CFB3;">
+        <span style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:42px;color:#D96B52;min-width:50px;line-height:0.9;">02</span>
+        <div>
+          <div style="font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:#171717;margin-bottom:4px;">Cowork habilitado</div>
+          <div style="font-family:Inter,sans-serif;font-size:14px;color:#5A5A5A;line-height:1.5;">En claude.ai, sidebar → "Cowork". Si trabajás en Team/Enterprise, un Owner tiene que haberlo habilitado para la org primero.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;padding:18px 0;border-bottom:1px solid #D8CFB3;">
+        <span style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:42px;color:#D96B52;min-width:50px;line-height:0.9;">03</span>
+        <div>
+          <div style="font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:#171717;margin-bottom:4px;">Al menos un conector autorizado</div>
+          <div style="font-family:Inter,sans-serif;font-size:14px;color:#5A5A5A;line-height:1.5;">Settings → Connectors. Los que tienen el badge <em style="font-style:italic;">Interactive</em> son los que pueden renderizar interfaces vivas — esos son los que te interesan.</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:20px;padding:18px 0;">
+        <span style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:42px;color:#D96B52;min-width:50px;line-height:0.9;">04</span>
+        <div>
+          <div style="font-family:Inter,sans-serif;font-size:15px;font-weight:600;color:#171717;margin-bottom:4px;">Scopes de solo lectura</div>
+          <div style="font-family:Inter,sans-serif;font-size:14px;color:#5A5A5A;line-height:1.5;">Para un tablero no necesitás write access. Autorizá únicamente read. Si el conector expone escrituras, Claude puede llamarlas — por eso restringí scopes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  <section style="padding:80px 28px;background:#0A0A0A;color:#fff;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#E8876B;text-transform:uppercase;margin-bottom:14px;">03 · Conectores disponibles (oficial)</div>
+    <h2 style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:40px;letter-spacing:-0.9px;line-height:1.05;color:#fff;margin:0 0 18px 0;">
+      El directorio real de Anthropic.
+    </h2>
+    <p style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:400;font-size:16px;line-height:1.55;color:rgba(255,255,255,0.65);margin:0 0 28px 0;">
+      Lista actualizada de <a href="https://claude.com/connectors" style="color:#E8876B;text-decoration:underline;">claude.com/connectors</a> (abril 2026). Los marcados con <em style="color:#D96B52;">Interactive</em> son los que sirven para Live Artifacts.
+    </p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:32px;">
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Gmail</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Google Calendar</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Google Drive</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Slack</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Linear</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Jira / Atlassian</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Notion</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Asana</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Salesforce</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Airtable</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">GitHub</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;"><div style="font-family:Inter,sans-serif;font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;">Zoom</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;">read · interactive</div></div>
+    </div>
+
+    <p style="font-family:Inter,sans-serif;font-size:14px;line-height:1.55;color:rgba(255,255,255,0.7);margin:0;">
+      Y más: Docusign, Apollo, Clay, Outreach, Similarweb, FactSet, Harvey, WordPress. Si la app que usás no está, podés montar un <strong style="color:#fff;">MCP server custom</strong> — la spec es <a href="https://modelcontextprotocol.io" style="color:#E8876B;text-decoration:underline;">modelcontextprotocol.io</a>. Stripe, Mixpanel y PostHog no son oficiales todavía: se conectan via MCP custom.
+    </p>
+  </div>
+</section>
+  <section style="padding:80px 28px;background:#F0EAD6;color:#171717;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#D96B52;text-transform:uppercase;margin-bottom:14px;">04 · Prompt listo para pegar</div>
+    <h2 style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:40px;letter-spacing:-0.9px;line-height:1.05;color:#171717;margin:0 0 18px 0;">
+      El template que funciona.
+    </h2>
+    <p style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:400;font-size:17px;line-height:1.55;color:#5A5A5A;margin:0 0 24px 0;">
+      Anthropic no publicó un keyword oficial. Lo que sí funciona es ser <em style="font-style:italic;color:#D96B52;">explícito</em>: pedir un dashboard, nombrar el conector, y aclarar que debe refrescarse al abrir.
+    </p>
+
+    <div style="background:#000;border-radius:12px;padding:22px 24px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.1);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,0.5);letter-spacing:1.4px;text-transform:uppercase;">Copiá este prompt</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#E8876B;letter-spacing:1.2px;">claude cowork</span>
+      </div>
+      <pre style="font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.65;color:#E8876B;margin:0;white-space:pre-wrap;word-wrap:break-word;">Armá un Live Artifact que sea un dashboard de [MÉTRICA].
+
+Fuente de datos: usá el conector de [APP] que ya tengo autorizado.
+Pedido específico: mostrá [KPI 1], [KPI 2] y [KPI 3] de los últimos 7 días,
+con variación vs semana anterior.
+
+Layout: una KPI card grande arriba, gráfico de línea en el medio,
+tabla con el detalle abajo. Paleta sobria, sans-serif.
+
+Importante: cada vez que abra este artifact, refetcheá la data desde
+el conector y re-renderizá. No cachees datos viejos.
+
+Nombralo "[slug-del-dashboard]" y dejalo guardado en Cowork.</pre>
+    </div>
+
+    <div style="padding:18px 20px;background:rgba(217,107,82,0.1);border-left:3px solid #D96B52;margin-bottom:20px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:1.6px;color:#B8553E;text-transform:uppercase;margin-right:6px;">Por qué funciona</span>
+      <span style="font-family:Inter,sans-serif;font-size:14px;color:#171717;line-height:1.55;">
+        "Live Artifact" en la primera línea le marca a Claude que es Cowork-mode. Nombrar el conector explícitamente evita que invente datos. El "refetcheá cada vez" forza el comportamiento de refresh en cada open — que es el único modelo que Anthropic documenta para ahora.
+      </span>
+    </div>
+
+    <p style="font-family:Inter,sans-serif;font-size:14px;color:#5A5A5A;line-height:1.55;margin:0;">
+      <strong style="color:#171717;">Ejemplo concreto:</strong> reemplazá <em style="font-style:italic;">[MÉTRICA]</em> por "tickets abiertos", <em style="font-style:italic;">[APP]</em> por "Linear", y los 3 KPIs por "Backlog / In Progress / In Review". Hacelo una vez, después duplicá el prompt para cada conector que tengas.
+    </p>
+  </div>
+</section>
+  <section style="padding:80px 28px;background:#0A0A0A;color:#fff;">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#E8876B;text-transform:uppercase;margin-bottom:14px;">05 · Límites reales (los que te van a frenar)</div>
+    <h2 style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:40px;letter-spacing:-0.9px;line-height:1.05;color:#fff;margin:0 0 24px 0;">
+      Lo que Anthropic <em style="font-style:italic;color:#D96B52;">no dice</em> en el anuncio.
+    </h2>
+
+    <div style="display:flex;flex-direction:column;gap:0;">
+      <div style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:20px;letter-spacing:-0.3px;color:#fff;margin-bottom:6px;"><span style="color:#D96B52;font-style:italic;">→</span> No hay auto-refresh programado.</div><p style="font-family:Inter,sans-serif;font-size:14px;color:rgba(255,255,255,0.68);line-height:1.6;margin:0;">Se refresca al abrir o al apretar refresh manualmente. Si querés un dashboard que se actualice mientras dormís, esto no es eso. Es un snapshot on-demand — siempre fresco cuando lo mirás.</p></div>
+      <div style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:20px;letter-spacing:-0.3px;color:#fff;margin-bottom:6px;"><span style="color:#D96B52;font-style:italic;">→</span> ~20 tool calls por turno.</div><p style="font-family:Inter,sans-serif;font-size:14px;color:rgba(255,255,255,0.68);line-height:1.6;margin:0;">Hay un cap observado (~20 MCP calls por turn) antes de que Claude frene y te pida "Continue". Si tu dashboard necesita pullear de 10 endpoints distintos, podés chocar el límite. Consolidá la data en menos llamadas.</p></div>
+      <div style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:20px;letter-spacing:-0.3px;color:#fff;margin-bottom:6px;"><span style="color:#D96B52;font-style:italic;">→</span> 20 MB por artifact.</div><p style="font-family:Inter,sans-serif;font-size:14px;color:rgba(255,255,255,0.68);line-height:1.6;margin:0;">Texto only. Sin binarios. Para un dashboard de KPIs sobra; para uno que embeba videos o imágenes grandes, vas a tener que pensar distinto.</p></div>
+      <div style="padding:20px 0;border-bottom:1px solid rgba(255,255,255,0.1);"><div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:20px;letter-spacing:-0.3px;color:#fff;margin-bottom:6px;"><span style="color:#D96B52;font-style:italic;">→</span> Consume más del allocation que un chat normal.</div><p style="font-family:Inter,sans-serif;font-size:14px;color:rgba(255,255,255,0.68);line-height:1.6;margin:0;">Anthropic dice literalmente que "las tareas en Cowork consumen más que chatear". No dieron número exacto pero asumí que abrir 10 Live Artifacts al día tiene un costo en tu plan. Si sos power user, probablemente Pro te quede corto y necesites Max.</p></div>
+      <div style="padding:20px 0;"><div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:20px;letter-spacing:-0.3px;color:#fff;margin-bottom:6px;"><span style="color:#D96B52;font-style:italic;">→</span> No hay docs oficial todavía.</div><p style="font-family:Inter,sans-serif;font-size:14px;color:rgba(255,255,255,0.68);line-height:1.6;margin:0;">Al día de hoy no existe una página dedicada a Live Artifacts en docs.claude.com — sólo el tweet de anuncio, el directorio de conectores, y las páginas de Cowork general. Si algo no te funciona, no hay lugar oficial al que ir: foro de Anthropic o Discord de la comunidad.</p></div>
+    </div>
+  </div>
+</section>
+  <section style="padding:96px 28px 48px;background:linear-gradient(165deg, #B8553E 0%, #D96B52 55%, #E8876B 100%);color:#fff;text-align:center;">
+  <div style="max-width:560px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.7);text-transform:uppercase;margin-bottom:20px;">Cierre</div>
+    <div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:44px;letter-spacing:-0.9px;line-height:1;margin-bottom:6px;">¿Querés</div>
+    <div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-weight:500;font-size:44px;letter-spacing:-0.9px;line-height:1;margin-bottom:6px;">más cosas</div>
+    <div style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-weight:500;font-size:92px;letter-spacing:-3.4px;line-height:0.92;margin-bottom:6px;">como esta?</div>
+    <p style="font-family:Inter,sans-serif;font-size:16px;line-height:1.55;color:rgba(255,255,255,0.92);margin:28px 0 8px 0;">
+      Seguime en <strong>@morfeoacademy</strong> — subo una guía así cada semana.
+    </p>
+    <p style="font-family:Fraunces,serif;font-optical-sizing:auto;font-style:italic;font-size:15px;color:rgba(255,255,255,0.82);margin:0;">
+      Herramientas nuevas, workflows, templates listos.
+    </p>
+  </div>
+</section>
+
+<section style="padding:48px 28px;background:#0A0A0A;color:rgba(255,255,255,0.55);">
+  <div style="max-width:680px;margin:0 auto;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;color:#E8876B;text-transform:uppercase;margin-bottom:12px;">Fuentes</div>
+    <p style="font-family:Inter,sans-serif;font-size:12.5px;line-height:1.65;margin:0;">
+      Anuncio oficial: <a href="https://x.com/claudeai/status/2046328619249684989" style="color:#E8876B;">@claudeai · 20 abr 2026</a> ·
+      Help center Artifacts: <a href="https://support.claude.com/en/articles/9487310-what-are-artifacts-and-how-do-i-use-them" style="color:#E8876B;">support.claude.com/artifacts</a> ·
+      Help center Connectors: <a href="https://support.claude.com/en/articles/11176164-use-connectors-to-extend-claude-s-capabilities" style="color:#E8876B;">support.claude.com/connectors</a> ·
+      Help center Cowork: <a href="https://support.claude.com/en/articles/13345190-get-started-with-claude-cowork" style="color:#E8876B;">support.claude.com/cowork</a> ·
+      Directorio conectores: <a href="https://claude.com/connectors" style="color:#E8876B;">claude.com/connectors</a> ·
+      Pricing: <a href="https://claude.com/pricing" style="color:#E8876B;">claude.com/pricing</a> ·
+      MCP spec: <a href="https://modelcontextprotocol.io" style="color:#E8876B;">modelcontextprotocol.io</a>.
+    </p>
+  </div>
+</section>
+</body>
+</html>
