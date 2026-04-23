@@ -1,678 +1,383 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ryze + Google y Meta Ads · Guia · Morfeo Academy</title>
-<meta name="description" content="Guia estrategica para usar Ryze con Claude, Google Ads y Meta Ads: como se conecta, como lo uso, que delegar y que no.">
-<meta property="og:title" content="Ryze + Google y Meta Ads · Morfeo Academy">
-<meta property="og:description" content="Como conectar Claude a Google y Meta Ads con Ryze, que pedirle, y como usarlo sin hacer macanas.">
-<meta property="og:image" content="/recursos/ryze-google-meta-ads/cover.png">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary_large_image">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --cream: #F0EAD6;
-    --cream-2: #E8DFC5;
-    --ink: #171717;
-    --ink-muted: #5A5A5A;
-    --coral: #D96B52;
-    --coral-dk: #B8553E;
-    --coral-lt: #E8876B;
-    --green: #4ADE80;
-    --yellow: #FEBC2E;
-    --black: #0A0A0A;
-    --border: #D8CFB3;
-  }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--cream);
-    color: var(--ink);
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.6;
-  }
-  .serif { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
-  .mono { font-family: 'JetBrains Mono', monospace; }
-  a { color: var(--coral-dk); text-decoration: none; border-bottom: 1px solid currentColor; }
-  em { color: var(--coral-dk); font-style: italic; }
-  strong { font-weight: 600; color: var(--ink); }
-
-  .nav {
-    padding: 18px 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1180px;
-    margin: 0 auto;
-    font-size: 14px;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(240,234,214,0.92);
-    backdrop-filter: saturate(180%) blur(14px);
-    -webkit-backdrop-filter: saturate(180%) blur(14px);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-brand { font-weight: 600; letter-spacing: -0.2px; }
-  .nav-brand em { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; color: var(--coral); border: none; }
-  .nav-back {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--ink-muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    border: none;
-  }
-  .nav-back:hover { color: var(--coral); }
-
-  .section { padding: 84px 28px; border-bottom: 1px solid var(--border); }
-  .section.dark { background: var(--black); color: #fff; border-bottom-color: transparent; }
-  .section.dark em { color: var(--coral); }
-  .section.dark strong { color: #fff; }
-  .section.gradient {
-    background: linear-gradient(165deg, var(--coral-dk) 0%, var(--coral) 55%, var(--coral-lt) 100%);
-    color: var(--black);
-    border-bottom-color: transparent;
-  }
-  .section.gradient em, .section.gradient strong { color: var(--black); }
-  .wrap { max-width: 720px; margin: 0 auto; }
-  .wrap-wide { max-width: 1080px; margin: 0 auto; }
-
-  .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--coral);
-    margin-bottom: 20px;
-    display: block;
-  }
-  .dark .eyebrow { color: var(--coral-lt); }
-  .gradient .eyebrow { color: var(--black); opacity: 0.65; }
-
-  h1 {
-    font-family: 'Fraunces', serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 72px;
-    line-height: 0.98;
-    letter-spacing: -2.5px;
-    margin-bottom: 24px;
-  }
-  h2 {
-    font-family: 'Fraunces', serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 52px;
-    line-height: 1.02;
-    letter-spacing: -1.8px;
-    margin-bottom: 20px;
-  }
-  h3 {
-    font-family: 'Fraunces', serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-size: 28px;
-    line-height: 1.08;
-    letter-spacing: -0.8px;
-    margin: 0 0 14px;
-  }
-  .lede {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 1.42;
-    color: var(--ink-muted);
-    margin-bottom: 32px;
-  }
-  .dark .lede { color: rgba(255,255,255,0.72); }
-  p { margin-bottom: 18px; font-size: 16px; }
-  ul, ol { margin: 18px 0 24px 22px; }
-  li { margin-bottom: 10px; font-size: 16px; }
-
-  .cover {
-    padding: 108px 28px 96px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cover::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: radial-gradient(circle at 1px 1px, rgba(23,23,23,0.13) 1px, transparent 1.4px);
-    background-size: 18px 18px;
-    opacity: 0.42;
-    mask-image: radial-gradient(ellipse 92% 78% at 50% 48%, #000 35%, transparent 95%);
-    -webkit-mask-image: radial-gradient(ellipse 92% 78% at 50% 48%, #000 35%, transparent 95%);
-  }
-  .cover::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(circle 520px at 92% 10%, rgba(217,107,82,0.10), transparent 65%),
-      radial-gradient(circle 420px at 8% 90%, rgba(74,222,128,0.09), transparent 65%),
-      radial-gradient(circle 360px at 18% 10%, rgba(254,188,46,0.12), transparent 70%);
-  }
-  .cover > .wrap { position: relative; z-index: 2; }
-
-  .window {
-    background: #FFFFFF;
-    border: 1px solid rgba(23,23,23,0.08);
-    border-radius: 22px;
-    padding: 62px 28px 52px;
-    position: relative;
-    text-align: center;
-    margin: 32px auto 36px;
-    transform: rotate(-0.6deg);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.95) inset,
-      0 34px 70px -18px rgba(23,23,23,0.28),
-      0 14px 30px -10px rgba(23,23,23,0.14);
-  }
-  .window::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, #FAF6EC 0%, #FFFFFF 100%);
-    border-bottom: 1px solid rgba(23,23,23,0.06);
-    border-top-left-radius: 22px;
-    border-top-right-radius: 22px;
-  }
-  .window .lights {
-    position: absolute;
-    top: 14px;
-    left: 16px;
-    display: flex;
-    gap: 7px;
-    z-index: 2;
-  }
-  .window .lights span {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-    box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
-  }
-  .window .url {
-    position: absolute;
-    top: 9px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    background: var(--cream);
-    border: 1px solid rgba(23,23,23,0.07);
-    padding: 4px 14px;
-    border-radius: 100px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    color: var(--ink-muted);
-    letter-spacing: 0.4px;
-  }
-  .window .url .dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--green);
-    margin-right: 6px;
-    vertical-align: 1px;
-    box-shadow: 0 0 0 2px rgba(74,222,128,0.18);
-  }
-  .window .win-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--coral);
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .window .win-eyebrow::after {
-    content: "LIVE";
-    background: var(--coral);
-    color: #fff;
-    padding: 1px 6px;
-    border-radius: 3px;
-    font-size: 8px;
-    letter-spacing: 0.6px;
-  }
-  .window-text {
-    font-family: 'Fraunces', serif;
-    font-optical-sizing: auto;
-    font-style: italic;
-    font-weight: 500;
-    color: var(--coral);
-    font-size: 82px;
-    letter-spacing: -3px;
-    line-height: 0.94;
-    position: relative;
-    z-index: 2;
-  }
-  .chip-dots {
-    margin-top: 22px;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .chip-dots span {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 10px;
-    border-radius: 100px;
-    background: rgba(240,234,214,0.75);
-    border: 1px solid rgba(23,23,23,0.06);
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--ink);
-  }
-  .chip-dots span::before {
-    content: "";
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-  }
-  .chip-dots span:nth-child(1)::before { background: var(--coral); }
-  .chip-dots span:nth-child(2)::before { background: var(--green); }
-  .chip-dots span:nth-child(3)::before { background: var(--yellow); }
-  .chip-dots span:nth-child(4)::before { background: #A78BFA; }
-
-  .callout {
-    border-left: 3px solid var(--coral);
-    margin: 26px 0;
-    background: rgba(217,107,82,0.08);
-    padding: 16px 20px;
-    border-radius: 4px;
-  }
-  .callout .label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: var(--coral-dk);
-    margin-bottom: 6px;
-    font-weight: 600;
-    display: block;
-  }
-  .callout p { margin: 0; font-size: 14.5px; }
-  .dark .callout { background: rgba(217,107,82,0.13); }
-  .dark .callout .label { color: var(--coral-lt); }
-  .dark .callout p { color: rgba(255,255,255,0.86); }
-
-  .check-item {
-    display: flex;
-    gap: 18px;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .check-item:last-child { border-bottom: none; }
-  .check-num {
-    font-family: 'Fraunces', serif;
-    font-style: italic;
-    font-size: 30px;
-    color: var(--coral);
-    min-width: 44px;
-    line-height: 1;
-  }
-  .check-title { font-weight: 600; font-size: 16px; margin-bottom: 4px; color: var(--ink); }
-  .check-desc { font-size: 14.5px; color: var(--ink-muted); }
-
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 28px;
-  }
-  .card {
-    padding: 24px 22px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  .card p { color: rgba(255,255,255,0.72); margin: 0; font-size: 14.5px; line-height: 1.58; }
-  .card .mini {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--coral-lt);
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .split {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-    margin-top: 20px;
-  }
-  .soft-box {
-    background: #FFFFFF;
-    border: 1px solid rgba(23,23,23,0.08);
-    border-radius: 18px;
-    padding: 24px 22px;
-    box-shadow: 0 16px 32px -18px rgba(23,23,23,0.22);
-  }
-  .soft-box ul { margin-top: 14px; margin-bottom: 0; }
-
-  pre {
-    background: var(--black);
-    color: var(--coral-lt);
-    padding: 22px 24px;
-    border-radius: 12px;
-    overflow-x: auto;
-    margin: 18px 0 28px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    line-height: 1.65;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    white-space: pre-wrap;
-    word-break: break-word;
-  }
-  pre .c { color: rgba(255,255,255,0.42); }
-  pre .k { color: #FEBC2E; }
-  pre .v { color: #fff; }
-
-  .footer {
-    padding: 48px 28px;
-    text-align: center;
-    background: var(--black);
-    color: rgba(255,255,255,0.55);
-    font-size: 13px;
-  }
-  .footer a { color: #fff; border-bottom-color: rgba(255,255,255,0.35); }
-
-  @media (max-width: 840px) {
-    h1 { font-size: 50px; letter-spacing: -1.7px; }
-    h2 { font-size: 38px; letter-spacing: -1.2px; }
-    h3 { font-size: 24px; }
-    .window-text { font-size: 56px; letter-spacing: -2px; }
-    .grid-3, .split { grid-template-columns: 1fr; }
-    .section { padding: 64px 24px; }
-    .cover { padding: 88px 24px 72px; }
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guia practica Ryze x Paid Ads - Morfeo Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#E7F5EF;
+      --panel:rgba(255,255,255,.68);
+      --line:rgba(17,46,49,.10);
+      --ink:#112E31;
+      --muted:#547276;
+      --accent:#2FBF8A;
+      --accent-soft:#DDF5EC;
+      --dark:#0F2326;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      min-height:100vh;
+      padding:44px 20px 72px;
+      font-family:"Manrope", system-ui, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 84% 8%, rgba(248,250,202,.85), transparent 18%),
+        linear-gradient(180deg, #63A8BA 0%, #A4DBDF 52%, #96C876 100%);
+    }
+    .wrap {
+      max-width:980px;
+      margin:0 auto;
+    }
+    .mono {
+      font-family:"IBM Plex Mono", monospace;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+    }
+    .hero {
+      border:1px solid rgba(255,255,255,.72);
+      background:linear-gradient(180deg, rgba(245,252,249,.72), rgba(255,255,255,.56));
+      border-radius:30px;
+      padding:28px 26px 24px;
+      box-shadow:0 24px 54px rgba(17,46,49,.16);
+      backdrop-filter:blur(18px);
+      margin-bottom:18px;
+    }
+    .tag {
+      display:inline-flex;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(14,32,34,.92);
+      color:#fff;
+      font-size:11px;
+      margin-bottom:16px;
+    }
+    h1 {
+      margin:0;
+      font-size:clamp(42px, 8vw, 78px);
+      line-height:.92;
+      letter-spacing:-.08em;
+      max-width:820px;
+    }
+    .lede {
+      margin:18px 0 0;
+      max-width:780px;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.6;
+    }
+    .note {
+      margin-top:18px;
+      display:inline-block;
+      padding:12px 14px;
+      border-radius:16px;
+      background:rgba(15,35,38,.92);
+      color:#fff;
+      font-size:14px;
+      line-height:1.45;
+    }
+    .grid {
+      display:grid;
+      gap:16px;
+      margin-top:16px;
+    }
+    .grid.two {
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .grid.three {
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .card {
+      border:1px solid rgba(255,255,255,.68);
+      background:linear-gradient(180deg, rgba(245,252,249,.72), rgba(255,255,255,.56));
+      border-radius:24px;
+      padding:22px 22px 20px;
+      box-shadow:0 18px 40px rgba(17,46,49,.14);
+      backdrop-filter:blur(18px);
+    }
+    .card h2, .card h3 {
+      margin:0;
+      letter-spacing:-.05em;
+    }
+    .card h2 { font-size:32px; }
+    .card h3 { font-size:24px; }
+    .eyebrow {
+      display:inline-block;
+      margin-bottom:12px;
+      color:var(--muted);
+      font-size:11px;
+    }
+    p {
+      margin:14px 0 0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:16px;
+    }
+    ul, ol {
+      margin:14px 0 0;
+      padding-left:20px;
+      color:var(--muted);
+    }
+    li {
+      margin:0 0 10px;
+      line-height:1.55;
+    }
+    .split {
+      display:grid;
+      grid-template-columns:1.08fr .92fr;
+      gap:16px;
+      margin-top:16px;
+    }
+    .callout {
+      border-radius:24px;
+      padding:22px;
+      background:rgba(15,35,38,.92);
+      color:#fff;
+      box-shadow:0 20px 44px rgba(17,46,49,.18);
+    }
+    .callout h2, .callout h3, .callout p, .callout li {
+      color:#fff;
+    }
+    .callout .eyebrow {
+      color:rgba(255,255,255,.66);
+    }
+    .mode {
+      border-radius:22px;
+      padding:18px 18px 16px;
+      background:rgba(255,255,255,.58);
+      border:1px solid rgba(255,255,255,.72);
+    }
+    .mode strong {
+      display:block;
+      font-size:18px;
+      letter-spacing:-.03em;
+    }
+    .prompt {
+      border-radius:18px;
+      padding:14px 16px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(17,46,49,.10);
+      font-size:15px;
+      line-height:1.5;
+      color:var(--ink);
+    }
+    .footer {
+      margin-top:16px;
+      border-radius:24px;
+      padding:20px 22px;
+      background:linear-gradient(180deg, rgba(245,252,249,.72), rgba(255,255,255,.56));
+      border:1px solid rgba(255,255,255,.68);
+      box-shadow:0 18px 40px rgba(17,46,49,.14);
+      color:var(--muted);
+      line-height:1.65;
+      font-size:14px;
+    }
+    a {
+      color:var(--ink);
+      text-decoration-thickness:1px;
+    }
+    .rule {
+      width:150px;
+      height:4px;
+      background:var(--accent);
+      border-radius:999px;
+      margin:20px 0 0;
+    }
+    @media (max-width: 820px) {
+      .split {
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<nav class="nav">
-  <div class="nav-brand">Morfeo <em>Academy</em></div>
-  <a class="nav-back" href="/recursos">← Todos los recursos</a>
-</nav>
-
-<section class="section cover">
   <div class="wrap">
-    <span class="eyebrow">Guia · Abril 2026 · Morfeo Academy</span>
-    <div class="serif" style="font-size:36px;margin-bottom:16px;letter-spacing:-0.8px;">Guia practica de</div>
-    <div class="window">
-      <div class="lights">
-        <span style="background:#FF5F57;"></span>
-        <span style="background:#FEBC2E;"></span>
-        <span style="background:#28C840;"></span>
+    <section class="hero">
+      <div class="tag mono">Morfeo Academy</div>
+      <h1>Guia practica:<br>como usar Ryze<br>para operar ads con IA</h1>
+      <p class="lede">
+        No es publicidad. Es una guia tactica sobre como pensaria Ryze en una cuenta real:
+        que hace, como funciona, donde aporta valor y que seguiria dejando en manos humanas.
+      </p>
+      <div class="rule"></div>
+      <div class="note">
+        Basada en informacion publica de Ryze consultada el 23 de abril de 2026
+        y en criterio operativo de Morfeo Academy.
       </div>
-      <div class="url"><span class="dot"></span>ryze.morfeoacademy.com</div>
-      <div class="win-eyebrow">Google y Meta Ads</div>
-      <div class="window-text">Ryze<br>+ Ads</div>
-      <div class="chip-dots">
-        <span>Claude</span>
-        <span>Google Ads</span>
-        <span>Meta Ads</span>
-        <span>GA4</span>
-      </div>
-    </div>
-    <div class="serif" style="font-size:26px;color:var(--ink);line-height:1.3;">
-      Como conectar Claude a cuentas reales,<br>
-      usar Ryze con criterio y <em>delegar sin regalar el volante</em>.
-    </div>
-    <p style="margin-top:36px;font-size:14px;color:var(--ink-muted);">
-      No es publicidad. Es una guia estrategica basada en informacion publica de Ryze
-      consultada el 23 de abril de 2026 y en criterio operativo de Morfeo Academy.
-    </p>
-  </div>
-</section>
+    </section>
 
-<section class="section dark">
-  <div class="wrap">
-    <span class="eyebrow">01 · Que es realmente</span>
-    <h2>Ryze, <em>en criollo.</em></h2>
-    <p class="lede">No es solo un chat mirando reportes. Es Claude conectado a Google Ads, Meta Ads y GA4 para leer la cuenta, ordenar trabajo operativo y, si vos queres, ejecutar cambios con aprobacion.</p>
-    <p>Lo importante no es el nombre del conector. Lo importante es el cambio de modelo mental: pasas de preguntarle cosas a un LLM a trabajar con un operador que entra al workflow de pauta con contexto real.</p>
-    <ul>
-      <li><strong>Lee datos reales</strong> de Google Ads, Meta Ads y analytics desde la conversacion.</li>
-      <li><strong>Cruza plataformas</strong> sin que vos tengas que abrir diez tabs.</li>
-      <li><strong>Ordena hallazgos</strong>, arma backlog y prioriza por impacto o riesgo.</li>
-      <li><strong>Prepara cambios</strong> y, en ciertos casos, los deja listos para ejecutar o programar.</li>
-    </ul>
-    <div class="callout">
-      <span class="label">Shout out</span>
-      <p>Le estamos copiando sin culpa el estilo a Ryze porque hoy es uno de los ejemplos mas claros de IA conectada a plataformas reales. No es publicidad. Si te interesa este tema, vale la pena estudiar como lo plantean.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <span class="eyebrow">02 · Como funciona</span>
-    <h2>El setup, <em>sin humo.</em></h2>
-    <p class="lede">Segun la documentacion publica de Ryze, el flujo hosted es simple: conectas el servidor a Claude, autorizas tus cuentas y despues operas desde el chat.</p>
-
-    <div class="check-item">
-      <span class="check-num">01</span>
-      <div>
-        <div class="check-title">Pegas el conector de Ryze en Claude</div>
-        <div class="check-desc">En Claude vas a Settings o Connectors, agregas la URL del servidor de Ryze y guardas la conexion.</div>
-      </div>
-    </div>
-    <div class="check-item">
-      <span class="check-num">02</span>
-      <div>
-        <div class="check-title">Autorizas Google Ads, Meta Ads y opcionalmente GA4</div>
-        <div class="check-desc">Ryze abre el flujo OAuth para dar acceso a las cuentas. Desde ahi, Claude ya puede leer la data real de esas plataformas.</div>
-      </div>
-    </div>
-    <div class="check-item">
-      <span class="check-num">03</span>
-      <div>
-        <div class="check-title">Volves al chat y empezas a pedir trabajo concreto</div>
-        <div class="check-desc">Auditorias, fugas, comparativas, backlog, reportes y cambios chicos. El valor aparece cuando le pedis tareas operativas claras, no magia.</div>
-      </div>
-    </div>
-
-    <div class="callout">
-      <span class="label">La forma correcta de arrancar</span>
-      <p>Primero lectura. Despues recomendaciones. Reci en la tercera etapa ejecucion. Si arrancas con "optimiza toda mi cuenta", el problema no es la herramienta: es el proceso.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section dark">
-  <div class="wrap-wide">
-    <span class="eyebrow">03 · Como lo uso yo</span>
-    <h2>Tres modos para que aporte <em>de verdad.</em></h2>
-    <p class="lede" style="max-width:720px;">Yo no le soltaria el volante de entrada. La usaria en capas: primero para entender, despues para ordenar y recien al final para ejecutar tareas repetitivas de bajo riesgo.</p>
-
-    <div class="grid-3">
-      <div class="card">
-        <span class="mini">Modo 01</span>
-        <h3>Lectura</h3>
-        <p>Le pido campañas con mas gasto y peor eficiencia, desvio de CPA, caidas de ROAS, ad sets fatigados, search terms flojos y diferencias raras entre Google y Meta.</p>
-      </div>
-      <div class="card">
-        <span class="mini">Modo 02</span>
-        <h3>Copiloto</h3>
-        <p>La uso para auditorias, backlog priorizado, recomendaciones separadas por impacto y riesgo, y reportes que despues yo convierto en decisiones.</p>
-      </div>
-      <div class="card">
-        <span class="mini">Modo 03</span>
-        <h3>Operador</h3>
-        <p>Recien ahi delegaria pausas programadas, negativas, QA de cuenta, cambios chicos de presupuesto y tareas repetitivas de seguimiento.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <span class="eyebrow">04 · Que delegar y que no</span>
-    <h2>La regla simple: <em>ejecuta, pero no decide sola.</em></h2>
-    <div class="split">
-      <div class="soft-box">
-        <h3>Lo que si le delegaria hoy</h3>
+    <div class="grid">
+      <section class="card">
+        <span class="eyebrow mono">Que es</span>
+        <h2>Ryze, en criollo</h2>
+        <p>
+          Ryze es una capa que conecta Claude con Google Ads, Meta Ads y, si queres,
+          Google Analytics. Lo relevante no es solo que te muestre datos: lo relevante
+          es que convierte el chat en una consola operativa para leer la cuenta,
+          detectar fugas, ordenar backlog, preparar reportes y ejecutar cambios con aprobacion.
+        </p>
         <ul>
-          <li>Lectura de cuenta</li>
-          <li>Deteccion de fugas</li>
-          <li>Comparacion entre plataformas</li>
-          <li>Armado de backlog</li>
-          <li>Lectura de terminos de busqueda</li>
-          <li>Reportes semanales</li>
-          <li>QA de naming, assets y settings</li>
-          <li>Programacion de cambios chicos</li>
+          <li>lee datos reales de la cuenta</li>
+          <li>cruza Google y Meta en una sola conversacion</li>
+          <li>prepara auditorias, reportes y acciones</li>
+          <li>puede escribir cambios y programarlos para mas tarde</li>
         </ul>
-      </div>
-      <div class="soft-box">
-        <h3>Lo que no le delegaria sola</h3>
+      </section>
+    </div>
+
+    <div class="grid three">
+      <section class="card">
+        <span class="eyebrow mono">01</span>
+        <h3>Como funciona</h3>
+        <p>
+          Segun las guias publicas de Ryze, el setup hosted consiste en pegar
+          una URL de conector en Claude, autorizar Google Ads y Meta Ads,
+          y volver al chat para consultar o operar la cuenta.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow mono">02</span>
+        <h3>Que hace mejor</h3>
+        <p>
+          Auditorias, comparaciones entre plataformas, lectura de fugas,
+          armado de backlog, reportes y cambios operativos de bajo riesgo.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow mono">03</span>
+        <h3>Donde tener cuidado</h3>
+        <p>
+          Presupuesto total, cambios estructurales grandes, estrategia de oferta
+          y cualquier accion que pueda mover demasiado volumen sin contexto.
+        </p>
+      </section>
+    </div>
+
+    <div class="grid two">
+      <section class="card">
+        <span class="eyebrow mono">Setup</span>
+        <h2>Como la conectaria</h2>
+        <ol>
+          <li>Entrar a Claude y abrir <code>Settings &gt; Connectors</code>.</li>
+          <li>Pegar la URL del conector de Ryze.</li>
+          <li>Guardar y verificar que la conexion este activa.</li>
+          <li>Autorizar Google Ads, Meta Ads y opcionalmente GA4.</li>
+          <li>Volver al chat y empezar con preguntas de lectura, no de accion.</li>
+        </ol>
+        <p>
+          Segun Ryze, las acciones de escritura requieren aprobacion previa.
+          Ese detalle es clave: te conviene usarlo primero como capa de lectura
+          y recien despues como operador.
+        </p>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow mono">Workflow</span>
+        <h2>Como la usaria bien</h2>
+        <div class="grid">
+          <div class="mode">
+            <strong>Nivel 1: lectura</strong>
+            <p>Chequeos diarios, campañas flojas, spend raro, fatiga, terminos malos, comparacion Google vs Meta.</p>
+          </div>
+          <div class="mode">
+            <strong>Nivel 2: copiloto</strong>
+            <p>Auditoria, backlog, hallazgos, reporte y recomendaciones separadas por impacto y riesgo.</p>
+          </div>
+          <div class="mode">
+            <strong>Nivel 3: operador</strong>
+            <p>Pausas programadas, cambios chicos, QA y tareas repetitivas con aprobacion.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="grid two">
+      <section class="card">
+        <span class="eyebrow mono">Delegaria hoy</span>
+        <h2>Lo que si</h2>
         <ul>
-          <li>Presupuesto total sin revision</li>
-          <li>Cambios estructurales grandes</li>
-          <li>Estrategia de oferta</li>
-          <li>Decisiones de riesgo comercial</li>
-          <li>Cortes bruscos de volumen sin contexto</li>
-          <li>La interpretacion final del negocio</li>
+          <li>lectura de cuenta y chequeos operativos</li>
+          <li>deteccion de fugas y desperdicio</li>
+          <li>comparacion entre Google Ads y Meta Ads</li>
+          <li>armado de backlog priorizado</li>
+          <li>reportes para founder o cliente</li>
+          <li>programacion de cambios chicos y reversibles</li>
         </ul>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow mono">No delegaria solo</span>
+        <h2>Lo que sigue humano</h2>
+        <ul>
+          <li>presupuesto total y riesgo aceptable</li>
+          <li>cambios fuertes de estructura</li>
+          <li>oferta, posicionamiento y criterio comercial</li>
+          <li>decisiones irreversibles sin contexto</li>
+          <li>lectura final del negocio</li>
+        </ul>
+        <p>
+          Regla simple: la IA puede ejecutar, pero el criterio sigue siendo humano.
+        </p>
+      </section>
+    </div>
+
+    <section class="card">
+      <span class="eyebrow mono">Prompts</span>
+      <h2>Los 7 prompts que si usaria</h2>
+      <div class="grid two">
+        <div class="prompt">1. Auditá mi cuenta y marcá dónde se está fugando presupuesto.</div>
+        <div class="prompt">2. Mostrame campañas con spend alto y sin conversiones en los últimos 14 días.</div>
+        <div class="prompt">3. Compará Google Ads y Meta Ads en spend, CPA y ROAS del último mes.</div>
+        <div class="prompt">4. Armame un backlog priorizado por impacto y facilidad.</div>
+        <div class="prompt">5. Separá cambios de bajo riesgo de cambios estructurales.</div>
+        <div class="prompt">6. Preparame un reporte semanal claro para founder o cliente.</div>
+        <div class="prompt">7. Decime qué puedo programar esta semana sin tocar decisiones estratégicas.</div>
       </div>
+    </section>
+
+    <div class="grid two">
+      <section class="card">
+        <span class="eyebrow mono">Mi recomendacion</span>
+        <h2>Un workflow simple</h2>
+        <ul>
+          <li><strong>Todos los dias:</strong> chequeo de excepciones, no de todo.</li>
+          <li><strong>Todas las semanas:</strong> auditoria corta, backlog y reporte.</li>
+          <li><strong>Todos los meses:</strong> revision humana de estrategia, estructura y presupuesto.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <span class="eyebrow mono">Guardrails</span>
+        <h2>Como no mandarte una cagada</h2>
+        <ul>
+          <li>arrancá en modo lectura</li>
+          <li>después pasá a recomendación</li>
+          <li>recién después a ejecución</li>
+          <li>no apruebes cambios masivos sin revisar</li>
+          <li>pedile siempre nivel de riesgo</li>
+          <li>dejá registro de cambios importantes</li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="footer">
+      <strong>Shout out to Ryze.</strong>
+      No es publicidad, pero si queres entender hacia donde va la operación en paid media,
+      vale la pena mirar este modelo: IA conectada a cuentas reales para leer, preparar
+      y ejecutar trabajo operativo.<br><br>
+
+      <strong>Fuentes oficiales consultadas el 23 de abril de 2026:</strong><br>
+      <a href="https://www.get-ryze.ai/">get-ryze.ai</a><br>
+      <a href="https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp">How to connect Claude to Google &amp; Meta Ads</a><br>
+      <a href="https://www.get-ryze.ai/blog/manage-google-meta-ads-with-claude-mcp">Manage Google &amp; Meta Ads with Claude MCP</a><br>
+      <a href="https://www.get-ryze.ai/blog/connect-claude-google-meta-ads-video-walkthrough">Video walkthrough</a>
     </div>
   </div>
-</section>
-
-<section class="section dark">
-  <div class="wrap">
-    <span class="eyebrow">05 · Prompts que si usaria</span>
-    <h2>Pedidos concretos, <em>no deseos abstractos.</em></h2>
-    <p class="lede">Si queres que funcione bien, pedile trabajo operativo puntual. Cuanto mas clara la tarea, mas util la respuesta.</p>
-
-<pre><span class="c"># Diagnostico</span>
-<span class="k">1.</span> <span class="v">Auditame la cuenta y marcame donde se esta fugando presupuesto.</span>
-<span class="k">2.</span> <span class="v">Mostrame campañas con spend alto y sin conversiones en los ultimos 14 dias.</span>
-<span class="k">3.</span> <span class="v">Compara Google Ads y Meta Ads en spend, CPA y ROAS del ultimo mes.</span>
-
-<span class="c"># Orden operativo</span>
-<span class="k">4.</span> <span class="v">Armame un backlog priorizado por impacto, facilidad y riesgo.</span>
-<span class="k">5.</span> <span class="v">Separa cambios de bajo riesgo de cambios estructurales.</span>
-<span class="k">6.</span> <span class="v">Preparame un reporte semanal claro para founder o cliente.</span>
-
-<span class="c"># Ejecucion controlada</span>
-<span class="k">7.</span> <span class="v">Decime que acciones puedo programar esta semana sin tocar decisiones estrategicas.</span></pre>
-
-    <div class="callout">
-      <span class="label">Mi consejo</span>
-      <p>No arranques con "optimizame todo". Arranca con "mostrame", "comparame", "priorizame" y "dejame listo". Ese orden cambia mucho la calidad del resultado.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <span class="eyebrow">06 · Guardrails</span>
-    <h2>Como usar Ryze sin hacer <em>macanas.</em></h2>
-    <div class="check-item">
-      <span class="check-num">01</span>
-      <div>
-        <div class="check-title">Empeza en modo lectura</div>
-        <div class="check-desc">Primero pedile diagnostico. Despues recomendaciones. Recien al final, ejecucion.</div>
-      </div>
-    </div>
-    <div class="check-item">
-      <span class="check-num">02</span>
-      <div>
-        <div class="check-title">Separa siempre diagnostico de accion</div>
-        <div class="check-desc">Una cosa es encontrar la fuga. Otra es aprobar el cambio. No mezcles los dos momentos.</div>
-      </div>
-    </div>
-    <div class="check-item">
-      <span class="check-num">03</span>
-      <div>
-        <div class="check-title">Pedile nivel de riesgo</div>
-        <div class="check-desc">Hacelo clasificar cada recomendacion en bajo, medio o alto riesgo antes de tocar nada.</div>
-      </div>
-    </div>
-    <div class="check-item">
-      <span class="check-num">04</span>
-      <div>
-        <div class="check-title">No apruebes cambios masivos de un saque</div>
-        <div class="check-desc">Presupuesto total, estructura, oferta y escalado fuerte siguen siendo decision humana.</div>
-      </div>
-    </div>
-    <div class="check-item">
-      <span class="check-num">05</span>
-      <div>
-        <div class="check-title">Deja registro del por que</div>
-        <div class="check-desc">Si Ryze sugiere o ejecuta algo, guarda el razonamiento. Eso te deja auditar despues y mejora el workflow.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section gradient">
-  <div class="wrap" style="text-align:center;">
-    <span class="eyebrow">Cierre</span>
-    <div class="serif" style="font-size:44px;font-weight:400;line-height:1.0;letter-spacing:-1.6px;color:var(--black);">Si queres</div>
-    <div class="serif" style="display:flex;align-items:baseline;justify-content:center;gap:10px;line-height:1;margin:4px 0;">
-      <span style="font-size:44px;letter-spacing:-1.6px;color:var(--black);">mas guias</span>
-      <span style="font-style:italic;font-size:92px;font-weight:500;letter-spacing:-3.5px;color:var(--cream);text-shadow:0 2px 14px rgba(10,10,10,0.22);">asi</span>
-    </div>
-    <div class="serif" style="font-size:40px;font-weight:400;line-height:1.0;letter-spacing:-1.4px;color:var(--black);">segui a Morfeo Academy.</div>
-    <p style="margin-top:28px;font-size:15px;max-width:520px;margin-left:auto;margin-right:auto;color:rgba(10,10,10,0.82);">
-      Todas las semanas subo recursos sobre Claude, sistemas de contenido y workflows reales para usar IA con criterio operativo.
-    </p>
-  </div>
-</section>
-
-<section style="padding:48px 28px;background:#0A0A0A;color:rgba(255,255,255,0.55);">
-  <div class="wrap">
-    <div class="eyebrow" style="color:#E8876B;">Fuentes consultadas</div>
-    <p style="font-size:12.5px;line-height:1.7;margin:0;">
-      Sitio oficial de Ryze:
-      <a href="https://www.get-ryze.ai/" style="color:#E8876B;">get-ryze.ai</a> ·
-      Setup del conector:
-      <a href="https://www.get-ryze.ai/how-to-connect-claude-to-google-meta-ads-mcp" style="color:#E8876B;">how to connect Claude to Google + Meta Ads</a> ·
-      Guia de uso:
-      <a href="https://www.get-ryze.ai/blog/manage-google-meta-ads-with-claude-mcp" style="color:#E8876B;">manage Google + Meta Ads with Claude MCP</a> ·
-      Walkthrough:
-      <a href="https://www.get-ryze.ai/blog/connect-claude-google-meta-ads-video-walkthrough" style="color:#E8876B;">video walkthrough</a>.
-    </p>
-  </div>
-</section>
-
-<footer class="footer">
-  <div style="max-width:680px;margin:0 auto;">
-    <p style="margin-bottom:8px;"><strong style="color:#fff;">Guia practica de Ryze + Google y Meta Ads</strong> · Abril 2026</p>
-    <p>Por Paul para <a href="https://instagram.com/morfeoacademy">@morfeoacademy</a> · Hecho con Claude Code</p>
-    <p style="margin-top:14px;font-size:11px;color:rgba(255,255,255,0.32);">Compartila libremente. Si la referencias, deja el credito.</p>
-  </div>
-</footer>
-
 </body>
 </html>
