@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guía para promptear mejor GPT Image 2 y Nano Banana · Morfeo Academy</title>
+<meta name="description" content="Research oficial + benchmark real para estructurar mejores prompts de imagen en GPT Image 2 y Nano Banana. Incluye meta-prompt para agentes, template universal y los 11 prompts del test del cavernícola.">
+<meta property="og:title" content="Guía para promptear mejor GPT Image 2 y Nano Banana">
+<meta property="og:description" content="Cómo convertir a tu agente en mejor prompteador, qué estructura usar y qué aprendimos del benchmark real del cavernícola.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.morfeoacademy.com/recursos/nano-banana-vs-gpt-2-v2/01_cover.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F4EEDD;
+    --cream-2: #EDE3CB;
+    --panel: rgba(255, 252, 245, 0.84);
+    --panel-strong: #FFFDF7;
+    --ink: #131313;
+    --ink-muted: #615D54;
+    --orange: #D96B52;
+    --orange-deep: #B8553E;
+    --black: #0A0A0A;
+    --line: #D7CEB6;
+    --green: #A3E635;
+    --violet: #A78BFA;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; }
+  pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 16px 28px;
+    border-bottom: 1px solid rgba(19, 19, 19, 0.08);
+    background: rgba(244, 238, 221, 0.86);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+  }
+  .nav-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+  }
+  .nav-brand {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .nav-brand em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--orange);
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+  .nav-link:hover {
+    color: var(--orange);
+    border-bottom-color: currentColor;
+  }
+  .hero {
+    padding: 100px 28px 80px;
+    text-align: center;
+  }
+  .cover-pill {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 14px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: 0 12px 22px -12px rgba(0, 0, 0, 0.22);
+    z-index: 1;
+  }
+  .p-tl { top: 66px; left: max(18px, calc(50% - 530px)); }
+  .p-tr { top: 84px; right: max(18px, calc(50% - 520px)); }
+  .p-bl { top: 280px; left: max(18px, calc(50% - 560px)); }
+  .p-br { top: 310px; right: max(18px, calc(50% - 560px)); }
+  .c-coral { background: #F7D0C5; color: #8E4432; border: 1px solid rgba(217, 107, 82, 0.26); }
+  .c-violet { background: #E7DEFF; color: #5D47A7; border: 1px solid rgba(167, 139, 250, 0.28); }
+  .c-green { background: #E5F8C0; color: #58761B; border: 1px solid rgba(163, 230, 53, 0.34); }
+  .hero-grid {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  h1, h2, h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 0.98;
+  }
+  h1 {
+    font-size: clamp(56px, 8vw, 92px);
+    margin-bottom: 18px;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  h2 {
+    font-size: clamp(38px, 5vw, 60px);
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-size: clamp(28px, 3.4vw, 40px);
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 16px;
+    color: var(--ink-muted);
+    margin-bottom: 16px;
+  }
+  .lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-style: italic;
+    font-size: 23px;
+    line-height: 1.42;
+    color: var(--ink-muted);
+    margin-bottom: 24px;
+  }
+  .hero-intro {
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .window {
+    background: #FFFFFF;
+    border: 1px solid rgba(19, 19, 19, 0.08);
+    border-radius: 22px;
+    padding: 62px 28px 52px;
+    position: relative;
+    text-align: center;
+    margin: 32px auto 44px;
+    transform: rotate(-0.6deg);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.95) inset,
+      0 34px 70px -18px rgba(23,23,23,0.28),
+      0 14px 30px -10px rgba(23,23,23,0.14);
+    max-width: 780px;
+  }
+  .window::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, #FAF6EC 0%, #FFFFFF 100%);
+    border-bottom: 1px solid rgba(23,23,23,0.06);
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+  .window .lights {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    display: flex;
+    gap: 7px;
+    z-index: 2;
+  }
+  .window .lights span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
+  }
+  .window .url {
+    position: absolute;
+    top: 9px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    background: var(--cream);
+    border: 1px solid rgba(23,23,23,0.07);
+    padding: 4px 14px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+  }
+  .window .url .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 0 2px rgba(217,107,82,0.18);
+    vertical-align: 1px;
+  }
+  .window .win-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--orange);
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+  }
+  .window .win-eyebrow::after {
+    content: "V2";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: var(--orange);
+    color: #fff;
+    font-size: 8px;
+    letter-spacing: 0.6px;
+  }
+  .window-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--orange);
+    font-size: clamp(64px, 9vw, 92px);
+    letter-spacing: -3.5px;
+    line-height: 0.93;
+    position: relative;
+    z-index: 2;
+  }
+  .window-text span,
+  .window-text small {
+    display: block;
+  }
+  .window-text small {
+    font-size: 0.8em;
+    letter-spacing: -0.05em;
+  }
+  .window .chip-dots {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .window .chip-dots span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(240,234,214,0.7);
+    border: 1px solid rgba(23,23,23,0.06);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .window .chip-dots span::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+  .window .chip-dots span:nth-child(1)::before { background: var(--orange); }
+  .window .chip-dots span:nth-child(2)::before { background: var(--violet); }
+  .window .chip-dots span:nth-child(3)::before { background: var(--green); }
+  .hero-summary {
+    max-width: 720px;
+    margin: 0 auto 24px;
+    font-family: 'Fraunces', serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 1.42;
+    color: var(--ink);
+  }
+  .hero-summary em {
+    color: var(--orange-deep);
+    font-style: italic;
+  }
+  .hero-credit {
+    max-width: 560px;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+  .hero-credit a {
+    color: var(--orange);
+    border-bottom: 1px solid currentColor;
+  }
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 26px 0 28px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 20px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  }
+  .button:hover { transform: translateY(-1px); }
+  .button-primary {
+    background: var(--black);
+    color: #fff;
+  }
+  .button-primary:hover { background: var(--orange); }
+  .button-secondary {
+    background: rgba(255, 255, 255, 0.7);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .button-secondary:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 auto;
+  }
+  .meta-card {
+    padding: 16px 16px 14px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 247, 0.72);
+  }
+  .meta-card strong {
+    display: block;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .meta-card span {
+    display: block;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .hero-note {
+    margin-top: 22px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--orange);
+    background: rgba(217, 107, 82, 0.08);
+    border-radius: 0 16px 16px 0;
+    text-align: left;
+  }
+  .hero-note strong { color: var(--ink); }
+  .hero-media {
+    max-width: 680px;
+    margin: 34px auto 0;
+    padding: 16px;
+    border-radius: 28px;
+    border: 1px solid rgba(19, 19, 19, 0.08);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 249, 240, 0.88));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.82) inset,
+      0 28px 60px -22px rgba(0, 0, 0, 0.24),
+      0 14px 26px -14px rgba(0, 0, 0, 0.12);
+  }
+  .hero-media img {
+    border-radius: 18px;
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.16);
+  }
+  .hero-caption {
+    padding-top: 14px;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .hero-copy {
+    text-align: center;
+  }
+  .section {
+    padding: 76px 28px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-dark {
+    background:
+      radial-gradient(circle at 15% 0%, rgba(217, 107, 82, 0.16), transparent 24%),
+      linear-gradient(180deg, #111111 0%, #090909 100%);
+    color: #fff;
+    border-bottom-color: transparent;
+  }
+  .section-dark p { color: rgba(255, 255, 255, 0.72); }
+  .section-dark .lede { color: rgba(255, 255, 255, 0.72); }
+  .section-dark .eyebrow { color: #E8876B; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  .wrap-wide { max-width: 1180px; margin: 0 auto; }
+  .framework-grid,
+  .tips-grid,
+  .resource-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .framework-card,
+  .tip-card,
+  .resource-card {
+    padding: 22px 20px;
+    border-radius: 22px;
+  }
+  .framework-card {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .framework-card strong {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+  .framework-card p {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.72);
+  }
+  .framework-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+    gap: 18px;
+    padding: 22px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+    margin-top: 18px;
+  }
+  .framework-panel h3 {
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .framework-panel p { margin-bottom: 0; }
+  .framework-list {
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+  .framework-list li {
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 14px;
+  }
+  .framework-list strong { color: #fff; }
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .stack-card {
+    padding: 20px 18px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 247, 0.84);
+  }
+  .stack-card .n {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .stack-card h3 {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+  .stack-card p {
+    margin: 0;
+    font-size: 14px;
+  }
+  .template-box,
+  .prompt-box {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 20px;
+    background: #0B0B0B;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .prompt-label {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.52);
+  }
+  .template-box pre,
+  .prompt-box pre {
+    font-size: 12.5px;
+    line-height: 1.68;
+    color: #F2E9D8;
+  }
+  .split-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 18px;
+  }
+  .panel-card {
+    padding: 22px 20px;
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 247, 0.82);
+  }
+  .panel-card ul {
+    padding-left: 18px;
+    margin: 12px 0 0;
+  }
+  .panel-card li {
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--ink-muted);
+  }
+  .cases-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .case-card {
+    display: grid;
+    grid-template-columns: minmax(0, 0.94fr) minmax(340px, 1.06fr);
+    gap: 24px;
+    padding: 24px;
+    border-radius: 28px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 253, 247, 0.92), rgba(255, 249, 240, 0.82));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 18px 40px -26px rgba(0, 0, 0, 0.18);
+  }
+  .case-kicker {
+    display: inline-block;
+    margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .asset-frame {
+    width: 100%;
+    padding: 14px;
+    border-radius: 22px;
+    background: #fff;
+    border: 1px solid rgba(19, 19, 19, 0.08);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 18px 38px -24px rgba(0, 0, 0, 0.22);
+  }
+  .asset-frame img { border-radius: 14px; }
+  .asset-caption {
+    padding-top: 12px;
+    font-size: 11px;
+    color: var(--ink-muted);
+  }
+  details.prompt-item {
+    margin-top: 16px;
+    border-radius: 20px;
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 247, 0.82);
+    overflow: hidden;
+  }
+  details.prompt-item summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 20px;
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+  }
+  details.prompt-item summary::-webkit-details-marker { display: none; }
+  details.prompt-item summary span {
+    display: inline-block;
+    margin-right: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--orange);
+    vertical-align: middle;
+  }
+  .prompt-item-body {
+    padding: 0 20px 20px;
+  }
+  .prompt-item-body p {
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .tip-card {
+    border: 1px solid var(--line);
+    background: rgba(255, 253, 247, 0.82);
+  }
+  .tip-card .tip-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    margin-bottom: 12px;
+    background: var(--black);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+  .tip-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .tip-card p {
+    margin: 0;
+    font-size: 14px;
+  }
+  .resource-card {
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: rgba(255, 255, 255, 0.06);
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  }
+  .resource-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(232, 135, 107, 0.42);
+    background: rgba(255, 255, 255, 0.09);
+  }
+  .resource-card .mono {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #E8876B;
+  }
+  .resource-card h3 {
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 28px;
+  }
+  .resource-card p {
+    margin-bottom: 18px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 14px;
+  }
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+  .footer {
+    padding: 28px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .footer em {
+    font-family: 'Fraunces', serif;
+    color: var(--orange);
+    font-style: italic;
+  }
+  @media (max-width: 980px) {
+    .framework-panel,
+    .case-card,
+    .split-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 860px) {
+    .stack-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .nav-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nav-links {
+      justify-content: flex-start;
+    }
+    .hero-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .section,
+    .hero { padding-left: 22px; padding-right: 22px; }
+    .case-card,
+    .hero-media,
+    .asset-frame { padding: 12px; }
+  }
+  @media (max-width: 560px) {
+    h1 { font-size: 52px; }
+    h2 { font-size: 40px; }
+    .lede { font-size: 20px; }
+    .hero-intro { font-size: 30px; }
+    .window {
+      padding: 52px 20px 40px;
+      border-radius: 20px;
+    }
+    .window::before {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+    }
+    .window .url {
+      max-width: calc(100% - 88px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .window-text {
+      font-size: 56px;
+      letter-spacing: -2px;
+    }
+    .hero-summary { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="/">Morfeo <em>Academy</em></a>
+    <div class="nav-links">
+      <a class="nav-link" href="#framework">Framework</a>
+      <a class="nav-link" href="#estructura">Estructura</a>
+      <a class="nav-link" href="#casos">Casos</a>
+      <a class="nav-link" href="#prompt-pack">Prompt pack</a>
+      <a class="nav-link" href="/recursos">Recursos</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid">
+    <span class="eyebrow">Guía · Abril 2026 · Morfeo Academy</span>
+    <div class="hero-intro">Guía completa de</div>
+    <h1 class="sr-only">Cómo dominar Nano Banana y GPT Image 2</h1>
+    <div class="window">
+      <div class="lights">
+        <span style="background:#FF5F57;"></span><span style="background:#FEBC2E;"></span><span style="background:#28C840;"></span>
+      </div>
+      <div class="url"><span class="dot"></span>nano-banana-vs-gpt.morfeoacademy.com</div>
+      <div class="win-eyebrow">Compare</div>
+      <div class="window-text"><span>Nano Banana</span><small>vs GPT-2</small></div>
+      <div class="chip-dots"><span>Prompts</span><span>GPT Image 2</span><span>Nano Banana</span></div>
+    </div>
+    <p class="hero-summary">
+      La estructura de prompt que mejor rindió, los 11 prompts finales,
+      y el sistema que usamos para dominar <em>Nano Banana</em> y <em>GPT Image 2</em>.
+    </p>
+    <p class="hero-credit">
+      La V2 de la guía que nació del carrusel.<br>
+      Por Paul · <a href="https://instagram.com/morfeoacademy">@morfeoacademy</a>
+    </p>
+  </div>
+</header>
+
+<section class="section section-dark" id="framework">
+  <div class="wrap-wide">
+    <span class="eyebrow">Research + benchmark</span>
+    <h2>OpenAI y Google empujan la misma idea:<br>no prompteás keywords; dirigís una escena.</h2>
+    <p class="lede">
+      La guía oficial de GPT Image 2 insiste en describir sujeto, fondo, estilo,
+      composición, luz, color y contexto. Las docs de Gemini empujan claridad,
+      especificidad, ejemplos cuando hacen falta e iteración gradual.
+    </p>
+
+    <div class="framework-grid">
+      <div class="framework-card">
+        <strong>Scene &gt; theme</strong>
+        <p>“Futurista” o “cinemático” no alcanza. El modelo responde mejor cuando le describís una escena completa y verificable.</p>
+      </div>
+      <div class="framework-card">
+        <strong>Specific beats vague</strong>
+        <p>Las dos familias de docs coinciden: instrucciones claras y concretas ganan sobre adjetivos lindos pero flojos.</p>
+      </div>
+      <div class="framework-card">
+        <strong>One image, one action</strong>
+        <p>Las mejores salidas de este test tuvieron una acción central por frame. Cuando metés tres acciones, se cae la jerarquía.</p>
+      </div>
+      <div class="framework-card">
+        <strong>Iterate with deltas</strong>
+        <p>No reescribas todo entre corrida y corrida. Cambiá una variable por vez y nombrá el fallo puntual que querés corregir.</p>
+      </div>
+    </div>
+
+    <div class="framework-panel">
+      <div>
+        <h3>Qué hicimos nosotros.</h3>
+        <p>
+          En este benchmark no hubo “prompt para GPT” y “prompt para Nano”.
+          Corrimos el mismo personaje, las mismas referencias y el mismo texto para ambos modelos.
+          Eso vuelve mucho más útil el resultado: no comparamos trucos de prompting, comparamos obediencia visual.
+        </p>
+      </div>
+      <ul class="framework-list">
+        <li><strong>Mismo brief:</strong> 11 prompts, mismo personaje, mismas refs, 16:9 y 2K para los dos.</li>
+        <li><strong>Research oficial:</strong> OpenAI recomienda describir sujeto, fondo, estilo, composición, luz, paleta y contexto; Google recomienda claridad, especificidad, ejemplos e iteración controlada.</li>
+        <li><strong>Resultado final:</strong> en nuestra revisión final GPT se llevó 8 de 11, Nano ganó 2 claras y la burger quedó pareja. Donde importaban anatomía, perspectiva y lógica espacial, GPT abrió diferencia.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="estructura">
+  <div class="wrap-wide">
+    <span class="eyebrow">Copiá esto en tu agente</span>
+    <h2>Convertí a ChatGPT, Claude Code o tu agente en un mejor prompteador.</h2>
+    <p class="lede">
+      Si querés que tu agente te devuelva mejores prompts para GPT Image 2 o Nano Banana,
+      no le pidas “escribime un prompt lindo”. Dale un sistema, un orden y una definición de salida.
+    </p>
+
+    <div class="template-box">
+      <span class="prompt-label">Meta-prompt para tu agente</span>
+      <pre>Act as a senior image prompt engineer for GPT Image 2 and Nano Banana.
+Turn my rough idea into a production-ready prompt in English.
+
+Your job:
+1. Infer the scene clearly before writing.
+2. Ask only for missing variables that materially change the image.
+3. Write prompts as directed scenes, not keyword lists.
+4. Keep one main action per frame.
+5. Add failure-control only for the parts most likely to break.
+
+Always return:
+- Core scene in one sentence
+- Final prompt
+- Shorter variant
+- Risk checklist
+
+Use this order every time:
+identity lock -> image type -> camera -> main action -> environment -> failure control
+
+Rules:
+- If references exist, start by locking the subject
+- Keep the final prompt in English
+- Prefer concrete visual nouns over abstract adjectives
+- If text inside the image is needed, allow only one short word unless I explicitly ask for more
+- Never stack multiple competing actions in the same frame
+- Never rewrite the whole prompt during iteration unless the composition itself is wrong</pre>
+    </div>
+
+    <div class="stack-grid">
+      <div class="stack-card">
+        <span class="n">01</span>
+        <h3>Identity lock</h3>
+        <p>Quién es el sujeto y qué no puede derivar: cara, pelo, barba, ropa, edad, energía.</p>
+      </div>
+      <div class="stack-card">
+        <span class="n">02</span>
+        <h3>Image type</h3>
+        <p>Definí qué clase de imagen es: editorial, campaign, absurdity, product, poster, portrait.</p>
+      </div>
+      <div class="stack-card">
+        <span class="n">03</span>
+        <h3>Camera</h3>
+        <p>Lente, POV, altura, distancia y tipo de encuadre. Acá se juega gran parte de la obediencia.</p>
+      </div>
+      <div class="stack-card">
+        <span class="n">04</span>
+        <h3>Action</h3>
+        <p>Una sola acción principal. La escena tiene que girar alrededor de un gesto central inequívoco.</p>
+      </div>
+      <div class="stack-card">
+        <span class="n">05</span>
+        <h3>Environment</h3>
+        <p>Fondo, luz, materiales, clima, densidad, señales de contexto y textura física del mundo.</p>
+      </div>
+      <div class="stack-card">
+        <span class="n">06</span>
+        <h3>Failure control</h3>
+        <p>Nombrá solo los riesgos reales: manos, dedos, objetos, texto, anatomía, composición heredada.</p>
+      </div>
+    </div>
+
+    <div class="template-box">
+      <span class="prompt-label">Template final de imagen</span>
+      <pre>Same exact [character] from the references. Keep [identity traits] identical.
+Premium photoreal [editorial / campaign / action-comedy] image, never cartoon, never parody, no text overlays.
+[camera / lens / perspective].
+[main action].
+[environment, lighting, mood, materials].
+[physical constraints / failure control].</pre>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <span class="eyebrow">Qué hace fuerte a un prompt</span>
+    <h2>La diferencia entre un prompt usable y uno flojo.</h2>
+
+    <div class="split-panel">
+      <div class="panel-card">
+        <h3>Lo que sí suma</h3>
+        <p>Esto mejora casi cualquier corrida, sin importar el modelo.</p>
+        <ul>
+          <li>sujeto bloqueado desde la primera línea</li>
+          <li>una sola acción importante por imagen</li>
+          <li>decisión óptica clara: POV, lente o ángulo</li>
+          <li>materialidad concreta: lluvia, vidrio, acero, humo, mármol, neón</li>
+          <li>1 a 3 restricciones críticas en vez de una lista infinita de negativas</li>
+        </ul>
+      </div>
+
+      <div class="panel-card">
+        <h3>Lo que lo rompe</h3>
+        <p>Estas son las cosas que más degradaron el benchmark.</p>
+        <ul>
+          <li>keyword soup sin jerarquía</li>
+          <li>tres acciones compitiendo en el mismo frame</li>
+          <li>pedir “vibe” sin definir cámara ni acción</li>
+          <li>negativas genéricas que no atacan el fallo real</li>
+          <li>cambiar personaje, composición y gesto al mismo tiempo durante una iteración</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="wrap-wide">
+    <span class="eyebrow">Refinamiento</span>
+    <h2>Cuando iteres, cambiá una variable por vez.</h2>
+    <p class="lede">
+      La mejor iteración no dice “mejoralo”. Dice qué se mantiene, qué se corrige
+      y qué no se toca. Esto coincide con el research oficial y fue exactamente lo que destrabó este carrusel.
+    </p>
+
+    <div class="framework-grid">
+      <div class="framework-card">
+        <strong>Keep / fix / don’t touch</strong>
+        <p>La estructura más útil fue: mantené X, corregí Y, no cambies Z. Eso protege lo bueno mientras corregís lo roto.</p>
+      </div>
+      <div class="framework-card">
+        <strong>Nombrá el error puntual</strong>
+        <p>No digas “la mano está rara”. Decí “one clear anatomically correct hand, no duplicate limbs, no broken fingers”.</p>
+      </div>
+      <div class="framework-card">
+        <strong>From scratch, solo cuando hace falta</strong>
+        <p>Usalo cuando la composición quedó contaminada por corridas previas. Si solo falló una mano, no tires todo el frame.</p>
+      </div>
+      <div class="framework-card">
+        <strong>Protegé la escena</strong>
+        <p>Si el objeto está roto, bloqueá su integridad física. Si el personaje deriva, volvés al casting lock. Si falla la selfie, bloqueás la lógica de cámara.</p>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <span class="prompt-label">Plantilla de refinamiento</span>
+      <pre>Keep the current [face / pose / camera / atmosphere].
+Fix only [specific failure].
+Do not change [what is already working].
+If the composition is contaminated by previous generations, regenerate from scratch.
+Return one improved prompt, not five alternatives.</pre>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="casos">
+  <div class="wrap-wide">
+    <span class="eyebrow">Casos del carrusel</span>
+    <h2>Cuatro escenas donde se ve bien la logica.</h2>
+    <p class="lede">
+      No son solo "slides lindas". Son ejemplos de donde la estructura del prompt cambia el resultado.
+    </p>
+
+    <div class="cases-list">
+      <article class="case-card">
+        <div class="case-copy">
+          <span class="case-kicker">Case study 01 · Fuego</span>
+          <h3>Una sola palabra de tipografia.<br>Todo lo demas, afuera.</h3>
+          <p>
+            La slide del encendedor fue la unica donde dejamos entrar texto dentro de la imagen.
+            Funciono porque la regla era estricta: una sola palabra, gigante, legible, sin otras capas tipograficas.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Macro</span>
+            <span class="chip">Typographic exception</span>
+            <span class="chip">Failure control</span>
+          </div>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt exacto</span>
+            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and deadpan seriousness identical. Premium photoreal editorial absurdity, never cartoon, never parody. Extreme macro in a dim modern kitchen at night, lens almost touching a glossy stone countertop, the caveman half-crawling into frame holding a simple intact disposable lighter inches from his face as if witnessing the birth of the sun, one thumb making a clean steady flame, realistic lighter anatomy, no broken lighter, no warped plastic, no melted parts, warm fire reflection in his eyes, chrome sink and refrigerator bokeh behind him. This is the only slide allowed to include typography: add one single giant lowercase word 'fuego' in extra-bold warm-bone geometric sans serif, perfectly flat and solid, centered across the full width behind the caveman. The layout should read almost like 'fue' on the left of his head and 'go' on the right, with the full word still obvious and legible. The caveman and lighter must be clearly in front of the word so his head, shoulders and hands crop across the letters, but no letter should cover his face or the flame. Keep the word perfectly legible with generous breathing room, no decorative labels, no contour lines, no extra captions, no other text.</pre>
+          </div>
+        </div>
+        <div class="case-media">
+          <figure class="asset-frame">
+            <img src="./02_nano-vs-gpt.png" alt="Slide comparativa fuego entre Nano Banana y GPT Image 2" width="1080" height="1350">
+            <figcaption class="asset-caption">La unica slide donde la tipografia entra adentro del render.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-copy">
+          <span class="case-kicker">Case study 02 · Auto</span>
+          <h3>Cuando queres locura,<br>nombrala sin pudor.</h3>
+          <p>
+            La primera version del auto quedaba demasiado tibia. Mejoro cuando el prompt dijo de frente que la cara tenia que mostrar mania, lluvia y exaltacion.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Action-comedy</span>
+            <span class="chip">From scratch</span>
+            <span class="chip">Emotion lock</span>
+          </div>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt exacto</span>
+            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and body type identical. Premium photoreal action-comedy campaign image, never cartoon, no text overlays. Generate this from scratch, not based on any previous composition. Hyper-wide hood-level shot on Avenida del Libertador in Buenos Aires during rain, lens near the front bumper, wet asphalt reflecting headlights and city lights, tree-lined median and elegant urban buildings softly visible through the rain, passing traffic bokeh and streetlamps in the distance. The caveman is mounted on top of a compact modern hatchback as if it were a living horse, gripping the roof rails like reins, knees pressed against the doors, heels digging against the metal body, the car moving through the slick avenue. His face must show wild manic exhilaration: eyes opened wide, feral grin, unhinged joy, rain on his face, as if he has just discovered the ultimate beast and is drunk on the power of controlling it. Headlights cutting through the drizzle, cinematic Buenos Aires energy, absurd, intense, majestic, no typography anywhere.</pre>
+          </div>
+        </div>
+        <div class="case-media">
+          <figure class="asset-frame">
+            <img src="./04_nano-vs-gpt.png" alt="Slide comparativa auto como caballo entre Nano Banana y GPT Image 2" width="1080" height="1350">
+            <figcaption class="asset-caption">La escena despego cuando la emocion paso a ser parte del brief y no una esperanza.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-copy">
+          <span class="case-kicker">Case study 03 · Supermercado</span>
+          <h3>La diferencia entre caos bueno y caos roto esta en el control fisico.</h3>
+          <p>
+            Esta slide salia rara una y otra vez hasta que el prompt empezo a controlar manos, carrito, productos y perspectiva como si fuera una foto de campana real.
+          </p>
+          <div class="chip-row">
+            <span class="chip">24mm</span>
+            <span class="chip">Product density</span>
+            <span class="chip">Anatomy control</span>
+          </div>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt exacto</span>
+            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and dead-serious survival urgency identical. Premium photoreal editorial absurdity, no text overlays, no parody, no goofy mascot energy. Inside a brightly lit modern supermarket aisle, cinematic 24mm three-quarter angle looking down a long gondola, the caveman caught in true panic-hoarding mode as if he has discovered infinite food and believes it could vanish at any second. He is lunging sideways while clutching a chaotic armful of products against his chest: cereal boxes, jars, bottles, snack bags, pasta, canned goods, all believable and heavy, with one clear anatomically correct hand still grabbing more from the shelf. A single shopping cart beside him is already grotesquely overflowing with supplies, one wheel slightly twisted under the weight, a trail of dropped packages scattered on the shiny tile floor behind him. Shelves packed with color and density on both sides, strong fluorescent ceiling lights, deep aisle perspective, subtle motion in the reach but his face tack sharp. Make it feel like a luxury ad campaign shot inside a supermarket: absurd, frantic, premium, believable. Avoid duplicate limbs, broken fingers, floating products, warped cart anatomy or weird extra people.</pre>
+          </div>
+        </div>
+        <div class="case-media">
+          <figure class="asset-frame">
+            <img src="./05_nano-vs-gpt.png" alt="Slide comparativa supermercado entre Nano Banana y GPT Image 2" width="1080" height="1350">
+            <figcaption class="asset-caption">Aca se nota clarisimo lo que cambia cuando el failure control entra de verdad.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="case-card">
+        <div class="case-copy">
+          <span class="case-kicker">Case study 04 · Selfie</span>
+          <h3>Si queres una selfie, tenes que bloquear la idea de "telefono fotografiado".</h3>
+          <p>
+            El salto grande vino cuando el prompt dejo de pedir "un celular con selfie" y paso a pedir "la selfie final", sin bezel, sin phone frame y sin objetos invadiendo el centro.
+          </p>
+          <div class="chip-row">
+            <span class="chip">Front camera POV</span>
+            <span class="chip">Invisible device</span>
+            <span class="chip">Urban atmosphere</span>
+          </div>
+          <div class="prompt-box">
+            <span class="prompt-label">Prompt exacto</span>
+            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan seriousness identical. Premium photoreal editorial absurdity, no text overlays. This image must look like the final selfie photo itself, not a photo of a phone screen. True front-camera selfie perspective at night on Avenida Corrientes after rain, with the phone body essentially invisible and outside the frame, no visible phone bezel, no visible phone screen, no hand or finger covering the center of the image, no extra objects in his hands. The caveman holds the device awkwardly at arm's length, both forearms entering only from the lower corners with wide-angle distortion, while he studies his own live image with profound spiritual concern and slight existential confusion, lips parted, eyes fixed on himself as if the device were stealing a fragment of his spirit. Cold screen light on his face and fingers, wet asphalt reflections, theater marquees, taxis and neon signage behind him, bizarre, elegant, unmistakably urban.</pre>
+          </div>
+        </div>
+        <div class="case-media">
+          <figure class="asset-frame">
+            <img src="./08_nano-vs-gpt.png" alt="Slide comparativa selfie entre Nano Banana y GPT Image 2" width="1080" height="1350">
+            <figcaption class="asset-caption">La diferencia estuvo en pedir la foto final, no la foto del aparato.</figcaption>
+          </figure>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark" id="tips">
+  <div class="wrap-wide">
+    <span class="eyebrow">Resultado slide por slide</span>
+    <h2>Mismo prompt. Dos respuestas.<br>Y una lectura breve de por qué.</h2>
+    <p class="lede">
+      Acá no hubo distintos trucos de prompting. El texto fue el mismo para ambos.
+      Lo que cambia es cómo cada modelo interpreta perspectiva, anatomía, tipografía, densidad y gesto.
+    </p>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-number">01</div>
+        <h3>Slide 02 · Fuego</h3>
+        <p><strong>Nano gana.</strong> La integración entre cara, encendedor y palabra “fuego” es más clara. GPT quedó más cinematográfico, pero la tipografía se vuelve menos limpia.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">02</div>
+        <h3>Slide 03 · Computadora</h3>
+        <p><strong>Nano gana.</strong> Obedece mejor la idea de cámara desde la laptop y conserva mejor la lógica “la pantalla lo está mirando”. GPT mejora atmósfera, pero pierde estructura.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">03</div>
+        <h3>Slide 04 · Auto</h3>
+        <p><strong>GPT gana.</strong> Captura la locura facial, la lluvia y la energía de Avenida del Libertador. Nano entendió la acción, pero quedó demasiado prolijo y contenido.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">04</div>
+        <h3>Slide 05 · Supermercado</h3>
+        <p><strong>GPT gana.</strong> Maneja mejor la densidad, el carrito rebalsado y la urgencia. Nano queda más ordenado y menos desesperado, que era justo el corazón del prompt.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">05</div>
+        <h3>Slide 06 · Espejo</h3>
+        <p><strong>GPT gana.</strong> La lógica del reflejo es más elegante y menos caótica. Nano se va a una repetición de espejos más invasiva que ensucia la lectura principal.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">06</div>
+        <h3>Slide 07 · Burger</h3>
+        <p><strong>Empate discutible.</strong> Nano la vuelve más absurda y publicitaria; GPT la vuelve más pesada y más creíble como comida. Las dos funcionan, pero por razones distintas.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">07</div>
+        <h3>Slide 08 · Selfie</h3>
+        <p><strong>GPT gana.</strong> La selfie se siente más real, más nocturna y más psicológica. Nano ubica mejor la avenida, pero sigue pareciendo menos una selfie final y más una simulación limpia.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">08</div>
+        <h3>Slide 09 · Escalera</h3>
+        <p><strong>GPT gana.</strong> Respeta mejor el punto de vista en picada y la geometría repetitiva de la escalera mecánica. Nano cambia el ángulo y se aleja de la consigna.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">09</div>
+        <h3>Slide 10 · Cajero</h3>
+        <p><strong>GPT gana.</strong> Hay más reverencia, más lectura de “ídolo” y mejor lógica espacial del cajero. Nano cumple, pero queda más literal y menos místico.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">10</div>
+        <h3>Slide 11 · Lavadora</h3>
+        <p><strong>GPT gana.</strong> El tambor realmente se siente portal. Nano también funciona, pero la distorsión circular y el efecto de vórtice están mejor resueltos abajo.</p>
+      </div>
+      <div class="tip-card">
+        <div class="tip-number">11</div>
+        <h3>Slide 12 · Secamanos</h3>
+        <p><strong>GPT gana.</strong> El aire se lee mejor en pelo, barba y manos. Nano encuentra la idea, pero la dirección del flujo y la reacción del cuerpo son menos precisas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="prompt-pack">
+  <div class="wrap">
+    <span class="eyebrow">Prompt pack completo</span>
+    <h2>Los 11 prompts del carrusel final.</h2>
+    <p class="lede">
+      Este es el texto exacto que corrimos nosotros, igual para ambos modelos.
+      Copialo, adaptalo o usalo como dataset de entrenamiento para tu agente. Si vas a tocar algo,
+      tocá primero el sujeto, después la cámara, y recién al final las restricciones.
+    </p>
+
+    <details class="prompt-item" open>
+      <summary><span>Slide 02</span> Fuego</summary>
+      <div class="prompt-item-body">
+        <p>La unica slide donde permitimos tipografia dentro del render.</p>
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and deadpan seriousness identical. Premium photoreal editorial absurdity, never cartoon, never parody. Extreme macro in a dim modern kitchen at night, lens almost touching a glossy stone countertop, the caveman half-crawling into frame holding a simple intact disposable lighter inches from his face as if witnessing the birth of the sun, one thumb making a clean steady flame, realistic lighter anatomy, no broken lighter, no warped plastic, no melted parts, warm fire reflection in his eyes, chrome sink and refrigerator bokeh behind him. This is the only slide allowed to include typography: add one single giant lowercase word 'fuego' in extra-bold warm-bone geometric sans serif, perfectly flat and solid, centered across the full width behind the caveman. The layout should read almost like 'fue' on the left of his head and 'go' on the right, with the full word still obvious and legible. The caveman and lighter must be clearly in front of the word so his head, shoulders and hands crop across the letters, but no letter should cover his face or the flame. Keep the word perfectly legible with generous breathing room, no decorative labels, no contour lines, no extra captions, no other text.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 03</span> Computadora</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan intensity identical. Premium photoreal editorial absurdity, no text overlays. Cinematic night office scene inside a glass tower, camera from the point of view of the laptop screen looking outward as if the glowing screen itself were watching him. The caveman sits too close at a sleek desk, eyes locked on the display with ancient suspicion, one dirty fingertip pressing a bright desktop icon while his other hand clutches a chipped stone tool beside the keyboard, charging cable draped like a strange snake, city lights and reflections behind him. The computer should feel like an intelligent glowing slab he is trying to communicate with, luxurious, eerie, believable.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 04</span> Auto</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and body type identical. Premium photoreal action-comedy campaign image, never cartoon, no text overlays. Generate this from scratch, not based on any previous composition. Hyper-wide hood-level shot on Avenida del Libertador in Buenos Aires during rain, lens near the front bumper, wet asphalt reflecting headlights and city lights, tree-lined median and elegant urban buildings softly visible through the rain, passing traffic bokeh and streetlamps in the distance. The caveman is mounted on top of a compact modern hatchback as if it were a living horse, gripping the roof rails like reins, knees pressed against the doors, heels digging against the metal body, the car moving through the slick avenue. His face must show wild manic exhilaration: eyes opened wide, feral grin, unhinged joy, rain on his face, as if he has just discovered the ultimate beast and is drunk on the power of controlling it. Headlights cutting through the drizzle, cinematic Buenos Aires energy, absurd, intense, majestic, no typography anywhere.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 05</span> Supermercado</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and dead-serious survival urgency identical. Premium photoreal editorial absurdity, no text overlays, no parody, no goofy mascot energy. Inside a brightly lit modern supermarket aisle, cinematic 24mm three-quarter angle looking down a long gondola, the caveman caught in true panic-hoarding mode as if he has discovered infinite food and believes it could vanish at any second. He is lunging sideways while clutching a chaotic armful of products against his chest: cereal boxes, jars, bottles, snack bags, pasta, canned goods, all believable and heavy, with one clear anatomically correct hand still grabbing more from the shelf. A single shopping cart beside him is already grotesquely overflowing with supplies, one wheel slightly twisted under the weight, a trail of dropped packages scattered on the shiny tile floor behind him. Shelves packed with color and density on both sides, strong fluorescent ceiling lights, deep aisle perspective, subtle motion in the reach but his face tack sharp. Make it feel like a luxury ad campaign shot inside a supermarket: absurd, frantic, premium, believable. Avoid duplicate limbs, broken fingers, floating products, warped cart anatomy or weird extra people.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 06</span> Espejo</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan seriousness identical. Premium photoreal editorial image, no text overlays. Tight shot inside a mirrored elevator, the caveman staring at his own reflection with grave concentration, one palm pressed against the mirror, confused by the duplicate man trapped inside the metal box, chrome walls, ceiling downlights, glowing floor indicator, fur texture against brushed steel, stillness, pressure, elegance.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 07</span> Burger</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan seriousness identical. Premium photoreal editorial absurdity, no text overlays. Extreme close-up inside a fluorescent late-night burger joint, the caveman seated at a tiny plastic fast-food table gripping an enormous double cheeseburger with both hands as if it were a hunted beast, caught mid first bite with sacred concentration, molten cheese stretching, sauce dripping down his fingers, crumpled wrappers and fries scattered around him, untouched soda cup nearby, blurred customers and menu glow in the background. The burger must feel absurdly huge but still believable, luxurious food photography mixed with dead-serious prehistoric comedy.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 08</span> Selfie</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan seriousness identical. Premium photoreal editorial absurdity, no text overlays. This image must look like the final selfie photo itself, not a photo of a phone screen. True front-camera selfie perspective at night on Avenida Corrientes after rain, with the phone body essentially invisible and outside the frame, no visible phone bezel, no visible phone screen, no hand or finger covering the center of the image, no extra objects in his hands. The caveman holds the device awkwardly at arm's length, both forearms entering only from the lower corners with wide-angle distortion, while he studies his own live image with profound spiritual concern and slight existential confusion, lips parted, eyes fixed on himself as if the device were stealing a fragment of his spirit. Cold screen light on his face and fingers, wet asphalt reflections, theater marquees, taxis and neon signage behind him, bizarre, elegant, unmistakably urban.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 09</span> Escalera mecanica</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and dead-serious body language identical. Premium photoreal editorial image, no text overlays. Dramatic overhead shot from halfway up a moving escalator inside a modern shopping mall, looking down at the caveman standing alone at the base as he studies the endless mechanical stairs like a dangerous metal river, one foot cautiously testing the first moving step, body fully braced for combat, repeating glass-and-metal geometry, skylight glow, precise comic timing.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 10</span> Cajero</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and dead-serious expression identical. Premium photoreal editorial absurdity, never cartoon, no text overlays. Steep oblique night shot in a narrow ATM vestibule, camera close to the machine, the caveman leaning in with reverence as a banknote emerges from the slot, one hand hovering beneath it like receiving an oracle gift, the other hand lightly touching the machine as if it were a sacred stone idol, fluorescent bank light above, concrete walls, security camera dome, card-slot glow, no typography anywhere.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 11</span> Lavadora</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and dead-serious wonder identical. Premium photoreal campaign image, no text overlays. Night laundromat scene, lens low and close to the round glass door of a front-loading washing machine so the spinning circular drum dominates the foreground like a supernatural vortex, the caveman kneeling directly in front of it with sacred concentration, one hand almost touching the glass, colored motion blur reflecting across his face, rows of chrome machines behind him, cold fluorescent light, the machine itself must feel like the portal, no typography anywhere.</pre>
+        </div>
+      </div>
+    </details>
+
+    <details class="prompt-item">
+      <summary><span>Slide 12</span> Secamanos</summary>
+      <div class="prompt-item-body">
+        <div class="prompt-box">
+          <span class="prompt-label">Prompt</span>
+          <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan seriousness identical. Premium photoreal editorial absurdity, no text overlays. Tight public restroom shot, the caveman holding both hands under a powerful automatic hand dryer while invisible air blasts his hair and beard backward, expression caught between awe and alarm, white tile, stainless sink, clean modern bathroom lighting, primitive man versus machine wind, absurd, elegant, dead serious.</pre>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Fuentes</span>
+    <h2>Research usado para reescribir esta guía.</h2>
+    <p class="lede">
+      La base no salió de opiniones sueltas. Salió de cruzar nuestras corridas con documentación oficial de OpenAI y Google.
+    </p>
+    <p>
+      <strong>OpenAI</strong> recomienda escribir prompts como descripciones completas de escena
+      y no como listas de keywords: sujeto, fondo, estilo, composición, iluminación, paleta y contexto.
+      Fuente: <a href="https://developers.openai.com/cookbook/examples/multimodal/image-gen-models-prompting-guide">GPT Image prompting guide</a>.
+    </p>
+    <p>
+      <strong>Google</strong> empuja la misma dirección desde Gemini:
+      instrucciones claras y específicas, ejemplos cuando hacen falta, y refinamiento gradual en vez de reescrituras totales.
+      Fuentes: <a href="https://ai.google.dev/gemini-api/docs/models/generative-models">Prompt design strategies</a> y <a href="https://ai.google.dev/gemini-api/docs/image-generation">Image generation docs</a>.
+    </p>
+    <p>
+      Nuestro benchmark suma la capa práctica: mismo personaje, mismos prompts, mismas referencias y revisión manual comparando obediencia visual, anatomía, composición, gesto y tipografía.
+    </p>
+  </div>
+</section>
+
+<section class="section section-dark" id="otros-recursos">
+  <div class="wrap-wide">
+    <span class="eyebrow">Otros recursos</span>
+    <h2>Segui profundizando desde aca.</h2>
+    <div class="resource-grid">
+      <a class="resource-card" href="https://www.morfeoacademy.com/recursos/nano-banana-vs-gpt-2/">
+        <span class="mono">Guia base</span>
+        <h3>Nano Banana vs GPT-2</h3>
+        <p>La version anterior: mas centrada en el carrusel final y la comparativa slide por slide.</p>
+        <span class="resource-link">ABRIR V1 →</span>
+      </a>
+      <a class="resource-card" href="/recursos/reference-first-carruseles">
+        <span class="mono">Workflow</span>
+        <h3>Reference-First</h3>
+        <p>La guia para usar referencias con trabajo concreto y renderizar carruseles con mas consistencia.</p>
+        <span class="resource-link">ABRIR GUIA →</span>
+      </a>
+      <a class="resource-card" href="/recursos">
+        <span class="mono">Biblioteca</span>
+        <h3>Todos los recursos</h3>
+        <p>Volver al listado principal de guias, setups y workflows publicados por Morfeo Academy.</p>
+        <span class="resource-link">VER RECURSOS →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Morfeo Academy · Recurso abierto · Guía para promptear mejor GPT Image 2 y Nano Banana.</p>
+  <p>Reescrita con research oficial + benchmark interno del carrusel del cavernícola.</p>
+</footer>
+
+</body>
+</html>

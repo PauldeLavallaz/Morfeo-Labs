@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reference-First · Carruseles consistentes con GPT Image · Morfeo Academy</title>
+<meta name="description" content="La guía en español para usar el método Reference-First: cerrar el copy, comprimir referencias, elegir un anchor y generar carruseles consistentes con GPT Image.">
+<meta property="og:title" content="Reference-First · Morfeo Academy">
+<meta property="og:description" content="El workflow para dejar de pedir el carrusel completo y empezar a sacar slides consistentes.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F0EAD6;
+    --cream-2: #E8DFC5;
+    --ink: #171717;
+    --ink-muted: #5A5A5A;
+    --coral: #D96B52;
+    --coral-dk: #B8553E;
+    --coral-lt: #E8876B;
+    --black: #0A0A0A;
+    --border: #D8CFB3;
+    --green: #4ADE80;
+    --violet: #A78BFA;
+    --yellow: #FEBC2E;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  a { color: var(--coral-dk); text-decoration: none; border-bottom: 1px solid currentColor; }
+  em { color: var(--coral-dk); font-style: italic; }
+  strong { font-weight: 600; color: inherit; }
+
+  .nav {
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1180px;
+    margin: 0 auto;
+    font-size: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(240,234,214,0.92);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-brand { font-weight: 600; letter-spacing: -0.2px; }
+  .nav-brand em { font-family: 'Fraunces', serif; font-weight: 500; border: none; color: var(--coral); }
+  .nav-back {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: none;
+  }
+  .nav-back:hover { color: var(--coral); }
+
+  .section {
+    padding: 84px 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section.dark {
+    background: var(--black);
+    color: #fff;
+    border-bottom-color: transparent;
+  }
+  .section.gradient {
+    background: linear-gradient(165deg, var(--coral-dk) 0%, var(--coral) 55%, var(--coral-lt) 100%);
+    color: var(--black);
+    border-bottom-color: transparent;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  .wrap-wide { max-width: 1080px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .dark .eyebrow { color: var(--coral-lt); }
+  .gradient .eyebrow { color: rgba(10,10,10,0.6); }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 72px;
+    line-height: 0.98;
+    letter-spacing: -2.5px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 48px;
+    line-height: 1.03;
+    letter-spacing: -1.6px;
+    margin-bottom: 18px;
+  }
+  h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.08;
+    letter-spacing: -0.8px;
+    margin-bottom: 12px;
+  }
+  .lede {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.42;
+    color: var(--ink-muted);
+    margin-bottom: 26px;
+  }
+  .dark .lede { color: rgba(255,255,255,0.74); }
+  p { margin-bottom: 18px; font-size: 16px; }
+  ul, ol { margin: 18px 0 24px 22px; }
+  li { margin-bottom: 10px; font-size: 16px; }
+
+  .window {
+    background: #FFFFFF;
+    border: 1px solid rgba(23,23,23,0.08);
+    border-radius: 22px;
+    padding: 58px 28px 46px;
+    position: relative;
+    text-align: center;
+    margin: 28px auto 34px;
+    transform: rotate(-0.6deg);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.95) inset,
+      0 34px 70px -18px rgba(23,23,23,0.28),
+      0 14px 30px -10px rgba(23,23,23,0.14);
+    max-width: 580px;
+  }
+  .window::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 38px;
+    background: linear-gradient(to bottom, #FAF6EC 0%, #FFFFFF 100%);
+    border-bottom: 1px solid rgba(23,23,23,0.06);
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
+  .window .lights {
+    position: absolute;
+    top: 13px;
+    left: 16px;
+    display: flex;
+    gap: 7px;
+    z-index: 2;
+  }
+  .window .lights span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .window .url {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    background: var(--cream);
+    border: 1px solid rgba(23,23,23,0.07);
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.4px;
+  }
+  .window-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--coral);
+    font-size: 84px;
+    letter-spacing: -3px;
+    line-height: 0.92;
+  }
+  .window-sub {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .window-sub span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(240,234,214,0.7);
+    border: 1px solid rgba(23,23,23,0.06);
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .window-sub span::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+  }
+  .window-sub span:nth-child(1)::before { background: var(--coral); }
+  .window-sub span:nth-child(2)::before { background: var(--violet); }
+  .window-sub span:nth-child(3)::before { background: var(--green); }
+
+  .callout {
+    border-left: 3px solid var(--coral);
+    margin: 28px 0;
+    background: rgba(217,107,82,0.08);
+    padding: 16px 20px;
+    border-radius: 4px;
+  }
+  .callout .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--coral-dk);
+    margin-bottom: 6px;
+    font-weight: 600;
+    display: block;
+  }
+  .dark .callout {
+    background: rgba(217,107,82,0.13);
+  }
+  .dark .callout .label { color: var(--coral-lt); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 34px;
+  }
+  .step {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 20px 18px;
+  }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--coral);
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    line-height: 1.06;
+    letter-spacing: -0.6px;
+    margin-bottom: 10px;
+  }
+  .step p {
+    margin-bottom: 0;
+    font-size: 14.5px;
+    color: var(--ink-muted);
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .mini-card {
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 18px;
+    background: rgba(255,255,255,0.04);
+  }
+  .mini-card.light {
+    border-color: var(--border);
+    background: #fff;
+  }
+  .mini-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 8px;
+  }
+  .mini-card p:last-child { margin-bottom: 0; }
+
+  .structure {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 26px;
+  }
+  .structure-item {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 14px;
+    min-height: 124px;
+  }
+  .structure-item .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--coral);
+    margin-bottom: 10px;
+    display: block;
+  }
+  .structure-item .t {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.04;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .structure-item .d {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+
+  pre {
+    background: var(--black);
+    color: var(--coral-lt);
+    padding: 22px 24px;
+    border-radius: 12px;
+    overflow-x: auto;
+    margin: 18px 0 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+  .dark pre {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: none;
+  }
+
+  .stack {
+    text-align: center;
+  }
+  .stack .l1,
+  .stack .l3 {
+    font-family: 'Fraunces', serif;
+    font-size: 42px;
+    letter-spacing: -1.4px;
+    line-height: 0.98;
+    color: var(--black);
+  }
+  .stack .l2 {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 94px;
+    font-weight: 500;
+    letter-spacing: -4px;
+    line-height: 0.92;
+    color: var(--cream);
+    text-shadow: 0 2px 14px rgba(10,10,10,0.2);
+    margin: 6px 0;
+  }
+
+  .footer {
+    padding: 46px 28px;
+    text-align: center;
+    background: var(--black);
+    color: rgba(255,255,255,0.55);
+    font-size: 13px;
+  }
+  .footer a {
+    color: #fff;
+    border-bottom-color: rgba(255,255,255,0.35);
+  }
+
+  @media (max-width: 860px) {
+    .steps, .grid-2, .structure { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    h1 { font-size: 48px; letter-spacing: -1.5px; }
+    h2 { font-size: 36px; letter-spacing: -1px; }
+    h3 { font-size: 24px; }
+    .section { padding: 64px 24px; }
+    .window-text { font-size: 58px; letter-spacing: -2px; }
+    .stack .l1, .stack .l3 { font-size: 34px; }
+    .stack .l2 { font-size: 70px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">Morfeo <em>Academy</em></div>
+  <a class="nav-back" href="/recursos">← Recursos</a>
+</nav>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">Guía · Abril 2026 · Morfeo Academy</span>
+    <div style="font-family:'Fraunces',serif;font-size:34px;letter-spacing:-0.8px;margin-bottom:10px;">Workflow completo de</div>
+    <div class="window">
+      <div class="lights"><span style="background:#FF5F57;"></span><span style="background:#FEBC2E;"></span><span style="background:#28C840;"></span></div>
+      <div class="url">reference-first.carousel</div>
+      <div class="window-text">Reference<br>First</div>
+      <div class="window-sub">
+        <span>GPT Image</span>
+        <span>Anchor slide</span>
+        <span>Consistencia</span>
+      </div>
+    </div>
+    <p class="lede">La inconsistencia no viene del modelo. Viene de pedirle demasiado, demasiado pronto.</p>
+    <p>Esta es la versión en español del sistema que usamos cuando queremos que un carrusel deje de sentirse random y empiece a comportarse como un <em>sistema visual</em>. No le pedís magia al generador. Le das una estructura.</p>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">01 · La tesis</span>
+    <h2>No pidas el carrusel entero.<br>Pedí una dirección.</h2>
+    <p class="lede">Primero cerrás la idea. Después el copy. Después las referencias. Recién ahí generás imágenes.</p>
+    <p>El error clásico es este: abrir GPT Image, pegar un párrafo, subir cinco referencias y esperar seis slides consistentes en una sola corrida. El modelo puede acertar una. Dos con suerte. Pero no te va a construir una familia visual estable si vos mismo no la definiste primero.</p>
+    <div class="callout">
+      <span class="label">Regla madre</span>
+      <p><strong>Copy first, image later.</strong> Si no cerraste el mensaje slide por slide, todavía no estás listo para renderizar nada.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap-wide">
+    <span class="eyebrow">02 · Los 8 pasos</span>
+    <h2>El workflow entero,<br>sin vueltas.</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">Paso 01</div><div class="step-title">Elegí una idea filosa.</div><p>No trabajes con un tema amplio. Bajalo a una afirmación puntual que pueda vivir en un hook.</p></div>
+      <div class="step"><div class="step-num">Paso 02</div><div class="step-title">Escribí el copy antes.</div><p>Cerrá headline, support line y CTA slide por slide. Si el mensaje está borroso, la imagen también.</p></div>
+      <div class="step"><div class="step-num">Paso 03</div><div class="step-title">Juntá 2 a 4 referencias.</div><p>No más. El sweet spot es pocas referencias, bien elegidas, con roles distintos.</p></div>
+      <div class="step"><div class="step-num">Paso 04</div><div class="step-title">Asignale un trabajo a cada una.</div><p>Una referencia puede prestar tipografía, otra spacing, otra color, otra estructura. Nunca “hacelo como esto”.</p></div>
+      <div class="step"><div class="step-num">Paso 05</div><div class="step-title">Generá 3 covers primero.</div><p>La slide 1 fija la familia visual. No avances con una sola idea sin contraste.</p></div>
+      <div class="step"><div class="step-num">Paso 06</div><div class="step-title">Elegí y refiná el anchor.</div><p>Refiná la mejor versión hasta que se convierta en el ancla visual del set.</p></div>
+      <div class="step"><div class="step-num">Paso 07</div><div class="step-title">Renderizá una slide a la vez.</div><p>Las slides 2-N tienen que nacer referenciando el anchor, no una moodboard vaga.</p></div>
+      <div class="step"><div class="step-num">Paso 08</div><div class="step-title">Hacé consistency pass.</div><p>Poné todas juntas, detectá las flojas y regenerá solo esas. No tires abajo todo el batch.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">03 · Estructura default</span>
+    <h2>Si vas a hacer un carrusel de 6 slides,<br>arrancá por esta arquitectura.</h2>
+    <p>Es el esqueleto más útil para explicar un sistema sin perder ritmo. Después lo podés adaptar, pero esta secuencia ya resuelve gran parte del pacing.</p>
+    <div class="structure">
+      <div class="structure-item"><span class="n">01</span><div class="t">Hook</div><div class="d">La afirmación o tensión inicial que frena el scroll.</div></div>
+      <div class="structure-item"><span class="n">02</span><div class="t">Mistake</div><div class="d">El error concreto que la mayoría comete.</div></div>
+      <div class="structure-item"><span class="n">03</span><div class="t">Sauce</div><div class="d">La idea clave que reorganiza el problema.</div></div>
+      <div class="structure-item"><span class="n">04</span><div class="t">Anchor rule</div><div class="d">La regla operativa que cambia el resultado.</div></div>
+      <div class="structure-item"><span class="n">05</span><div class="t">Formula</div><div class="d">El sistema repetible explicado con claridad.</div></div>
+      <div class="structure-item"><span class="n">06</span><div class="t">CTA</div><div class="d">La llamada a la acción, simple y sin ruido.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">04 · Cómo repartir las referencias</span>
+    <h2>No subas referencias mudas.<br>Subí referencias con trabajo.</h2>
+    <p class="lede">El salto de calidad aparece cuando dejás de pedir “inspiración” y empezás a pedir préstamos concretos.</p>
+    <div class="grid-2">
+      <div class="mini-card">
+        <div class="mini-kicker">Reference 1</div>
+        <h3>Tipografía y jerarquía</h3>
+        <p>Tomá la forma en que ordena el título, el peso visual y qué palabras reciben el acento.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-kicker">Reference 2</div>
+        <h3>Layout y spacing</h3>
+        <p>Pedile cómo reparte blancos, bordes, márgenes, bloques y respiración general.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-kicker">Reference 3</div>
+        <h3>Color, textura y mood</h3>
+        <p>Usala para la paleta, el grano, la temperatura y la atmósfera, no para el mensaje exacto.</p>
+      </div>
+      <div class="mini-card">
+        <div class="mini-kicker">Reference 4</div>
+        <h3>Pacing, proof o CTA</h3>
+        <p>Es la que te presta el ritmo de cierre, la lógica de prueba o la resolución final del sistema.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="label">Fórmula de briefing</span>
+      <p><strong>Borrow:</strong> tipografía, spacing, color, textura, lógica de layout. <strong>Do not copy:</strong> branding exacto, texto exacto, composición exacta, assets exactos.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">05 · Prompt para la portada</span>
+    <h2>Primero generá 3 covers.<br>No una sola.</h2>
+    <p>La cover no es “la primera slide”. Es la pieza que define la densidad, el contraste, el carácter y la gramática visual del resto. Por eso la cover se explora en variantes.</p>
+<pre>Quiero 3 versiones distintas de la slide 1 de un carrusel editorial 4:5.
+
+Idea central:
+[PEGÁ ACÁ TU TESIS]
+
+Copy exacto de la portada:
+[PEGÁ ACÁ EL HEADLINE]
+[PEGÁ ACÁ LA SUPPORT LINE]
+[PEGÁ ACÁ EL CTA INFERIOR]
+
+Referencias y jobs:
+- Reference 1 → borrow typography hierarchy
+- Reference 2 → borrow layout and spacing
+- Reference 3 → borrow colour, texture, mood
+- Reference 4 → borrow CTA or proof logic
+
+Do not copy:
+- no texto exacto de las referencias
+- no branding exacto
+- no composición calcada
+
+Necesito 3 hipótesis visuales reales de la misma portada.
+Todas tienen que sentirse parte de la misma familia, pero resolver la jerarquía de forma distinta.
+No generes el resto del carrusel todavía.</pre>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">06 · Prompt para slides 2-N</span>
+    <h2>Después seguís una slide por vez,<br>anclado en la mejor portada.</h2>
+    <p>Una vez que elegiste el anchor, el juego cambia. Ya no le hablás al modelo desde una moodboard. Le hablás desde una familia visual cerrada.</p>
+<pre>Usá esta slide anchor como referencia principal del sistema visual.
+
+Objetivo:
+Generar la slide [N] del mismo carrusel, manteniendo la misma familia visual.
+
+Anchor slide:
+- typography feel
+- spacing
+- colour treatment
+- texture
+- mood
+- visual hierarchy
+
+Copy exacto de esta slide:
+[PEGÁ ACÁ EL HEADLINE]
+[PEGÁ ACÁ LA SUPPORT LINE]
+[PEGÁ ACÁ EL CTA O LABEL SI EXISTE]
+
+Esta slide cumple este rol:
+[mistake / sauce / formula / CTA / etc.]
+
+Mantené consistencia con el anchor.
+No reinventes la paleta.
+No cambies la lógica tipográfica.
+No conviertas esta slide en una cover reciclada.
+Resolvé solo esta slide.</pre>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">07 · Refinamiento y consistency pass</span>
+    <h2>Cuando refinás, no hables en abstracto.<br>Usá tres listas.</h2>
+    <p>Los mejores prompts de refinamiento no dicen “mejoralo”. Dicen exactamente qué se queda, qué se mueve y qué no se toca.</p>
+    <div class="grid-2">
+      <div class="mini-card light">
+        <div class="mini-kicker">Keep</div>
+        <p>Todo lo que ya funciona y define la familia visual: el contraste, la jerarquía, la densidad, el mood.</p>
+      </div>
+      <div class="mini-card light">
+        <div class="mini-kicker">Change</div>
+        <p>Una cantidad chica de cosas: por ejemplo tamaño del remate, peso del proof o posición del módulo inferior.</p>
+      </div>
+    </div>
+    <div class="mini-card light" style="margin-top:18px;">
+      <div class="mini-kicker">Do not touch</div>
+      <p>La parte del sistema que si la movés te rompe el set entero. Normalmente: paleta, lógica tipográfica, textura y ritmo de blancos.</p>
+    </div>
+    <div class="callout">
+      <span class="label">Consistency pass</span>
+      <p>Poné las 6 slides juntas. Detectá cuáles rompen familia. Regenerá solo esas. La consistencia no se arregla rerenderizando todo; se arregla atacando las piezas flojas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <span class="eyebrow">08 · Cuándo pasar a hybrid-text-safe</span>
+    <h2>No le delegates al generador<br>el texto que tiene que quedar exacto.</h2>
+    <p>Si la slide necesita precisión tipográfica fina, el modelo te puede dar una base visual buenísima, pero no siempre te va a cerrar el detalle. En esos casos, cambiá de modo.</p>
+    <ul>
+      <li><strong>Texto largo exacto</strong> o remates con muchas palabras.</li>
+      <li><strong>Bullets, tablas, labels chicos</strong> o numeración de sistema.</li>
+      <li><strong>UI falsa, métricas o pseudo dashboards</strong> donde la legibilidad importa más que la textura.</li>
+      <li><strong>Slides con mucha microtipografía</strong> que después tienen que quedar publicables sin explicar “qué quiso decir”.</li>
+    </ul>
+    <p>En `hybrid-text-safe` el modelo genera fondo, objetos, textura y safe areas. La tipografía final la componés vos después, de forma determinista.</p>
+  </div>
+</section>
+
+<section class="section dark">
+  <div class="wrap">
+    <span class="eyebrow">09 · Lo que destruye el output</span>
+    <h2>Los 6 errores que más arruinan<br>un carrusel.</h2>
+    <ul>
+      <li>Pedir el carrusel entero en una sola corrida.</li>
+      <li>Subir demasiadas referencias sin explicar qué debe tomar de cada una.</li>
+      <li>Refinar con comentarios vagos como “más prolijo” o “más premium”.</li>
+      <li>Generar las slides 2-N en batch sin anclarlas a la slide 1.</li>
+      <li>Confundir consistencia con repetición y terminar con seis covers parecidas.</li>
+      <li>Regenerar todo el set cuando en realidad solo había dos slides flojas.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section gradient">
+  <div class="wrap stack">
+    <span class="eyebrow">Cierre</span>
+    <div class="l1">Si querés que</div>
+    <div class="l2">GPT te devuelva</div>
+    <div class="l3">un carrusel consistente,</div>
+    <div class="l2">primero cerrá</div>
+    <div class="l1">el sistema.</div>
+    <p style="margin-top:26px;font-size:16px;line-height:1.55;color:rgba(10,10,10,0.78);">Esta guía es la traducción al español del método <strong>Reference-First</strong>, adaptada para el workflow que usamos en Morfeo Academy.</p>
+  </div>
+</section>
+
+<section class="section" style="padding:48px 28px;">
+  <div class="wrap">
+    <span class="eyebrow">Fuente</span>
+    <p style="font-size:13px;color:var(--ink-muted);margin:0;">Adaptado desde <em>The Reference-First Carousel Workflow</em>. Traducción, estructura y ejemplos localizados por Morfeo Academy para uso práctico con GPT Image y carruseles editoriales.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Morfeo Academy · Recursos gratis · Hecho para sistemas de contenido reales.</p>
+</footer>
+
+</body>
+</html>
