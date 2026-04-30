@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guía para promptear mejor GPT Image 2 y Nano Banana · Morfeo Academy</title>
-<meta name="description" content="Research oficial + benchmark real para estructurar mejores prompts de imagen en GPT Image 2 y Nano Banana. Incluye meta-prompt para agentes, template universal y los 11 prompts del test del cavernícola.">
-<meta property="og:title" content="Guía para promptear mejor GPT Image 2 y Nano Banana">
-<meta property="og:description" content="Cómo convertir a tu agente en mejor prompteador, qué estructura usar y qué aprendimos del benchmark real del cavernícola.">
+<title>Guía simple de prompts para GPT Image 2 y Nano Banana · Morfeo Academy</title>
+<meta name="description" content="Una guía simple para escribir mejores prompts en GPT Image 2 y Nano Banana. Incluye sistema corto, ejemplos del carrusel y los 11 prompts exactos del test del cavernícola.">
+<meta property="og:title" content="Guía simple de prompts para GPT Image 2 y Nano Banana">
+<meta property="og:description" content="Sistema corto, ejemplos claros y los prompts exactos del carrusel del cavernícola.">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://www.morfeoacademy.com/recursos/nano-banana-vs-gpt-2-v2/01_cover.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -623,6 +623,12 @@
     gap: 8px;
     margin: 18px 0;
   }
+  .case-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
   .chip {
     display: inline-flex;
     align-items: center;
@@ -841,8 +847,8 @@
       <div class="chip-dots"><span>Prompts</span><span>GPT Image 2</span><span>Nano Banana</span></div>
     </div>
     <p class="hero-summary">
-      La estructura de prompt que mejor rindió, los 11 prompts finales,
-      y el sistema que usamos para dominar <em>Nano Banana</em> y <em>GPT Image 2</em>.
+      Un sistema simple para escribir mejores prompts, cuatro ejemplos claros
+      y los 11 prompts exactos que usamos con <em>Nano Banana</em> y <em>GPT Image 2</em>.
     </p>
     <p class="hero-credit">
       La V2 de la guía que nació del carrusel.<br>
@@ -853,232 +859,114 @@
 
 <section class="section section-dark" id="framework">
   <div class="wrap-wide">
-    <span class="eyebrow">Research + benchmark</span>
-    <h2>OpenAI y Google empujan la misma idea:<br>no prompteás keywords; dirigís una escena.</h2>
+    <span class="eyebrow">Antes de empezar</span>
+    <h2>Tres ideas para escribir mejores prompts.</h2>
     <p class="lede">
-      La guía oficial de GPT Image 2 insiste en describir sujeto, fondo, estilo,
-      composición, luz, color y contexto. Las docs de Gemini empujan claridad,
-      especificidad, ejemplos cuando hacen falta e iteración gradual.
+      Las docs oficiales y el test del cavernícola dejan la misma conclusión:
+      describí una escena completa, no una bolsa de keywords.
     </p>
 
     <div class="framework-grid">
       <div class="framework-card">
-        <strong>Scene &gt; theme</strong>
-        <p>“Futurista” o “cinemático” no alcanza. El modelo responde mejor cuando le describís una escena completa y verificable.</p>
+        <strong>1. Bloqueá el sujeto</strong>
+        <p>Si el personaje importa, definilo primero: cara, pelo, ropa, energía y lo que no puede derivar.</p>
       </div>
       <div class="framework-card">
-        <strong>Specific beats vague</strong>
-        <p>Las dos familias de docs coinciden: instrucciones claras y concretas ganan sobre adjetivos lindos pero flojos.</p>
+        <strong>2. Elegí una cámara</strong>
+        <p>POV, lente, altura o distancia. Mucha obediencia visual se juega en esa línea.</p>
       </div>
       <div class="framework-card">
-        <strong>One image, one action</strong>
-        <p>Las mejores salidas de este test tuvieron una acción central por frame. Cuando metés tres acciones, se cae la jerarquía.</p>
-      </div>
-      <div class="framework-card">
-        <strong>Iterate with deltas</strong>
-        <p>No reescribas todo entre corrida y corrida. Cambiá una variable por vez y nombrá el fallo puntual que querés corregir.</p>
+        <strong>3. Dejá una sola acción</strong>
+        <p>Una imagen, un gesto central. Cuando compiten varias acciones, se cae la composición.</p>
       </div>
     </div>
-
-    <div class="framework-panel">
-      <div>
-        <h3>Qué hicimos nosotros.</h3>
-        <p>
-          En este benchmark no hubo “prompt para GPT” y “prompt para Nano”.
-          Corrimos el mismo personaje, las mismas referencias y el mismo texto para ambos modelos.
-          Eso vuelve mucho más útil el resultado: no comparamos trucos de prompting, comparamos obediencia visual.
-        </p>
-      </div>
-      <ul class="framework-list">
-        <li><strong>Mismo brief:</strong> 11 prompts, mismo personaje, mismas refs, 16:9 y 2K para los dos.</li>
-        <li><strong>Research oficial:</strong> OpenAI recomienda describir sujeto, fondo, estilo, composición, luz, paleta y contexto; Google recomienda claridad, especificidad, ejemplos e iteración controlada.</li>
-        <li><strong>Resultado final:</strong> en nuestra revisión final GPT se llevó 8 de 11, Nano ganó 2 claras y la burger quedó pareja. Donde importaban anatomía, perspectiva y lógica espacial, GPT abrió diferencia.</li>
-      </ul>
-    </div>
+    <p>
+      <strong>Benchmark:</strong> corrimos el mismo prompt para los dos modelos, con el mismo personaje y las mismas referencias.
+      GPT ganó la mayoría cuando importaban anatomía, perspectiva y lógica espacial. Nano respondió mejor en algunas imágenes más limpias o más gráficas.
+    </p>
   </div>
 </section>
 
 <section class="section" id="estructura">
-  <div class="wrap-wide">
-    <span class="eyebrow">Copiá esto en tu agente</span>
-    <h2>Convertí a ChatGPT, Claude Code o tu agente en un mejor prompteador.</h2>
+  <div class="wrap">
+    <span class="eyebrow">Sistema simple</span>
+    <h2>Usá este orden.</h2>
     <p class="lede">
-      Si querés que tu agente te devuelva mejores prompts para GPT Image 2 o Nano Banana,
-      no le pidas “escribime un prompt lindo”. Dale un sistema, un orden y una definición de salida.
+      Sujeto. Cámara. Acción. Después recién afinás entorno y restricciones.
     </p>
-
-    <div class="template-box">
-      <span class="prompt-label">Meta-prompt para tu agente</span>
-      <pre>Act as a senior image prompt engineer for GPT Image 2 and Nano Banana.
-Turn my rough idea into a production-ready prompt in English.
-
-Your job:
-1. Infer the scene clearly before writing.
-2. Ask only for missing variables that materially change the image.
-3. Write prompts as directed scenes, not keyword lists.
-4. Keep one main action per frame.
-5. Add failure-control only for the parts most likely to break.
-
-Always return:
-- Core scene in one sentence
-- Final prompt
-- Shorter variant
-- Risk checklist
-
-Use this order every time:
-identity lock -> image type -> camera -> main action -> environment -> failure control
-
-Rules:
-- If references exist, start by locking the subject
-- Keep the final prompt in English
-- Prefer concrete visual nouns over abstract adjectives
-- If text inside the image is needed, allow only one short word unless I explicitly ask for more
-- Never stack multiple competing actions in the same frame
-- Never rewrite the whole prompt during iteration unless the composition itself is wrong</pre>
-    </div>
 
     <div class="stack-grid">
       <div class="stack-card">
         <span class="n">01</span>
-        <h3>Identity lock</h3>
-        <p>Quién es el sujeto y qué no puede derivar: cara, pelo, barba, ropa, edad, energía.</p>
+        <h3>Sujeto</h3>
+        <p>Definí quién aparece y qué no puede cambiar: cara, ropa, pelo, edad, energía.</p>
       </div>
       <div class="stack-card">
         <span class="n">02</span>
-        <h3>Image type</h3>
-        <p>Definí qué clase de imagen es: editorial, campaign, absurdity, product, poster, portrait.</p>
+        <h3>Cámara</h3>
+        <p>Elegí tipo de imagen, POV, lente y distancia. No lo dejes implícito.</p>
       </div>
       <div class="stack-card">
         <span class="n">03</span>
-        <h3>Camera</h3>
-        <p>Lente, POV, altura, distancia y tipo de encuadre. Acá se juega gran parte de la obediencia.</p>
-      </div>
-      <div class="stack-card">
-        <span class="n">04</span>
-        <h3>Action</h3>
-        <p>Una sola acción principal. La escena tiene que girar alrededor de un gesto central inequívoco.</p>
-      </div>
-      <div class="stack-card">
-        <span class="n">05</span>
-        <h3>Environment</h3>
-        <p>Fondo, luz, materiales, clima, densidad, señales de contexto y textura física del mundo.</p>
-      </div>
-      <div class="stack-card">
-        <span class="n">06</span>
-        <h3>Failure control</h3>
-        <p>Nombrá solo los riesgos reales: manos, dedos, objetos, texto, anatomía, composición heredada.</p>
+        <h3>Acción</h3>
+        <p>Describí una sola acción fuerte y cerrá con 1 a 3 riesgos reales: manos, texto, objeto, perspectiva.</p>
       </div>
     </div>
 
     <div class="template-box">
-      <span class="prompt-label">Template final de imagen</span>
-      <pre>Same exact [character] from the references. Keep [identity traits] identical.
-Premium photoreal [editorial / campaign / action-comedy] image, never cartoon, never parody, no text overlays.
+      <span class="prompt-label">Dáselo a tu agente</span>
+      <pre>Act as a senior image prompt engineer.
+Turn my rough idea into one production-ready prompt in English.
+
+Rules:
+1. Lock the subject first.
+2. Define the camera clearly.
+3. Keep one main action.
+4. Add only the 1 to 3 constraints most likely to fail.
+
+Return:
+- Core scene
+- Final prompt
+- Shorter variant</pre>
+    </div>
+
+    <div class="template-box">
+      <span class="prompt-label">Template final</span>
+      <pre>Same exact [subject] from the references. Keep [identity traits] identical.
+Premium photoreal [image type], never cartoon, no text overlays.
 [camera / lens / perspective].
-[main action].
-[environment, lighting, mood, materials].
-[physical constraints / failure control].</pre>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap-wide">
-    <span class="eyebrow">Qué hace fuerte a un prompt</span>
-    <h2>La diferencia entre un prompt usable y uno flojo.</h2>
-
-    <div class="split-panel">
-      <div class="panel-card">
-        <h3>Lo que sí suma</h3>
-        <p>Esto mejora casi cualquier corrida, sin importar el modelo.</p>
-        <ul>
-          <li>sujeto bloqueado desde la primera línea</li>
-          <li>una sola acción importante por imagen</li>
-          <li>decisión óptica clara: POV, lente o ángulo</li>
-          <li>materialidad concreta: lluvia, vidrio, acero, humo, mármol, neón</li>
-          <li>1 a 3 restricciones críticas en vez de una lista infinita de negativas</li>
-        </ul>
-      </div>
-
-      <div class="panel-card">
-        <h3>Lo que lo rompe</h3>
-        <p>Estas son las cosas que más degradaron el benchmark.</p>
-        <ul>
-          <li>keyword soup sin jerarquía</li>
-          <li>tres acciones compitiendo en el mismo frame</li>
-          <li>pedir “vibe” sin definir cámara ni acción</li>
-          <li>negativas genéricas que no atacan el fallo real</li>
-          <li>cambiar personaje, composición y gesto al mismo tiempo durante una iteración</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section section-dark">
-  <div class="wrap-wide">
-    <span class="eyebrow">Refinamiento</span>
-    <h2>Cuando iteres, cambiá una variable por vez.</h2>
-    <p class="lede">
-      La mejor iteración no dice “mejoralo”. Dice qué se mantiene, qué se corrige
-      y qué no se toca. Esto coincide con el research oficial y fue exactamente lo que destrabó este carrusel.
-    </p>
-
-    <div class="framework-grid">
-      <div class="framework-card">
-        <strong>Keep / fix / don’t touch</strong>
-        <p>La estructura más útil fue: mantené X, corregí Y, no cambies Z. Eso protege lo bueno mientras corregís lo roto.</p>
-      </div>
-      <div class="framework-card">
-        <strong>Nombrá el error puntual</strong>
-        <p>No digas “la mano está rara”. Decí “one clear anatomically correct hand, no duplicate limbs, no broken fingers”.</p>
-      </div>
-      <div class="framework-card">
-        <strong>From scratch, solo cuando hace falta</strong>
-        <p>Usalo cuando la composición quedó contaminada por corridas previas. Si solo falló una mano, no tires todo el frame.</p>
-      </div>
-      <div class="framework-card">
-        <strong>Protegé la escena</strong>
-        <p>Si el objeto está roto, bloqueá su integridad física. Si el personaje deriva, volvés al casting lock. Si falla la selfie, bloqueás la lógica de cámara.</p>
-      </div>
-    </div>
-
-    <div class="prompt-box">
-      <span class="prompt-label">Plantilla de refinamiento</span>
-      <pre>Keep the current [face / pose / camera / atmosphere].
-Fix only [specific failure].
-Do not change [what is already working].
-If the composition is contaminated by previous generations, regenerate from scratch.
-Return one improved prompt, not five alternatives.</pre>
+[one main action].
+[environment / lighting / materials].
+[1 to 3 failure controls].</pre>
     </div>
   </div>
 </section>
 
 <section class="section" id="casos">
   <div class="wrap-wide">
-    <span class="eyebrow">Casos del carrusel</span>
-    <h2>Cuatro escenas donde se ve bien la logica.</h2>
+    <span class="eyebrow">Ejemplos</span>
+    <h2>Cuatro casos donde se ve rápido la lógica.</h2>
     <p class="lede">
-      No son solo "slides lindas". Son ejemplos de donde la estructura del prompt cambia el resultado.
+      Mirá la escena, quedate con la lección y después abrí el prompt exacto abajo.
     </p>
 
     <div class="cases-list">
       <article class="case-card">
         <div class="case-copy">
-          <span class="case-kicker">Case study 01 · Fuego</span>
-          <h3>Una sola palabra de tipografia.<br>Todo lo demas, afuera.</h3>
+          <span class="case-kicker">Caso 01 · Fuego</span>
+          <h3>La única excepción tipográfica.</h3>
           <p>
-            La slide del encendedor fue la unica donde dejamos entrar texto dentro de la imagen.
-            Funciono porque la regla era estricta: una sola palabra, gigante, legible, sin otras capas tipograficas.
+            La única slide con texto dentro del render. Funcionó porque la regla fue rígida: una sola palabra, gigante y atrás del personaje.
           </p>
           <div class="chip-row">
             <span class="chip">Macro</span>
-            <span class="chip">Typographic exception</span>
-            <span class="chip">Failure control</span>
+            <span class="chip">Tipografía</span>
+            <span class="chip">Encendedor</span>
           </div>
-          <div class="prompt-box">
-            <span class="prompt-label">Prompt exacto</span>
-            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and deadpan seriousness identical. Premium photoreal editorial absurdity, never cartoon, never parody. Extreme macro in a dim modern kitchen at night, lens almost touching a glossy stone countertop, the caveman half-crawling into frame holding a simple intact disposable lighter inches from his face as if witnessing the birth of the sun, one thumb making a clean steady flame, realistic lighter anatomy, no broken lighter, no warped plastic, no melted parts, warm fire reflection in his eyes, chrome sink and refrigerator bokeh behind him. This is the only slide allowed to include typography: add one single giant lowercase word 'fuego' in extra-bold warm-bone geometric sans serif, perfectly flat and solid, centered across the full width behind the caveman. The layout should read almost like 'fue' on the left of his head and 'go' on the right, with the full word still obvious and legible. The caveman and lighter must be clearly in front of the word so his head, shoulders and hands crop across the letters, but no letter should cover his face or the flame. Keep the word perfectly legible with generous breathing room, no decorative labels, no contour lines, no extra captions, no other text.</pre>
+          <p><strong>Qué destrabó la imagen:</strong> bloquear la tipografía como excepción y controlar físicamente el encendedor.</p>
+          <p><strong>Ganó:</strong> Nano.</p>
+          <div class="case-actions">
+            <a class="button button-secondary" href="#prompt-02">Ver prompt exacto</a>
           </div>
         </div>
         <div class="case-media">
@@ -1091,19 +979,20 @@ Return one improved prompt, not five alternatives.</pre>
 
       <article class="case-card">
         <div class="case-copy">
-          <span class="case-kicker">Case study 02 · Auto</span>
-          <h3>Cuando queres locura,<br>nombrala sin pudor.</h3>
+          <span class="case-kicker">Caso 02 · Auto</span>
+          <h3>Si querés locura, nombrala.</h3>
           <p>
-            La primera version del auto quedaba demasiado tibia. Mejoro cuando el prompt dijo de frente que la cara tenia que mostrar mania, lluvia y exaltacion.
+            La escena subió cuando el prompt dejó de insinuar emoción y pidió directamente manía, lluvia y exaltación.
           </p>
           <div class="chip-row">
-            <span class="chip">Action-comedy</span>
-            <span class="chip">From scratch</span>
-            <span class="chip">Emotion lock</span>
+            <span class="chip">Lluvia</span>
+            <span class="chip">Avenida del Libertador</span>
+            <span class="chip">Cara demente</span>
           </div>
-          <div class="prompt-box">
-            <span class="prompt-label">Prompt exacto</span>
-            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and body type identical. Premium photoreal action-comedy campaign image, never cartoon, no text overlays. Generate this from scratch, not based on any previous composition. Hyper-wide hood-level shot on Avenida del Libertador in Buenos Aires during rain, lens near the front bumper, wet asphalt reflecting headlights and city lights, tree-lined median and elegant urban buildings softly visible through the rain, passing traffic bokeh and streetlamps in the distance. The caveman is mounted on top of a compact modern hatchback as if it were a living horse, gripping the roof rails like reins, knees pressed against the doors, heels digging against the metal body, the car moving through the slick avenue. His face must show wild manic exhilaration: eyes opened wide, feral grin, unhinged joy, rain on his face, as if he has just discovered the ultimate beast and is drunk on the power of controlling it. Headlights cutting through the drizzle, cinematic Buenos Aires energy, absurd, intense, majestic, no typography anywhere.</pre>
+          <p><strong>Qué destrabó la imagen:</strong> pasar de “auto raro” a una acción precisa con emoción explícita.</p>
+          <p><strong>Ganó:</strong> GPT.</p>
+          <div class="case-actions">
+            <a class="button button-secondary" href="#prompt-04">Ver prompt exacto</a>
           </div>
         </div>
         <div class="case-media">
@@ -1116,19 +1005,20 @@ Return one improved prompt, not five alternatives.</pre>
 
       <article class="case-card">
         <div class="case-copy">
-          <span class="case-kicker">Case study 03 · Supermercado</span>
-          <h3>La diferencia entre caos bueno y caos roto esta en el control fisico.</h3>
+          <span class="case-kicker">Caso 03 · Supermercado</span>
+          <h3>El caos bueno necesita control físico.</h3>
           <p>
-            Esta slide salia rara una y otra vez hasta que el prompt empezo a controlar manos, carrito, productos y perspectiva como si fuera una foto de campana real.
+            Esta slide dejó de romperse cuando el prompt empezó a controlar manos, carrito, productos y perspectiva como una foto de campaña real.
           </p>
           <div class="chip-row">
             <span class="chip">24mm</span>
-            <span class="chip">Product density</span>
-            <span class="chip">Anatomy control</span>
+            <span class="chip">Góndola</span>
+            <span class="chip">Carrito rebalsado</span>
           </div>
-          <div class="prompt-box">
-            <span class="prompt-label">Prompt exacto</span>
-            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and dead-serious survival urgency identical. Premium photoreal editorial absurdity, no text overlays, no parody, no goofy mascot energy. Inside a brightly lit modern supermarket aisle, cinematic 24mm three-quarter angle looking down a long gondola, the caveman caught in true panic-hoarding mode as if he has discovered infinite food and believes it could vanish at any second. He is lunging sideways while clutching a chaotic armful of products against his chest: cereal boxes, jars, bottles, snack bags, pasta, canned goods, all believable and heavy, with one clear anatomically correct hand still grabbing more from the shelf. A single shopping cart beside him is already grotesquely overflowing with supplies, one wheel slightly twisted under the weight, a trail of dropped packages scattered on the shiny tile floor behind him. Shelves packed with color and density on both sides, strong fluorescent ceiling lights, deep aisle perspective, subtle motion in the reach but his face tack sharp. Make it feel like a luxury ad campaign shot inside a supermarket: absurd, frantic, premium, believable. Avoid duplicate limbs, broken fingers, floating products, warped cart anatomy or weird extra people.</pre>
+          <p><strong>Qué destrabó la imagen:</strong> nombrar con precisión lo que más se suele romper.</p>
+          <p><strong>Ganó:</strong> GPT.</p>
+          <div class="case-actions">
+            <a class="button button-secondary" href="#prompt-05">Ver prompt exacto</a>
           </div>
         </div>
         <div class="case-media">
@@ -1141,19 +1031,20 @@ Return one improved prompt, not five alternatives.</pre>
 
       <article class="case-card">
         <div class="case-copy">
-          <span class="case-kicker">Case study 04 · Selfie</span>
-          <h3>Si queres una selfie, tenes que bloquear la idea de "telefono fotografiado".</h3>
+          <span class="case-kicker">Caso 04 · Selfie</span>
+          <h3>Pedí la selfie final, no el aparato.</h3>
           <p>
-            El salto grande vino cuando el prompt dejo de pedir "un celular con selfie" y paso a pedir "la selfie final", sin bezel, sin phone frame y sin objetos invadiendo el centro.
+            El salto grande vino cuando el prompt dejó de pedir “un celular con selfie” y pasó a pedir directamente la foto final.
           </p>
           <div class="chip-row">
             <span class="chip">Front camera POV</span>
-            <span class="chip">Invisible device</span>
-            <span class="chip">Urban atmosphere</span>
+            <span class="chip">Sin bezel</span>
+            <span class="chip">Corrientes</span>
           </div>
-          <div class="prompt-box">
-            <span class="prompt-label">Prompt exacto</span>
-            <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic and deadpan seriousness identical. Premium photoreal editorial absurdity, no text overlays. This image must look like the final selfie photo itself, not a photo of a phone screen. True front-camera selfie perspective at night on Avenida Corrientes after rain, with the phone body essentially invisible and outside the frame, no visible phone bezel, no visible phone screen, no hand or finger covering the center of the image, no extra objects in his hands. The caveman holds the device awkwardly at arm's length, both forearms entering only from the lower corners with wide-angle distortion, while he studies his own live image with profound spiritual concern and slight existential confusion, lips parted, eyes fixed on himself as if the device were stealing a fragment of his spirit. Cold screen light on his face and fingers, wet asphalt reflections, theater marquees, taxis and neon signage behind him, bizarre, elegant, unmistakably urban.</pre>
+          <p><strong>Qué destrabó la imagen:</strong> bloquear la lógica de cámara y sacar el teléfono del centro.</p>
+          <p><strong>Ganó:</strong> GPT.</p>
+          <div class="case-actions">
+            <a class="button button-secondary" href="#prompt-08">Ver prompt exacto</a>
           </div>
         </div>
         <div class="case-media">
@@ -1167,88 +1058,17 @@ Return one improved prompt, not five alternatives.</pre>
   </div>
 </section>
 
-<section class="section section-dark" id="tips">
-  <div class="wrap-wide">
-    <span class="eyebrow">Resultado slide por slide</span>
-    <h2>Mismo prompt. Dos respuestas.<br>Y una lectura breve de por qué.</h2>
-    <p class="lede">
-      Acá no hubo distintos trucos de prompting. El texto fue el mismo para ambos.
-      Lo que cambia es cómo cada modelo interpreta perspectiva, anatomía, tipografía, densidad y gesto.
-    </p>
-    <div class="tips-grid">
-      <div class="tip-card">
-        <div class="tip-number">01</div>
-        <h3>Slide 02 · Fuego</h3>
-        <p><strong>Nano gana.</strong> La integración entre cara, encendedor y palabra “fuego” es más clara. GPT quedó más cinematográfico, pero la tipografía se vuelve menos limpia.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">02</div>
-        <h3>Slide 03 · Computadora</h3>
-        <p><strong>Nano gana.</strong> Obedece mejor la idea de cámara desde la laptop y conserva mejor la lógica “la pantalla lo está mirando”. GPT mejora atmósfera, pero pierde estructura.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">03</div>
-        <h3>Slide 04 · Auto</h3>
-        <p><strong>GPT gana.</strong> Captura la locura facial, la lluvia y la energía de Avenida del Libertador. Nano entendió la acción, pero quedó demasiado prolijo y contenido.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">04</div>
-        <h3>Slide 05 · Supermercado</h3>
-        <p><strong>GPT gana.</strong> Maneja mejor la densidad, el carrito rebalsado y la urgencia. Nano queda más ordenado y menos desesperado, que era justo el corazón del prompt.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">05</div>
-        <h3>Slide 06 · Espejo</h3>
-        <p><strong>GPT gana.</strong> La lógica del reflejo es más elegante y menos caótica. Nano se va a una repetición de espejos más invasiva que ensucia la lectura principal.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">06</div>
-        <h3>Slide 07 · Burger</h3>
-        <p><strong>Empate discutible.</strong> Nano la vuelve más absurda y publicitaria; GPT la vuelve más pesada y más creíble como comida. Las dos funcionan, pero por razones distintas.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">07</div>
-        <h3>Slide 08 · Selfie</h3>
-        <p><strong>GPT gana.</strong> La selfie se siente más real, más nocturna y más psicológica. Nano ubica mejor la avenida, pero sigue pareciendo menos una selfie final y más una simulación limpia.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">08</div>
-        <h3>Slide 09 · Escalera</h3>
-        <p><strong>GPT gana.</strong> Respeta mejor el punto de vista en picada y la geometría repetitiva de la escalera mecánica. Nano cambia el ángulo y se aleja de la consigna.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">09</div>
-        <h3>Slide 10 · Cajero</h3>
-        <p><strong>GPT gana.</strong> Hay más reverencia, más lectura de “ídolo” y mejor lógica espacial del cajero. Nano cumple, pero queda más literal y menos místico.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">10</div>
-        <h3>Slide 11 · Lavadora</h3>
-        <p><strong>GPT gana.</strong> El tambor realmente se siente portal. Nano también funciona, pero la distorsión circular y el efecto de vórtice están mejor resueltos abajo.</p>
-      </div>
-      <div class="tip-card">
-        <div class="tip-number">11</div>
-        <h3>Slide 12 · Secamanos</h3>
-        <p><strong>GPT gana.</strong> El aire se lee mejor en pelo, barba y manos. Nano encuentra la idea, pero la dirección del flujo y la reacción del cuerpo son menos precisas.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="section" id="prompt-pack">
   <div class="wrap">
-    <span class="eyebrow">Prompt pack completo</span>
-    <h2>Los 11 prompts del carrusel final.</h2>
+    <span class="eyebrow">Prompts</span>
+    <h2>Los 11 prompts exactos.</h2>
     <p class="lede">
-      Este es el texto exacto que corrimos nosotros, igual para ambos modelos.
-      Copialo, adaptalo o usalo como dataset de entrenamiento para tu agente. Si vas a tocar algo,
-      tocá primero el sujeto, después la cámara, y recién al final las restricciones.
+      Mismo texto para ambos modelos. Abrí el que te sirva, copiá y adaptá.
     </p>
 
-    <details class="prompt-item" open>
+    <details class="prompt-item" id="prompt-02" open>
       <summary><span>Slide 02</span> Fuego</summary>
       <div class="prompt-item-body">
-        <p>La unica slide donde permitimos tipografia dentro del render.</p>
         <div class="prompt-box">
           <span class="prompt-label">Prompt</span>
           <pre>Same exact caveman from the references. Keep face, beard, hair, fur tunic, body type and deadpan seriousness identical. Premium photoreal editorial absurdity, never cartoon, never parody. Extreme macro in a dim modern kitchen at night, lens almost touching a glossy stone countertop, the caveman half-crawling into frame holding a simple intact disposable lighter inches from his face as if witnessing the birth of the sun, one thumb making a clean steady flame, realistic lighter anatomy, no broken lighter, no warped plastic, no melted parts, warm fire reflection in his eyes, chrome sink and refrigerator bokeh behind him. This is the only slide allowed to include typography: add one single giant lowercase word 'fuego' in extra-bold warm-bone geometric sans serif, perfectly flat and solid, centered across the full width behind the caveman. The layout should read almost like 'fue' on the left of his head and 'go' on the right, with the full word still obvious and legible. The caveman and lighter must be clearly in front of the word so his head, shoulders and hands crop across the letters, but no letter should cover his face or the flame. Keep the word perfectly legible with generous breathing room, no decorative labels, no contour lines, no extra captions, no other text.</pre>
@@ -1256,7 +1076,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-03">
       <summary><span>Slide 03</span> Computadora</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1266,7 +1086,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-04">
       <summary><span>Slide 04</span> Auto</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1276,7 +1096,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-05">
       <summary><span>Slide 05</span> Supermercado</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1286,7 +1106,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-06">
       <summary><span>Slide 06</span> Espejo</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1296,7 +1116,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-07">
       <summary><span>Slide 07</span> Burger</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1306,7 +1126,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-08">
       <summary><span>Slide 08</span> Selfie</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1316,7 +1136,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-09">
       <summary><span>Slide 09</span> Escalera mecanica</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1326,7 +1146,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-10">
       <summary><span>Slide 10</span> Cajero</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1336,7 +1156,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-11">
       <summary><span>Slide 11</span> Lavadora</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1346,7 +1166,7 @@ Return one improved prompt, not five alternatives.</pre>
       </div>
     </details>
 
-    <details class="prompt-item">
+    <details class="prompt-item" id="prompt-12">
       <summary><span>Slide 12</span> Secamanos</summary>
       <div class="prompt-item-body">
         <div class="prompt-box">
@@ -1361,49 +1181,33 @@ Return one improved prompt, not five alternatives.</pre>
 <section class="section">
   <div class="wrap">
     <span class="eyebrow">Fuentes</span>
-    <h2>Research usado para reescribir esta guía.</h2>
+    <h2>De dónde sale esta guía.</h2>
     <p class="lede">
-      La base no salió de opiniones sueltas. Salió de cruzar nuestras corridas con documentación oficial de OpenAI y Google.
+      La base sale de cruzar nuestras corridas con documentación oficial de OpenAI y Google.
     </p>
     <p>
-      <strong>OpenAI</strong> recomienda escribir prompts como descripciones completas de escena
-      y no como listas de keywords: sujeto, fondo, estilo, composición, iluminación, paleta y contexto.
-      Fuente: <a href="https://developers.openai.com/cookbook/examples/multimodal/image-gen-models-prompting-guide">GPT Image prompting guide</a>.
+      <strong>OpenAI:</strong> sujeto, fondo, estilo, composición, iluminación y contexto.
+      <a href="https://developers.openai.com/cookbook/examples/multimodal/image-gen-models-prompting-guide">Ver guía</a>.
     </p>
     <p>
-      <strong>Google</strong> empuja la misma dirección desde Gemini:
-      instrucciones claras y específicas, ejemplos cuando hacen falta, y refinamiento gradual en vez de reescrituras totales.
-      Fuentes: <a href="https://ai.google.dev/gemini-api/docs/models/generative-models">Prompt design strategies</a> y <a href="https://ai.google.dev/gemini-api/docs/image-generation">Image generation docs</a>.
+      <strong>Google:</strong> claridad, especificidad, ejemplos cuando hacen falta e iteración gradual.
+      <a href="https://ai.google.dev/gemini-api/docs/models/generative-models">Prompt design</a> ·
+      <a href="https://ai.google.dev/gemini-api/docs/image-generation">Image generation docs</a>.
     </p>
     <p>
-      Nuestro benchmark suma la capa práctica: mismo personaje, mismos prompts, mismas referencias y revisión manual comparando obediencia visual, anatomía, composición, gesto y tipografía.
+      Nuestro benchmark suma la capa práctica: mismo personaje, mismos prompts y comparación manual de obediencia visual.
     </p>
   </div>
 </section>
 
 <section class="section section-dark" id="otros-recursos">
-  <div class="wrap-wide">
-    <span class="eyebrow">Otros recursos</span>
-    <h2>Segui profundizando desde aca.</h2>
-    <div class="resource-grid">
-      <a class="resource-card" href="https://www.morfeoacademy.com/recursos/nano-banana-vs-gpt-2/">
-        <span class="mono">Guia base</span>
-        <h3>Nano Banana vs GPT-2</h3>
-        <p>La version anterior: mas centrada en el carrusel final y la comparativa slide por slide.</p>
-        <span class="resource-link">ABRIR V1 →</span>
-      </a>
-      <a class="resource-card" href="/recursos/reference-first-carruseles">
-        <span class="mono">Workflow</span>
-        <h3>Reference-First</h3>
-        <p>La guia para usar referencias con trabajo concreto y renderizar carruseles con mas consistencia.</p>
-        <span class="resource-link">ABRIR GUIA →</span>
-      </a>
-      <a class="resource-card" href="/recursos">
-        <span class="mono">Biblioteca</span>
-        <h3>Todos los recursos</h3>
-        <p>Volver al listado principal de guias, setups y workflows publicados por Morfeo Academy.</p>
-        <span class="resource-link">VER RECURSOS →</span>
-      </a>
+  <div class="wrap">
+    <span class="eyebrow">Seguí por acá</span>
+    <h2>Dos recursos para complementar esta guía.</h2>
+    <div class="hero-actions">
+      <a class="button button-secondary" href="https://www.morfeoacademy.com/recursos/nano-banana-vs-gpt-2/">Ver V1</a>
+      <a class="button button-secondary" href="/recursos/reference-first-carruseles">Ver Reference-First</a>
+      <a class="button button-secondary" href="/recursos">Ver todos los recursos</a>
     </div>
   </div>
 </section>
