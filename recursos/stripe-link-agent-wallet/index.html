@@ -404,30 +404,28 @@
 
 <section class="section">
   <div class="wrap">
-    <h2>Para qué sirve y a qué se conecta.</h2>
-    <p class="lede">Pensalo como la billetera del agente. El agente sigue siendo OpenClaw, Hermes, Claude Code o el que uses. Link sólo resuelve la parte del pago.</p>
+    <h2>Con qué agentes se usa.</h2>
+    <p class="lede">Link no reemplaza al agente. Sólo resuelve la parte del pago.</p>
 
     <div class="mini-grid">
       <article class="card">
         <h3>OpenClaw</h3>
-        <p>Sirve si tu agente navega, busca productos o hace compras por vos. Link le agrega la capacidad de pagar con aprobación.</p>
+        <p>Si OpenClaw encuentra, navega y compra, Link le agrega la billetera.</p>
       </article>
 
       <article class="card">
         <h3>Claude Code</h3>
-        <p>Sirve si querés que Claude Code opere compras desde terminal o como agente local. Se conecta vía <span class="mono">link-cli</span> o vía MCP.</p>
+        <p>Si Claude Code corre herramientas locales, puede usar <span class="mono">link-cli</span> o MCP.</p>
       </article>
 
       <article class="card">
-        <h3>Hermes u otro agente</h3>
-        <p>También aplica si Hermes puede correr herramientas locales o conectarse a un MCP server. No está atado a un agente específico.</p>
+        <h3>Hermes</h3>
+        <p>Si Hermes opera como agente autónomo, Link le suma pagos con aprobación.</p>
       </article>
     </div>
 
     <div class="notes">
-      <div class="note"><strong>En una frase:</strong> Link agent wallet no reemplaza a OpenClaw, Hermes o Claude Code. Les da una forma segura de <strong>pedir permiso para gastar y completar una compra</strong>.</div>
-      <div class="note"><strong>Se conecta a:</strong> cualquier agente que pueda ejecutar <span class="mono">link-cli</span> o hablar con el MCP server de Link.</div>
-      <div class="note"><strong>Se usa para:</strong> compras online, reorders, reservas, pagos chicos operados por un agente con aprobación humana.</div>
+      <div class="note"><strong>Regla simple:</strong> si tu agente puede correr <span class="mono">link-cli</span> o hablar con el MCP server de Link, le podés sumar pagos.</div>
     </div>
   </div>
 </section>
