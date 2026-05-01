@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guia Link Agent Wallet de Stripe · Morfeo Academy</title>
+<meta name="description" content="Guia simple para entender Link agent wallet de Stripe: que es, como instalar link-cli y cual es el paso a paso minimo para probarlo.">
+<meta property="og:title" content="Guia Link Agent Wallet de Stripe · Morfeo Academy">
+<meta property="og:description" content="Version simple: instalacion, comandos para copiar y pegar, y paso a paso numerado.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f4efdf;
+    --panel: rgba(255, 252, 244, 0.86);
+    --line: #d7cfbc;
+    --ink: #171717;
+    --muted: #5f5a52;
+    --dark: #08120d;
+    --dark-2: #0d1c14;
+    --green: #5fed83;
+    --green-soft: #bdfdd0;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(circle at top left, rgba(95, 237, 131, 0.08), transparent 24%),
+      linear-gradient(180deg, #f6f1e3 0%, #f1e9d7 100%);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+  .serif {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+  }
+
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 16px 22px;
+    background: rgba(244, 239, 223, 0.84);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(23, 23, 23, 0.08);
+  }
+  .nav-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .brand {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .brand em {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+  .nav-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .hero {
+    padding: 72px 22px 48px;
+    background:
+      radial-gradient(circle at 82% 16%, rgba(95, 237, 131, 0.18), transparent 18%),
+      radial-gradient(rgba(95, 237, 131, 0.08) 1px, transparent 1px),
+      linear-gradient(180deg, var(--dark-2) 0%, var(--dark) 100%);
+    background-size: auto, 16px 16px, auto;
+    color: #fbfdf8;
+    border-bottom: 1px solid rgba(95, 237, 131, 0.12);
+  }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.68);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 5px rgba(95, 237, 131, 0.14);
+  }
+  h1 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(36px, 6vw, 66px);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    max-width: 11ch;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    max-width: 640px;
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.78);
+  }
+  .hero p + p {
+    margin-top: 12px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .meta-row span {
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid rgba(95, 237, 131, 0.16);
+    background: rgba(255, 255, 255, 0.04);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.76);
+  }
+
+  .section {
+    padding: 54px 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .section h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin-bottom: 10px;
+  }
+  .section .lede {
+    max-width: 720px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-size: 17px;
+  }
+
+  .mini-grid,
+  .steps {
+    display: grid;
+    gap: 16px;
+  }
+  .mini-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  .card,
+  .step {
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: var(--panel);
+    box-shadow: 0 14px 30px rgba(23, 23, 23, 0.05);
+  }
+  .card {
+    padding: 22px;
+  }
+  .card h3,
+  .step h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 21px;
+    line-height: 1.06;
+    margin-bottom: 8px;
+  }
+  .card p,
+  .step p {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  .step {
+    overflow: hidden;
+  }
+  .step-top {
+    padding: 20px 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .step-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--green);
+    letter-spacing: -0.06em;
+  }
+  .step-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .step-body {
+    padding: 0 22px 22px;
+  }
+  .step-body p {
+    margin-bottom: 16px;
+  }
+
+  .code-wrap {
+    border-top: 1px solid rgba(23, 23, 23, 0.08);
+    background: linear-gradient(180deg, rgba(8, 18, 13, 0.98), rgba(10, 20, 15, 0.98));
+  }
+  .code-head {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid rgba(95, 237, 131, 0.12);
+  }
+  .code-head span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.56);
+  }
+  .copy-btn {
+    appearance: none;
+    border: 1px solid rgba(95, 237, 131, 0.16);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--green);
+    padding: 8px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .copy-btn.done {
+    background: var(--green);
+    color: var(--dark);
+    border-color: transparent;
+  }
+  pre {
+    padding: 18px 16px 20px;
+    overflow-x: auto;
+    white-space: pre;
+    font-size: 13px;
+    line-height: 1.7;
+    color: #eef8ef;
+  }
+
+  .notes {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .note {
+    padding: 14px 16px;
+    border-radius: 18px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.44);
+    color: var(--muted);
+    font-size: 14px;
+  }
+  .note strong {
+    color: var(--ink);
+  }
+
+  .footer {
+    padding: 30px 22px 42px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .mini-grid {
+      grid-template-columns: 1fr;
+    }
+    .nav-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .hero, .section {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+    .meta-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="brand">Morfeo <em>Academy</em></div>
+    <a class="nav-link" href="/recursos/">Volver a recursos</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Stripe Sessions 2026 · Guia simple</span>
+    <h1>Link agent wallet, explicado sin humo.</h1>
+    <p>Stripe lanzó una forma de dejar que un agente pague por vos <strong>sin ver tu tarjeta real</strong> y con <strong>aprobación humana</strong>.</p>
+    <p>Acá tenés la versión corta: qué es, cómo instalarlo y cuál es el paso a paso mínimo para probarlo.</p>
+
+    <div class="meta-row">
+      <span>US only al 30/04/2026</span>
+      <span>Link CLI</span>
+      <span>Tarjeta efímera o SPT</span>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Qué cambia.</h2>
+    <p class="lede">La idea no es “IA comprando sola”. La idea es que el agente pueda pedir permiso para gastar y terminar la compra con una credencial segura.</p>
+
+    <div class="mini-grid">
+      <article class="card">
+        <h3>1. El agente no ve tu tarjeta.</h3>
+        <p>Link le da una credencial de un solo uso o un token limitado para completar esa compra.</p>
+      </article>
+
+      <article class="card">
+        <h3>2. Vos aprobás.</h3>
+        <p>El gasto pasa por una aprobación explícita. Ahí está el control real del sistema.</p>
+      </article>
+
+      <article class="card">
+        <h3>3. El merchant cobra normal.</h3>
+        <p>Puede cobrar con tarjeta efímera o con <span class="mono">SharedPaymentToken</span> si tiene integración programática.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Paso a paso.</h2>
+    <p class="lede">Si querés probarlo rápido, este es el flujo mínimo. En orden.</p>
+
+    <div class="steps">
+      <article class="step">
+        <div class="step-top">
+          <div>
+            <div class="step-label">Paso 1</div>
+            <h3>Instalá Link CLI e iniciá sesión.</h3>
+          </div>
+          <div class="step-num">01</div>
+        </div>
+        <div class="step-body">
+          <p>Esto conecta tu agente con la wallet de Link. Si ya tenés cuenta, usás esa. Si no, la creás.</p>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">
+            <span>Instalación</span>
+            <button class="copy-btn" data-copy-target="code-install">Copiar</button>
+          </div>
+          <pre id="code-install">npm i -g @stripe/link-cli
+link-cli auth login --client-name "Morfeo Agent"</pre>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-top">
+          <div>
+            <div class="step-label">Paso 2</div>
+            <h3>Listá los métodos de pago.</h3>
+          </div>
+          <div class="step-num">02</div>
+        </div>
+        <div class="step-body">
+          <p>Necesitás el <span class="mono">payment_method_id</span> para crear el spend request.</p>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">
+            <span>Wallet</span>
+            <button class="copy-btn" data-copy-target="code-methods">Copiar</button>
+          </div>
+          <pre id="code-methods">link-cli payment-methods list</pre>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-top">
+          <div>
+            <div class="step-label">Paso 3</div>
+            <h3>Creá el spend request.</h3>
+          </div>
+          <div class="step-num">03</div>
+        </div>
+        <div class="step-body">
+          <p>Este comando le pide a Link una credencial para una compra concreta y dispara la aprobación.</p>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">
+            <span>Compra</span>
+            <button class="copy-btn" data-copy-target="code-request">Copiar</button>
+          </div>
+          <pre id="code-request">link-cli spend-request create \
+  --payment-method-id csmrpd_xxx \
+  --merchant-name "Stripe Press" \
+  --merchant-url "https://press.stripe.com" \
+  --context "Purchasing 'Working in Public' for the user." \
+  --amount 3500 \
+  --line-item "name:Working in Public,unit_amount:3500,quantity:1" \
+  --total "type:total,display_text:Total,amount:3500" \
+  --request-approval</pre>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-top">
+          <div>
+            <div class="step-label">Paso 4</div>
+            <h3>Cobrà con tarjeta o con SPT.</h3>
+          </div>
+          <div class="step-num">04</div>
+        </div>
+        <div class="step-body">
+          <p>Si el merchant soporta flujo programático, podés usar <span class="mono">SharedPaymentToken</span>. Si no, el camino simple es tarjeta efímera.</p>
+        </div>
+        <div class="code-wrap">
+          <div class="code-head">
+            <span>SPT opcional</span>
+            <button class="copy-btn" data-copy-target="code-spt">Copiar</button>
+          </div>
+          <pre id="code-spt">link-cli spend-request create \
+  --payment-method-id csmrpd_xxx \
+  --merchant-name "Seller API" \
+  --merchant-url "https://seller.example.com" \
+  --context "Scoped checkout for the user." \
+  --amount 10000 \
+  --credential-type "shared_payment_token" \
+  --request-approval
+
+curl https://api.stripe.com/v1/payment_intents \
+  -u "sk_test_...:" \
+  -d amount=10000 \
+  -d currency=usd \
+  -d shared_payment_granted_token=spt_123 \
+  -d confirm=true</pre>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Notas rápidas.</h2>
+    <p class="lede">Lo importante para no confundirse en la primera prueba.</p>
+
+    <div class="notes">
+      <div class="note"><strong>Aprobación:</strong> hoy la historia fuerte es que aprobás la compra. No lo pienses todavía como autonomía total.</div>
+      <div class="note"><strong>Modo simple:</strong> si querés salir rápido, pensalo como “agente + approval + tarjeta efímera”.</div>
+      <div class="note"><strong>Modo más nativo:</strong> si vendés con Stripe y querés un flujo limpio para agentes, mirá <span class="mono">SharedPaymentToken</span>.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-links">
+    <a href="https://x.com/stripe/status/2049529444092838116" target="_blank" rel="noreferrer">Stripe</a>
+    <a href="https://link.com/ae/agents" target="_blank" rel="noreferrer">Link</a>
+    <a href="https://github.com/stripe/link-cli" target="_blank" rel="noreferrer">Link CLI</a>
+    <a href="https://docs.stripe.com/agentic-commerce/concepts/shared-payment-tokens" target="_blank" rel="noreferrer">SPT Docs</a>
+  </div>
+  <p>Hecho por <a href="https://www.instagram.com/morfeoacademy/" target="_blank" rel="noreferrer">@morfeoacademy</a> para <a href="/recursos/">Recursos</a>.</p>
+</footer>
+
+<script>
+  const copyButtons = document.querySelectorAll('.copy-btn');
+
+  async function copyBlock(button) {
+    const targetId = button.getAttribute('data-copy-target');
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    try {
+      await navigator.clipboard.writeText(target.textContent.trim());
+      const original = button.textContent;
+      button.textContent = 'Copiado';
+      button.classList.add('done');
+
+      setTimeout(() => {
+        button.textContent = original;
+        button.classList.remove('done');
+      }, 1400);
+    } catch (error) {
+      button.textContent = 'Error';
+      setTimeout(() => {
+        button.textContent = 'Copiar';
+      }, 1400);
+    }
+  }
+
+  copyButtons.forEach((button) => {
+    button.addEventListener('click', () => copyBlock(button));
+  });
+</script>
+</body>
+</html>
