@@ -342,7 +342,7 @@
     <span class="eyebrow">Stripe Sessions 2026 · Guia simple</span>
     <h1>Link agent wallet, explicado sin humo.</h1>
     <p>Stripe lanzó una forma de dejar que un agente pague por vos <strong>sin ver tu tarjeta real</strong> y con <strong>aprobación humana</strong>.</p>
-    <p>Acá tenés la versión corta: qué es, cómo instalarlo y cuál es el paso a paso mínimo para probarlo.</p>
+    <p>No es un agente nuevo. Es una <strong>capa de pago</strong> que le podés enchufar a un agente que ya uses. Acá tenés la versión corta: para qué sirve, a qué se conecta y cuál es el paso a paso mínimo para probarlo.</p>
 
     <div class="meta-row">
       <span>US only al 30/04/2026</span>
@@ -372,6 +372,36 @@
         <h3>3. El merchant cobra normal.</h3>
         <p>Puede cobrar con tarjeta efímera o con <span class="mono">SharedPaymentToken</span> si tiene integración programática.</p>
       </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <h2>Para qué sirve y a qué se conecta.</h2>
+    <p class="lede">Pensalo como la billetera del agente. El agente sigue siendo OpenClaw, Hermes, Claude Code o el que uses. Link sólo resuelve la parte del pago.</p>
+
+    <div class="mini-grid">
+      <article class="card">
+        <h3>OpenClaw</h3>
+        <p>Sirve si tu agente navega, busca productos o hace compras por vos. Link le agrega la capacidad de pagar con aprobación.</p>
+      </article>
+
+      <article class="card">
+        <h3>Claude Code</h3>
+        <p>Sirve si querés que Claude Code opere compras desde terminal o como agente local. Se conecta vía <span class="mono">link-cli</span> o vía MCP.</p>
+      </article>
+
+      <article class="card">
+        <h3>Hermes u otro agente</h3>
+        <p>También aplica si Hermes puede correr herramientas locales o conectarse a un MCP server. No está atado a un agente específico.</p>
+      </article>
+    </div>
+
+    <div class="notes">
+      <div class="note"><strong>En una frase:</strong> Link agent wallet no reemplaza a OpenClaw, Hermes o Claude Code. Les da una forma segura de <strong>pedir permiso para gastar y completar una compra</strong>.</div>
+      <div class="note"><strong>Se conecta a:</strong> cualquier agente que pueda ejecutar <span class="mono">link-cli</span> o hablar con el MCP server de Link.</div>
+      <div class="note"><strong>Se usa para:</strong> compras online, reorders, reservas, pagos chicos operados por un agente con aprobación humana.</div>
     </div>
   </div>
 </section>
